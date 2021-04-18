@@ -1,0 +1,38 @@
+// Base Typography
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,300&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Open Sans',
+    sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 6.3rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 4.7rem;
+
+}
+
+h3 {
+  font-size: 3.5rem;
+
+}
+
+h4 {
+  font-size: 2.7rem;
+}
+
+
+p {
+  font-size: 1.6rem;
+}

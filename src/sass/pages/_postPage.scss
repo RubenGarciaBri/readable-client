@@ -1,0 +1,10 @@
+.postPage {
+  min-height: 100vh;
+  background-color: #e4e8ed;
+  padding-top: 5rem;
+
+  &-container {
+    max-width: 96rem;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,118 @@
+.createPost {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  background: #fff;
+  border-radius: .7rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: .5rem .5rem .1rem 1.5rem;
+
+  
+  &__left {
+    flex-basis: 8%;   
+ 
+    &-icon {
+      margin: 1.2rem 0 0 .5rem;
+      display: inline-block;
+      font-size: 3.2rem;
+    }
+  }
+
+  &__right {
+    flex-basis: 92%;
+    padding: 1rem;
+
+    &-form {
+
+      &__input {
+        font-family: 'Open Sans',
+        sans-serif;
+        font-size: 1.4rem;
+        width: 100%;
+        padding: 1.2rem 1.7rem;
+        background: #eee;
+        border: 1px solid #eee;
+        border-radius: .7rem;
+        color: #222;
+        margin: 0 0 1.5rem 0;
+      }
+  
+      &__textarea {
+        font-family: 'Open Sans',
+         sans-serif;
+        font-size: 1.4rem;
+        width: 100%;
+        padding: 1.2rem 1.7rem;
+        background: #eee;
+        border: 1px solid #eee;
+        border-radius: .7rem;
+        color: #222;
+        resize: none;
+      }
+
+      &__categories {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0 1rem 0rem;
+
+        &-title {
+          display: inline-block;
+          margin-top: .3rem;
+          margin-right: .5rem;
+          font-size: 1.2rem;
+          font-weight: bold;
+          margin-bottom: .5rem;
+        }
+
+        &-item {
+          
+          & a {
+          font-size: 1rem;
+          font-weight: bold;
+          padding: .6rem 1.2rem;
+          background: #eee;
+          border: 1 solid #ccc;
+          border-radius: 25rem;
+          color: #222;
+          }
+
+          &--active a {
+            background: #aaa;
+          }
+        }
+      }
+
+      &__error {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #dc3545;
+      }
+  
+      &__btn {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: bold;
+        padding: 1.2rem 3.6rem;
+        text-align: center;
+        margin: 2.5rem 0 0 0;
+        background-color: #ccc;
+        color: #222;
+        border-radius: 25rem;
+        border: none;
+      }
+    }
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-auto {
+  cursor: auto;
+}

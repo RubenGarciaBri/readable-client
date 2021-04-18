@@ -1,0 +1,50 @@
+.newComment {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  background: #fff;
+  border-radius: .7rem;
+  overflow: hidden;
+  margin-bottom: 0rem;
+  padding: .5rem 1rem 1rem 1.5rem;
+ 
+    &__form {
+      width: 100%;
+
+      &-textarea {
+        margin-top: 1rem;
+        font-family: 'Open Sans',
+         sans-serif;
+        font-size: 1.4rem;
+        width: 100%;
+        padding: 1.2rem 1.7rem;
+        background: #eee;
+        border: 1px solid #eee;
+        border-radius: .7rem;
+        color: #222;
+        resize: none;
+      }
+
+      &-error {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #dc3545;
+      }
+  
+      &-btn {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: bold;
+        padding: .8rem 1.6rem;
+        text-align: center;
+        margin: .5rem 0 0 0;
+        background-color: #ccc;
+        color: #222;
+        border-radius: 25rem;
+        border: none;
+      }
+    }
+}

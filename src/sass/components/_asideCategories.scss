@@ -1,0 +1,59 @@
+.asideCategories {
+  background: #fff;
+  border-radius: .7rem;
+  overflow: hidden;
+
+  &__top {
+    display: flex;
+    align-items: flex-end;
+    padding: 2.2rem 0 2.2rem 0;
+    border-bottom: 2px solid #eee;
+
+    &-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-left: 2rem;
+    }
+  }
+
+  &__body {
+
+    &-list {
+
+      &__item {
+
+        &-link {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          color: #222;
+          font-size: 1.6rem;
+          font-weight: 600;
+          padding: 1.3rem 0 1.3rem 2.5rem;
+          border-bottom: 1px solid #eee;
+
+          &:hover {
+            background: #eee;
+          }
+
+          &--active {
+            background: #eee;
+          }
+        }
+      }
+    }
+
+    &-btn {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: bold;
+      padding: .8rem;
+      text-align: center;
+      margin: 2rem auto 3.5rem auto;
+      width: 80%;
+      background-color: #ccc;
+      color: #222;
+      border-radius: 25rem;
+    }
+  }
+}

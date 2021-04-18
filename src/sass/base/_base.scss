@@ -1,0 +1,60 @@
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Open Sans',
+    sans-serif;
+  line-height: 1.5;
+  color: #222;
+  position: relative;
+  background: #fff;
+}
+
+html {
+  font-size: 62.5%;
+
+  @include respond(tab-port) {
+    font-size: 56.25%;
+  }
+
+  @include respond(phone) {
+    font-size: 50%;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  font-size: 2rem;
+  display: inline-block;
+}
+
+input,
+textarea,
+button {
+  outline: none;
+  border: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+.main-container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+span {
+  white-space: nowrap;
+}
+

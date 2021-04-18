@@ -1,0 +1,25 @@
+.home {
+  background-color: #e4e8ed;
+  min-height: 100vh;
+}
+
+.home-container {
+  max-width: 120rem;
+  margin: 0 auto;
+  display: flex;
+  gap: 25px;
+  margin-top: 2.5rem;
+}
+
+.home-left {
+  flex-basis: 25%;
+}
+
+.home-main {
+  flex-basis: 50%;
+}
+
+.home-right {
+  flex-basis: 25%;
+}
+
