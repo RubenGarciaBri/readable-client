@@ -51,5 +51,6 @@
     "node-sass": "^5.0.0",
     "react-icons": "^4.2.0",
     "react-toastify": "^7.0.3"
-  }
+  },
+  "proxy": "https://us-central1-readable-bf7a6.cloudfunctions.net/api"
 }
