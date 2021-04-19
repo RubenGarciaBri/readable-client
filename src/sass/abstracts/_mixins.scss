@@ -38,3 +38,23 @@
 @mixin transition-default {
   transition: all .2s;
 }
+
+// Flex Containers
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mini Container
+@mixin container-mini {
+  max-width: 85rem;
+  margin: 0 auto;
+}

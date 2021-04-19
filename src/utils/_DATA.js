@@ -114,7 +114,7 @@ export async function _saveComment ({comment, postId, author}) {
 
 export const _getUsers = async () => {
   try {
-    // const res = await axios.get('http://localhost:5000/api/users')
+    // const res = await axios.get('api/users')
     // return res.data
     return users
   }
@@ -125,10 +125,8 @@ export const _getUsers = async () => {
 
 export const _getPosts = async () => {
   try {
-    // const res = await axios.get('http://localhost:5000/api/polls')
-    // return res.data
-
-    return posts
+    const posts = await axios.get('/posts')
+    return posts.data
   }
   catch(err) {
     console.log(err)
