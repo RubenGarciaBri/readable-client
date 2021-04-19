@@ -133,7 +133,7 @@
       }
     }
 
-    &-options {
+    &-signout {
       width: 4rem;
       height: 4rem;
       border-radius: 25rem;
@@ -151,82 +151,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         position: absolute;
-      }
-
-      &__dropdown {
-        position: absolute;
-        cursor: auto;
-        top: 4.5rem;
-        right: 0;
-        background: #fff;
-        width: 30rem;
-        overflow: hidden;
-        border-radius: .7rem;
-        z-index: 10;
-
-        &-top {
-          display: flex;
-          align-items: center;
-          padding: 1.7rem;
-          border-bottom: solid 1px #eee;
-
-          &__left {
-            flex-basis: 30%;
-
-            &-img {
-              border-radius: 50%;
-              width: 5.8rem;
-            }
-          }
-
-          &__right {
-            flex-basis: 70%;
-
-            &-name {
-              font-size: 1.6rem;
-              font-weight: bold;
-              display: block;
-            }
-  
-            &-profile {  
-              color: #666;
-              font-size: 1.4rem;
-            }
-          }    
-        }
-
-        &-list {
-
-          &__item {
-          
-            &:not(:last-child) {
-              border-bottom: solid 1px #eee;
-            }
-          
-            &-link {
-              width: 100%;
-              text-align: left;
-              padding: 1.5rem 1.7rem; 
-              font-size: 1.4rem;
-              color: #333;
-              display: flex;
-              align-items: center;
-              gap: 1rem;
-              position: relative;
-              font-weight: 600;
-
-              &__icon {
-                font-size: 2.4rem;
-                color: #333;
-              }
-
-              &:hover {
-                background: #eee;
-              }
-            }
-
-          }
-        }
       }
     }
   }

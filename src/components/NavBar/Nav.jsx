@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import NotificationsDropdown from './NotificationsDropdown'
-import OptionsDropdown from './OptionsDropdown'
+import SignoutButton from './SignoutButton'
 import ProfileLink from './ProfileLink'
 
 const Nav = () => {
@@ -18,7 +18,7 @@ const Nav = () => {
         <div className='navbar__right'>
           <ProfileLink/>
           <NotificationsDropdown/>
-          <OptionsDropdown/>
+          <SignoutButton/>
         </div>
       </div>
     </nav>
