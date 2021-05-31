@@ -1,5 +1,5 @@
 import { generateId } from '../utils/helpers'
-import axios from 'axios'
+
 
 export let users = {
   'Mike': {
@@ -112,23 +112,3 @@ export async function _saveComment ({comment, postId, author}) {
   })
 }
 
-export const _getUsers = async () => {
-  try {
-    // const res = await axios.get('api/users')
-    // return res.data
-    return users
-  }
-  catch(err) {
-    console.log(err)
-  }
-}
-
-export const _getPosts = async () => {
-  try {
-    const posts = await axios.get('/posts')
-    return posts.data
-  }
-  catch(err) {
-    console.log(err)
-  }
-}

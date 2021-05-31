@@ -1,18 +1,37 @@
+import axios from 'axios'
 import {
-  _getUsers,
-  _getPosts,
   _savePost,
   _saveComment
 } from './_DATA.js'
 
 export function getInitialData () {
   return Promise.all([
-    _getUsers(),
-    _getPosts(),
+    getUsers(),
+    getPosts(),
   ]).then(([users, posts]) => ({
     users,
     posts,
   }))
+}
+
+export const getUsers = async () => {
+  try {
+    const res = await axios.get('/users')
+    return res.data
+  }
+  catch(err) {
+    console.log(err)
+  }
+}
+
+export const getPosts = async () => {
+  try {
+    const res = await axios.get('/posts')
+    return res.data
+  }
+  catch(err) {
+    console.log(err)
+  }
 }
 
 

@@ -6,7 +6,6 @@ import { FaSignOutAlt } from "react-icons/fa"
 
 const SignoutButton = ({ authedUser, dispatch }) => {
   
-
   return (
     <div style={{
       position: 'relative'

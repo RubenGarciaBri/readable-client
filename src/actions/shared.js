@@ -6,17 +6,14 @@ import { receivePosts } from './posts'
 const AUTHED_ID = 'Carol'
 const AUTHED_AVATAR = 'https://randomuser.me/api/portraits/women/2.jpg'
 
-export function handleInitialData() {
-  return (dispatch) => {
+export const handleInitialData = () => (dispatch) => {
+
     return getInitialData()
-    .then(data => {
-      console.log(data)
-    })
-  //   .then(({ users, posts }) => {
-  //   // Default user log in for development purposes 
-  //   dispatch(setAuthedUser(AUTHED_ID, AUTHED_AVATAR))
-  //   dispatch(receiveUsers(users))
-  //   dispatch(receivePosts(posts)) 
-  // })
-  }
+    .then(({ users, posts }) => {
+    // Default user log in for development purposes 
+    dispatch(setAuthedUser(AUTHED_ID, AUTHED_AVATAR))
+    dispatch(receiveUsers(users))
+    dispatch(receivePosts(posts)) 
+  })
+  
 }

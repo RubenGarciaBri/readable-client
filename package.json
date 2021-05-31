@@ -52,5 +52,5 @@
     "react-icons": "^4.2.0",
     "react-toastify": "^7.0.3"
   },
-  "proxy": "https://us-central1-readable-bf7a6.cloudfunctions.net/api"
+  "proxy": "http://localhost:5001/readable-bf7a6/europe-west1/api"
 }

@@ -19,7 +19,7 @@ const images = {
   business: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvW9Cbechc2qraRG4d84OWM0xvHtYzYcbrgQ&usqp=CAU'
 }
 
-const Post = ({ dispatch, post, user, authedUser, opened }) => {
+const Post = ({ dispatch, post, authedUser, opened }) => {
 
   const {
     id, title, body, category, author, timestamp, favourites, comments, voteScore, upvotes, downvotes
