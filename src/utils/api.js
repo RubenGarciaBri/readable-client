@@ -7,9 +7,11 @@ import {
 export function getInitialData () {
   return Promise.all([
     getUsers(),
+    getAuthedUser(),
     getPosts(),
-  ]).then(([users, posts]) => ({
+  ]).then(([users, authedUser, posts]) => ({
     users,
+    authedUser,
     posts,
   }))
 }
@@ -17,6 +19,16 @@ export function getInitialData () {
 export const getUsers = async () => {
   try {
     const res = await axios.get('/users')
+    return res.data
+  }
+  catch(err) {
+    console.log(err)
+  }
+}
+
+export const getAuthedUser = async () => {
+  try {
+    const res = await axios.get('/user')
     return res.data
   }
   catch(err) {

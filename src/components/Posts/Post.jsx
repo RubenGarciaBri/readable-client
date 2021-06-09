@@ -22,12 +22,13 @@ const images = {
 const Post = ({ dispatch, post, authedUser, opened }) => {
 
   const {
-    id, title, body, category, author, timestamp, favourites, comments, voteScore, upvotes, downvotes
+    id, title, body, category, author, createdAt, favCount, commentCount, voteScore, upvotes, downvotes
   } = post
 
-  const hasUpvoted = upvotes.includes(authedUser.id)
-  const hasDownvoted = downvotes.includes(authedUser.id)
-  const hasFaved = favourites.includes(authedUser.id)
+  // Change later!!
+  const hasUpvoted = false
+  const hasDownvoted = false
+  const hasFaved = false
 
   const onFavClick = () => {
     if (author === authedUser.id) {
@@ -73,7 +74,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
                 <a href="#">r/{category}</a>
               </li>
               <li className="post-right__top-list__item">
-                <a href="#">Posted by {author} at {formatDate(timestamp)}</a>
+                <a href="#">Posted by {author} at {createdAt}</a>
               </li>
             </ul>
           </div>
@@ -85,7 +86,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
           <div className="post-right__bottom">
           <ul className="post-right__bottom-list">
               <li className="post-right__bottom-list__item">
-                <Link to={`/posts/${id}`}><FaCommentAlt className="post-right__bottom-list__item-commentIcon"/> {comments.length} comments</Link>
+                <Link to={`/posts/${id}`}><FaCommentAlt className="post-right__bottom-list__item-commentIcon"/> {commentCount} comments</Link>
               </li>
               <li className="post-right__bottom-list__item">       
               <a href="#" onClick={onFavClick}>    
@@ -138,7 +139,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
                 <a href="#">r/{category}</a>
               </li>
               <li className="postOpened-right__top-list__item">
-                <a href="#">Posted by {author} at {formatDate(timestamp)}</a>
+                <a href="#">Posted by {author} at {formatDate(createdAt)}</a>
               </li>
             </ul>
           </div>
@@ -150,7 +151,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
           <div className="postOpened-right__bottom">
             <ul className="postOpened-right__bottom-list">
               <li className="postOpened-right__bottom-list__item">
-                <a href="#"><FaCommentAlt className="postOpened-right__bottom-list__item-icon"/> {comments.length} comments</a>
+                <a href="#"><FaCommentAlt className="postOpened-right__bottom-list__item-icon"/> {commentCount} comments</a>
               </li>
               <li className="postOpened-right__bottom-list__item">       
               <a href="#" onClick={onFavClick}>    

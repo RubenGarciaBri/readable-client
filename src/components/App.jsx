@@ -9,6 +9,8 @@ import SignupPage from '../screens/SignupPage'
 import LoginPage from '../screens/LoginPage'
 import { ToastContainer, toast } from 'react-toastify';
 
+
+
 function App({ dispatch }) {
   // Load initial data
   useEffect(() => {
