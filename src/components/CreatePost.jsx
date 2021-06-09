@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import { connect } from 'react-redux'
 import { FaCode } from 'react-icons/fa'
 import { GoAlert } from 'react-icons/go'
-import { handleAddPost } from '../actions/posts'
+import { handleAddPost } from '../redux/reducers/actions/posts'
 import useOutsideClick from '../utils/helpers'
 
 const CreatePost = ({ dispatch, authedUser}) => {

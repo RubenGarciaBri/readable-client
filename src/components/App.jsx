@@ -1,21 +1,38 @@
 import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
+import jwtDecode from 'jwt-decode'
 import Home from '../screens/Home'
-import { handleInitialData } from '../actions/shared'
+import { handleInitialData } from '../redux/reducers/actions/shared'
 import PostPage from '../screens/PostPage'
 import ProfilePage from '../screens/ProfilePage'
 import SignupPage from '../screens/SignupPage'
 import LoginPage from '../screens/LoginPage'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'
+import { SET_AUTHENTICATED } from './redux/types';
+import { logoutUser, getUserData } from './redux/actions/userActions';
+import axios from 'axios'
 
-
+axios.defaults.baseURL = 'https://europe-west1-readable-bf7a6.cloudfunctions.net/api'
 
 function App({ dispatch }) {
   // Load initial data
   useEffect(() => {
     dispatch(handleInitialData())
   }, [])
+
+  const token = localStorage.FBIdToken;
+  if (token) {
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Data.now()) {
+    dispatch(logoutUser())
+    window.location.href = '/login'
+  } else {
+    dispatch({ type: SET_AUTHENTICATED })
+    axios.defaults.headers.common['Authorization'] = token;
+    dispatch(getUserData());
+  }
+}
 
   return (
     <div className='App'>

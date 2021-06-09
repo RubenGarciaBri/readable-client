@@ -1,4 +1,4 @@
-import { getInitialData } from '../utils/api'
+import { getInitialData } from '../../../utils/api'
 import { setAuthedUser } from './authedUser'
 import { receiveUsers } from './users'
 import { receivePosts } from './posts'
