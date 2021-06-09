@@ -9,8 +9,8 @@ import ProfilePage from '../screens/ProfilePage'
 import SignupPage from '../screens/SignupPage'
 import LoginPage from '../screens/LoginPage'
 import { ToastContainer, toast } from 'react-toastify'
-import { SET_AUTHENTICATED } from './redux/types';
-import { logoutUser, getUserData } from './redux/actions/userActions';
+import { SET_AUTHENTICATED } from '../redux/types';
+import { logoutUser, getUserData } from '../redux/actions/users';
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://europe-west1-readable-bf7a6.cloudfunctions.net/api'
