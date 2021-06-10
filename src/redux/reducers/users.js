@@ -1,11 +1,40 @@
-import { RECEIVE_USERS } from '../types';
+import {
+  SET_USER,
+  SET_AUTHENTICATED,
+  SET_UNAUTHENTICATED,
+  LOADING_USER,
+  LIKE_SCREAM,
+  UNLIKE_SCREAM,
+  MARK_NOTIFICATIONS_READ
+} from '../types';
 
-export default function users(state = {}, action) {
+const initialState = {
+  authenticated: false,
+  loading: false,
+  credentials: {},
+  likes: [],
+  notifications: []
+};
+
+export default function users(state = initialState, action) {
   switch (action.type) {
-    case RECEIVE_USERS:
+    case SET_AUTHENTICATED:
       return {
         ...state,
-        ...action.payload.users,
+        authenticated: true
+      };
+    case SET_UNAUTHENTICATED:
+      return initialState;
+    case SET_USER:
+      return {
+        authenticated: true,
+        loading: false,
+        ...action.payload
+      };
+    case LOADING_USER:
+      return {
+        ...state,
+        loading: true
       };
 
     default:
