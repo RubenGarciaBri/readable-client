@@ -1,5 +1,4 @@
 import {
-  RECEIVE_USERS,
   SET_USER,
   SET_ERRORS,
   CLEAR_ERRORS,
@@ -10,14 +9,6 @@ import {
 } from '../types';
 import axios from 'axios';
 
-export function receiveUsers(users) {
-  return {
-    type: RECEIVE_USERS,
-    payload: {
-      users,
-    },
-  };
-}
 
 export const loginUser = (userData, history) => (dispatch) => {
   axios

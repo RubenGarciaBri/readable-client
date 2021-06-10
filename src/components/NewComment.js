@@ -15,7 +15,7 @@ const NewComment = ({ dispatch, authedUser, id }) => {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(handleAddComment(text, id));
+    // dispatch(handleAddComment(text, id));
   };
 
   return (

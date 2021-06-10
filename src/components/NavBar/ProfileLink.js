@@ -17,11 +17,11 @@ const ProfileLink = ({ authenticated, imageUrl, userName }) => {
   );
 };
 
-function mapStateToProps({ users }) {
+function mapStateToProps({ user }) {
   return {
-    authenticated: users.authenticated,
-    imageUrl: users.credentials.imageUrl,
-    userName: users.credentials.userName
+    authenticated: user.authenticated,
+    imageUrl: user.credentials.imageUrl,
+    userName: user.credentials.userName
   };
 }
 

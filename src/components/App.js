@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getPosts } from '../redux/actions/data'
 import jwtDecode from 'jwt-decode';
 import Home from '../screens/Home';
-import { handleInitialData } from '../redux/actions/shared';
 import PostPage from '../screens/PostPage';
 import ProfilePage from '../screens/ProfilePage';
 import SignupPage from '../screens/SignupPage';
@@ -32,6 +32,8 @@ function App({ dispatch }) {
         dispatch(getUserData());
       }
     }
+
+    dispatch(getPosts())
   }, []);
 
   return (

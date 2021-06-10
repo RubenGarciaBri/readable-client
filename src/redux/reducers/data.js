@@ -1,5 +1,5 @@
 import {
-  RECEIVE_POSTS,
+  SET_POSTS,
   ADD_POST,
   ADD_COMMENT,
   TOGGLE_UPVOTE,
@@ -7,12 +7,18 @@ import {
   TOGGLE_FAV,
 } from '../types';
 
-export default function posts(state = {}, action) {
+const initialState = {
+  posts: {},
+  post: {},
+  loading: false
+};
+
+export default function data(state = initialState, action) {
   switch (action.type) {
-    case RECEIVE_POSTS:
+    case SET_POSTS:
       return {
         ...state,
-        ...action.payload.posts,
+        posts: action.payload,
       };
 
     case ADD_POST:

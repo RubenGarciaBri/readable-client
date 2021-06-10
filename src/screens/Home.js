@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { getPosts } from '../redux/actions/data'
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
 import AsideUsers from '../components/AsideUsers';
@@ -9,6 +10,11 @@ import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
 
 const Home = ({ postIds, authenticated }) => {
+
+  // useEffect(() => {
+  //   getPosts()
+  // }, [])
+
   return authenticated === true ? (
     <div className='home'>
       <Nav />
@@ -39,13 +45,9 @@ const Home = ({ postIds, authenticated }) => {
   );
 };
 
-function mapStateToProps({ user, posts }) {
+function mapStateToProps({ user, data }) {
   return {
-    users,
-    posts,
-    postIds: Object.keys(posts).sort(
-      (a, b) => posts[b].timestamp - posts[a].timestamp
-    ),
+    postIds: Object.keys(data.posts),
     authenticated: user.authenticated,
   };
 }

@@ -60,7 +60,7 @@ const CreatePost = ({ dispatch, authedUser }) => {
 
     // Category form validation
     if (category !== null) {
-      dispatch(handleAddPost(title, text, category));
+      // dispatch(handleAddPost(title, text, category));
       clearValues();
     } else {
       setErrorMessage(true);

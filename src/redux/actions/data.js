@@ -30,8 +30,6 @@ const options = {
   },
 };
 
-// New Functions
-
 // Get all posts
 export const getPosts = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -63,7 +61,7 @@ export const getPost = (postId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
-// Post a scream
+// Post a post
 export const postPost = (newPost) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
@@ -83,7 +81,7 @@ export const postPost = (newPost) => (dispatch) => {
     });
 };
 
-// Like a scream
+// Fav a post
 export const favPost = (postId) => (dispatch) => {
   axios
     .get(`/post/${postId}/fav`)
@@ -95,7 +93,8 @@ export const favPost = (postId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
-// Unlike a scream
+
+// Unfav a post
 export const unfavPost = (postId) => (dispatch) => {
   axios
     .get(`/post/${postId}/unfav`)
@@ -107,6 +106,7 @@ export const unfavPost = (postId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
 // Submit a comment
 export const submitComment = (postId, commentData) => (dispatch) => {
   axios
@@ -157,34 +157,34 @@ export const clearErrors = () => (dispatch) => {
 };
 
 // Old functions
-export function handleAddPost(title, body, category) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState();
+// export function handleAddPost(title, body, category) {
+//   return (dispatch, getState) => {
+//     const { authedUser } = getState();
 
-    return savePost({
-      title,
-      body,
-      category,
-      author: authedUser.id,
-    }).then((post) => {
-      dispatch(addPost(post));
+//     return savePost({
+//       title,
+//       body,
+//       category,
+//       author: authedUser.id,
+//     }).then((post) => {
+//       dispatch(addPost(post));
 
-      axios.post('http://localhost:3001/posts', post, options);
-    });
-  };
-}
+//       axios.post('http://localhost:3001/posts', post, options);
+//     });
+//   };
+// }
 
-export function handleAddComment(comment, postId) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState();
+// export function handleAddComment(comment, postId) {
+//   return (dispatch, getState) => {
+//     const { authedUser } = getState();
 
-    return saveComment({
-      comment,
-      postId,
-      author: authedUser.id,
-    }).then((comment) => dispatch(addComment(comment)));
-  };
-}
+//     return saveComment({
+//       comment,
+//       postId,
+//       author: authedUser.id,
+//     }).then((comment) => dispatch(addComment(comment)));
+//   };
+// }
 
 // export function handleToggleUpvote (id) {
 //   return (dispatch, getState) => {
@@ -220,32 +220,15 @@ export function handleAddComment(comment, postId) {
 //   }
 // }
 
-export function receivePosts(posts) {
-  return {
-    type: RECEIVE_POSTS,
-    payload: {
-      posts,
-    },
-  };
-}
 
-function addPost(post) {
-  return {
-    type: ADD_POST,
-    payload: {
-      post,
-    },
-  };
-}
-
-function addComment(comment) {
-  return {
-    type: ADD_COMMENT,
-    payload: {
-      comment,
-    },
-  };
-}
+// function addComment(comment) {
+//   return {
+//     type: ADD_COMMENT,
+//     payload: {
+//       comment,
+//     },
+//   };
+// }
 
 // function toggleUpvote (id, authedUser) {
 //   return {

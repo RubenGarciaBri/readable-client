@@ -254,13 +254,11 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
   }
 };
 
-function mapStateToProps({ authedUser, posts, users }, { id }) {
-  const post = posts[id];
-  const user = users[authedUser.id];
+function mapStateToProps({ data, user }, { id }) {
+  const post = data.posts[id];
 
   return {
-    authedUser,
-    post: post,
+    post,
     user,
   };
 }

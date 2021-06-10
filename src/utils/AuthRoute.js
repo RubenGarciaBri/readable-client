@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const AuthRoute = ({ component: Component, authenticated, ...rest }) => {
-  console.log(authenticated);
   
   return (
     <Route
@@ -15,9 +14,9 @@ const AuthRoute = ({ component: Component, authenticated, ...rest }) => {
   );
 };
 
-function mapStateToProps({ users }) {
+function mapStateToProps({ user }) {  
   return {
-    authenticated: users.authenticated
+    authenticated: user.authenticated
   };
 }
 
