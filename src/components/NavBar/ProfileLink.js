@@ -2,24 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const ProfileLink = ({ authedUser, dispatch }) => {
+const ProfileLink = ({ authenticated, imageUrl, userName }) => {
   return (
     <Link to='/profile' className='navbar__right-profile'>
       <img
         className='navbar__right-profile__userImg shadow-slim'
-        src={authedUser && authedUser.avatar}
+        src={authenticated && imageUrl}
         alt=''
       />
       <span className='navbar__right-profile__userName'>
-        {authedUser && authedUser.id}
+        {authenticated && userName}
       </span>
     </Link>
   );
 };
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ users }) {
   return {
-    authedUser,
+    authenticated: users.authenticated,
+    imageUrl: users.credentials.imageUrl,
+    userName: users.credentials.userName
   };
 }
 

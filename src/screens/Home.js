@@ -39,14 +39,14 @@ const Home = ({ postIds, authenticated }) => {
   );
 };
 
-function mapStateToProps({ users, posts }) {
+function mapStateToProps({ user, posts }) {
   return {
     users,
     posts,
     postIds: Object.keys(posts).sort(
       (a, b) => posts[b].timestamp - posts[a].timestamp
     ),
-    authenticated: users.authenticated,
+    authenticated: user.authenticated,
   };
 }
 

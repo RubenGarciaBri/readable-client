@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { GoAlert } from 'react-icons/go';
-import { handleAddComment } from '../redux/actions/posts';
+import { handleAddComment } from '../redux/actions/data';
 
 const NewComment = ({ dispatch, authedUser, id }) => {
   const [text, setText] = useState('');

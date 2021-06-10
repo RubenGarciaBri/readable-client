@@ -10,7 +10,7 @@ import SignupPage from '../screens/SignupPage';
 import LoginPage from '../screens/LoginPage';
 import { ToastContainer, toast } from 'react-toastify';
 import { SET_AUTHENTICATED } from '../redux/types';
-import { logoutUser, getUserData } from '../redux/actions/users';
+import { logoutUser, getUserData } from '../redux/actions/user';
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
 

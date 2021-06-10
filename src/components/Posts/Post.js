@@ -4,8 +4,8 @@ import { formatPost, formatDate } from '../../utils/helpers';
 import {
   handleToggleUpvote,
   handleToggleDownvote,
-} from '../../redux/actions/posts';
-import { handleToggleFav } from '../../redux/actions/posts';
+} from '../../redux/actions/data';
+import { handleToggleFav } from '../../redux/actions/data';
 import { FaCommentAlt, FaRegStar, FaShareAlt, FaStar } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';

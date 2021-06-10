@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginUser } from '../redux/actions/users';
+import { loginUser } from '../redux/actions/user';
 
 const LoginPage = ({ dispatch, user }) => {
   const [email, setEmail] = useState('');
