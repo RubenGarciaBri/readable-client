@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux' 
 import { formatPost, formatDate } from '../../utils/helpers'
-import { handleToggleUpvote, handleToggleDownvote } from '../../redux/reducers/actions/posts'
-import { handleToggleFav } from '../../redux/reducers/actions/posts'
+import { handleToggleUpvote, handleToggleDownvote } from '../../redux/actions/posts'
+import { handleToggleFav } from '../../redux/actions/posts'
 import { FaCommentAlt, FaRegStar, FaShareAlt, FaStar } from 'react-icons/fa'
 import { ImArrowUp, ImArrowDown } from 'react-icons/im'
 import { Link, withRouter } from 'react-router-dom'
@@ -34,7 +34,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
     if (author === authedUser.id) {
       toast.error('You can\'t fav your own posts')
     } else {
-      dispatch(handleToggleFav(id))
+      // dispatch(handleToggleFav(id))
     }
   }
 
@@ -47,7 +47,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
               if (author === authedUser.id) {
                 toast.error('You can\'t vote on your own posts')
               } else {
-                dispatch(handleToggleUpvote(id))
+                // dispatch(handleToggleUpvote(id))
               }
             }}>
               <ImArrowUp style={{color: hasUpvoted === true ? 'orange' : null }} className="post-left__rating-upvote__icon" />
@@ -57,7 +57,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
               if (author === authedUser.id) {
                 toast.error('You can\'t vote on your own posts')
               } else {
-                dispatch(handleToggleDownvote(id))
+                // dispatch(handleToggleDownvote(id))
               }
             }}>
               <ImArrowDown style={{color: hasDownvoted === true ? 'orange' : null}} className="post-left__rating-downvote__icon"/>
@@ -112,7 +112,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
               if (author === authedUser.id) {
                 toast.error('You can\'t vote on your own posts')
               } else {
-                dispatch(handleToggleUpvote(id))
+                // dispatch(handleToggleUpvote(id))
               }
             }}>
               <ImArrowUp style={{color: hasUpvoted === true ? 'orange' : null }} className="postOpened-left__rating-upvote__icon" />
@@ -122,7 +122,7 @@ const Post = ({ dispatch, post, authedUser, opened }) => {
               if (author === authedUser.id) {
                 toast.error('You can\'t vote on your own posts')
               } else {
-                dispatch(handleToggleDownvote(id))
+                // dispatch(handleToggleDownvote(id))
               } 
             }}>   
               <ImArrowDown style={{color: hasDownvoted === true ? 'orange' : null}} className="postOpened-left__rating-downvote__icon"/>

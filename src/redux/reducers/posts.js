@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, ADD_POST, ADD_COMMENT, TOGGLE_UPVOTE, TOGGLE_DOWNVOTE, TOGGLE_FAV  } from '../actions/posts'
+import { RECEIVE_POSTS, ADD_POST, ADD_COMMENT, TOGGLE_UPVOTE, TOGGLE_DOWNVOTE, TOGGLE_FAV  } from '../types'
 
 export default function posts (state = {}, action) {
   switch(action.type) {

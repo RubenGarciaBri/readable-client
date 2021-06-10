@@ -1,4 +1,4 @@
-import { savePost, saveComment } from "../../../utils/api"
+import { savePost, saveComment } from "../../utils/api"
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -6,8 +6,8 @@ import { toast } from 'react-toastify'
 import {
   SET_POSTS,
   LOADING_DATA,
-  LIKE_POST,
-  UNLIKE_POST,
+  FAV_POST,
+  UNFAV_POST,
   DELETE_POST,
   SET_ERRORS,
   POST_POST,
@@ -82,6 +82,7 @@ export const postPost = (newPost) => (dispatch) => {
       });
     });
 };
+
 // Like a scream
 export const favPost = (postId) => (dispatch) => {
   axios
@@ -192,42 +193,42 @@ export function handleAddComment (comment, postId) {
 }
 
 
-export function handleToggleUpvote (id) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState()
+// export function handleToggleUpvote (id) {
+//   return (dispatch, getState) => {
+//     const { authedUser } = getState()
 
-    dispatch(toggleUpvote(id, authedUser))
-  }
-}
-
-
-export function handleToggleDownvote (id) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState()
-
-    dispatch(toggleDownvote(id, authedUser))
-  }
-}
+//     dispatch(toggleUpvote(id, authedUser))
+//   }
+// }
 
 
-export function handleToggleFav (postId) {
-  return (dispatch, getState) => {
-    const { authedUser } = getState()
+// export function handleToggleDownvote (id) {
+//   return (dispatch, getState) => {
+//     const { authedUser } = getState()
 
-    dispatch(toggleFav(postId, authedUser))
-  }
-}
+//     dispatch(toggleDownvote(id, authedUser))
+//   }
+// }
 
 
-function toggleFav(postId, authedUser) {
-  return {
-    type: TOGGLE_FAV,
-    payload: {
-      postId,
-      authedUser
-    }  
-  }
-}
+// export function handleToggleFav (postId) {
+//   return (dispatch, getState) => {
+//     const { authedUser } = getState()
+
+//     dispatch(toggleFav(postId, authedUser))
+//   }
+// }
+
+
+// function toggleFav(postId, authedUser) {
+//   return {
+//     type: TOGGLE_FAV,
+//     payload: {
+//       postId,
+//       authedUser
+//     }  
+//   }
+// }
 
 
 export function receivePosts (posts) {
@@ -259,23 +260,23 @@ function addComment (comment) {
 }
 
 
-function toggleUpvote (id, authedUser) {
-  return {
-    type: TOGGLE_UPVOTE,
-    payload: {
-      id,
-      authedUser
-    }
-  }
-}
+// function toggleUpvote (id, authedUser) {
+//   return {
+//     type: TOGGLE_UPVOTE,
+//     payload: {
+//       id,
+//       authedUser
+//     }
+//   }
+// }
 
 
-function toggleDownvote (id, authedUser) {
-  return {
-    type: TOGGLE_DOWNVOTE,
-    payload: {
-      id,
-      authedUser
-    }
-  }
-}
+// function toggleDownvote (id, authedUser) {
+//   return {
+//     type: TOGGLE_DOWNVOTE,
+//     payload: {
+//       id,
+//       authedUser
+//     }
+//   }
+// }

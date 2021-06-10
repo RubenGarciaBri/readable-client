@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import jwtDecode from 'jwt-decode'
 import Home from '../screens/Home'
-import { handleInitialData } from '../redux/reducers/actions/shared'
+import { handleInitialData } from '../redux/actions/shared'
 import PostPage from '../screens/PostPage'
 import ProfilePage from '../screens/ProfilePage'
 import SignupPage from '../screens/SignupPage'
@@ -24,7 +24,7 @@ function App({ dispatch }) {
   const token = localStorage.FBIdToken;
   if (token) {
   const decodedToken = jwtDecode(token);
-  if (decodedToken.exp * 1000 < Data.now()) {
+  if (decodedToken.exp * 1000 < Date.now()) {
     dispatch(logoutUser())
     window.location.href = '/login'
   } else {
