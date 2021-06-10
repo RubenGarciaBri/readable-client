@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './main.scss';
-import 'react-toastify/dist/ReactToastify.css'
-import reportWebVitals from './reportWebVitals'
-import { BrowserRouter } from 'react-router-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducer from './redux/reducers'
-import middleware from './middleware'
+import 'react-toastify/dist/ReactToastify.css';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './redux/reducers';
+import middleware from './middleware';
 import App from './components/App';
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const store = createStore(reducer, composeWithDevTools(middleware))
+const store = createStore(reducer, composeWithDevTools(middleware));
 
 ReactDOM.render(
   <Provider store={store}>

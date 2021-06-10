@@ -1,15 +1,14 @@
-import { SET_AUTHED_USER } from '../actions/authedUser'
+import { SET_AUTHED_USER } from '../actions/authedUser';
 
-export default function authedUser (state = null, action) {
-  switch(action.type) {
-    case SET_AUTHED_USER :
+export default function authedUser(state = null, action) {
+  switch (action.type) {
+    case SET_AUTHED_USER:
       return {
         id: action.payload.id,
-        avatar: action.payload.avatar
-      }
+        avatar: action.payload.avatar,
+      };
 
-    default :
-      return state
-      
+    default:
+      return state;
   }
 }

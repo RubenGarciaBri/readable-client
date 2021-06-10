@@ -1,6 +1,6 @@
-import { savePost, saveComment } from "../../utils/api"
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import { savePost, saveComment } from '../../utils/api';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // New Imports
 import {
@@ -19,15 +19,15 @@ import {
   RECEIVE_POSTS,
   ADD_COMMENT,
   ADD_POST,
-  TOGGLE_FAV
+  TOGGLE_FAV,
 } from '../types';
 
 const options = {
   headers: {
-    'Authorization': 'mytoken',
+    Authorization: 'mytoken',
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }
+    Accept: 'application/json',
+  },
 };
 
 // New Functions
@@ -40,13 +40,13 @@ export const getPosts = () => (dispatch) => {
     .then((res) => {
       dispatch({
         type: SET_POSTS,
-        payload: res.data
+        payload: res.data,
       });
     })
     .catch((err) => {
       dispatch({
         type: SET_POSTS,
-        payload: []
+        payload: [],
       });
     });
 };
@@ -57,7 +57,7 @@ export const getPost = (postId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: SET_POST,
-        payload: res.data
+        payload: res.data,
       });
       dispatch({ type: STOP_LOADING_UI });
     })
@@ -71,14 +71,14 @@ export const postPost = (newPost) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: POST_POST,
-        payload: res.data
+        payload: res.data,
       });
       dispatch(clearErrors());
     })
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data,
       });
     });
 };
@@ -90,7 +90,7 @@ export const favPost = (postId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: FAV_POST,
-        payload: res.data
+        payload: res.data,
       });
     })
     .catch((err) => console.log(err));
@@ -102,7 +102,7 @@ export const unfavPost = (postId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UNFAV_POST,
-        payload: res.data
+        payload: res.data,
       });
     })
     .catch((err) => console.log(err));
@@ -114,18 +114,18 @@ export const submitComment = (postId, commentData) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: SUBMIT_COMMENT,
-        payload: res.data
+        payload: res.data,
       });
       dispatch(clearErrors());
     })
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data,
       });
     });
 };
-export const deletePost= (postId) => (dispatch) => {
+export const deletePost = (postId) => (dispatch) => {
   axios
     .delete(`/post/${postId}`)
     .then(() => {
@@ -141,13 +141,13 @@ export const getUserData = (userName) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: SET_POSTS,
-        payload: res.data.posts
+        payload: res.data.posts,
       });
     })
     .catch(() => {
       dispatch({
         type: SET_POSTS,
-        payload: null
+        payload: null,
       });
     });
 };
@@ -156,42 +156,35 @@ export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
 
-
-
-
 // Old functions
-export function handleAddPost (title, body, category) {
+export function handleAddPost(title, body, category) {
   return (dispatch, getState) => {
-    const { authedUser } = getState()
+    const { authedUser } = getState();
 
     return savePost({
       title,
       body,
       category,
       author: authedUser.id,
-    })
-    .then((post) => {
-      dispatch(addPost(post))
+    }).then((post) => {
+      dispatch(addPost(post));
 
-      axios.post('http://localhost:3001/posts', post, options);     
-    })
-  }
+      axios.post('http://localhost:3001/posts', post, options);
+    });
+  };
 }
 
-
-export function handleAddComment (comment, postId) {
+export function handleAddComment(comment, postId) {
   return (dispatch, getState) => {
-    const { authedUser } = getState()
+    const { authedUser } = getState();
 
     return saveComment({
       comment,
       postId,
       author: authedUser.id,
-    })
-    .then((comment) => dispatch(addComment(comment)))
-  }
+    }).then((comment) => dispatch(addComment(comment)));
+  };
 }
-
 
 // export function handleToggleUpvote (id) {
 //   return (dispatch, getState) => {
@@ -201,7 +194,6 @@ export function handleAddComment (comment, postId) {
 //   }
 // }
 
-
 // export function handleToggleDownvote (id) {
 //   return (dispatch, getState) => {
 //     const { authedUser } = getState()
@@ -209,7 +201,6 @@ export function handleAddComment (comment, postId) {
 //     dispatch(toggleDownvote(id, authedUser))
 //   }
 // }
-
 
 // export function handleToggleFav (postId) {
 //   return (dispatch, getState) => {
@@ -219,46 +210,42 @@ export function handleAddComment (comment, postId) {
 //   }
 // }
 
-
 // function toggleFav(postId, authedUser) {
 //   return {
 //     type: TOGGLE_FAV,
 //     payload: {
 //       postId,
 //       authedUser
-//     }  
+//     }
 //   }
 // }
 
-
-export function receivePosts (posts) {
+export function receivePosts(posts) {
   return {
     type: RECEIVE_POSTS,
     payload: {
-      posts
-    }
-  }
+      posts,
+    },
+  };
 }
 
-function addPost (post) {
+function addPost(post) {
   return {
     type: ADD_POST,
     payload: {
-      post
-    }
-  }
+      post,
+    },
+  };
 }
 
-
-function addComment (comment) {
+function addComment(comment) {
   return {
     type: ADD_COMMENT,
     payload: {
-      comment
-    }
-  }
+      comment,
+    },
+  };
 }
-
 
 // function toggleUpvote (id, authedUser) {
 //   return {
@@ -269,7 +256,6 @@ function addComment (comment) {
 //     }
 //   }
 // }
-
 
 // function toggleDownvote (id, authedUser) {
 //   return {
