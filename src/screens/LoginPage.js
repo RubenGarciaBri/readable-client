@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/user';
 
-const LoginPage = ({ dispatch, user }) => {
+const LoginPage = ({ dispatch, user, UI }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
   const history = useHistory();
+
+  useEffect(() => {
+    setErrors(UI.errors);
+  }, [UI.errors]);
 
   const userData = {
     email,
@@ -43,6 +47,10 @@ const LoginPage = ({ dispatch, user }) => {
                 className='login-card__form-password'
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {
+                // Return the first and unique property of the object that contains the error
+                errors && <small className='login-card__form-errors'>{errors[Object.keys(errors)[0]]}</small>
+              }
               <button
                 type='submit'
                 className='login-card__form-btn shadow-slim'
@@ -60,9 +68,10 @@ const LoginPage = ({ dispatch, user }) => {
   );
 };
 
-function mapStateToProps({ user }) {
+function mapStateToProps({ user, UI }) {
   return {
     user,
+    UI,
   };
 }
 
