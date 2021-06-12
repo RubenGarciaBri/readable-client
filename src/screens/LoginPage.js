@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/user';
 
-const LoginPage = ({ dispatch, user, UI }) => {
+const LoginPage = ({ dispatch, UI }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -49,7 +49,11 @@ const LoginPage = ({ dispatch, user, UI }) => {
               />
               {
                 // Return the first and unique property of the object that contains the error
-                errors && <small className='login-card__form-errors'>{errors[Object.keys(errors)[0]]}</small>
+                errors && (
+                  <small className='login-card__form-errors'>
+                    {errors[Object.keys(errors)[0]]}
+                  </small>
+                )
               }
               <button
                 type='submit'
@@ -68,9 +72,8 @@ const LoginPage = ({ dispatch, user, UI }) => {
   );
 };
 
-function mapStateToProps({ user, UI }) {
+function mapStateToProps({ UI }) {
   return {
-    user,
     UI,
   };
 }

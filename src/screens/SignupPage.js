@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { signupUser } from '../redux/actions/user'
+import { connect } from 'react-redux';
 import axios from 'axios';
 
-const SignupPage = () => {
+const SignupPage = ({ dispatch, UI }) => {
   const [userName, setUserName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -11,28 +13,22 @@ const SignupPage = () => {
 
   const history = useHistory();
 
+  console.log(errors)
+
+  useEffect(() => {
+    setErrors(UI.errors);
+  }, [UI.errors]);
+
   const newUserData = {
     userName,
     email,
-    password,
+    password, 
     confirmPassword,
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        'http://localhost:5000/readable-bf7a6/europe-west1/api/signup',
-        newUserData
-      )
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        history.push('/');
-      })
-      .catch((err) => {
-        setErrors(err.response.data);
-      });
+    dispatch(signupUser(newUserData, history))
   };
 
   return (
@@ -70,6 +66,14 @@ const SignupPage = () => {
                 className='signup-card__form-password'
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
+              {
+                // Return the first and unique property of the object that contains the error
+                errors && (
+                  <small className='signup-card__form-errors'>
+                    {errors[Object.keys(errors)[0]]}
+                  </small>
+                )
+              }
               <button
                 type='submit'
                 className='signup-card__form-btn shadow-slim'
@@ -87,4 +91,10 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+function mapStateToProps({ UI }) {
+  return {
+    UI,
+  };
+}
+
+export default connect(mapStateToProps)(SignupPage);
