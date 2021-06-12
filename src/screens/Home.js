@@ -11,10 +11,6 @@ import ErrorMessage from '../components/ErrorMessage';
 
 const Home = ({ postIds, authenticated }) => {
 
-  // useEffect(() => {
-  //   getPosts()
-  // }, [])
-
   return authenticated === true ? (
     <div className='home'>
       <Nav />

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getPosts } from '../redux/actions/data'
+import { useHistory } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
 import Home from '../screens/Home';
 import PostPage from '../screens/PostPage';
@@ -18,6 +19,8 @@ axios.defaults.baseURL =
   'https://europe-west1-readable-bf7a6.cloudfunctions.net/api';
 
 function App({ dispatch }) {
+  const history = useHistory();
+  
   // Load initial data
   useEffect(() => {
     const token = localStorage.FBIdToken;
@@ -25,15 +28,15 @@ function App({ dispatch }) {
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         dispatch(logoutUser());
-        window.location.href = '/login';
+        history.push('/login')
       } else {
         dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common['Authorization'] = token;
         dispatch(getUserData());
+        dispatch(getPosts())
       }
     }
 
-    dispatch(getPosts())
   }, []);
 
   return (
