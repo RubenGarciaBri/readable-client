@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { getPosts } from '../redux/actions/data'
+import { getPosts } from '../redux/actions/data';
+import { useHistory } from 'react-router-dom';
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
 import AsideUsers from '../components/AsideUsers';
@@ -8,8 +9,22 @@ import AsideCategories from '../components/AsideCategories';
 import CreatePost from '../components/CreatePost';
 import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
+import { arrayIntoNestedIdObject } from '../utils/helpers';
+import { nestedIdObjectToArray } from '../utils/helpers';
 
-const Home = ({ postIds, authenticated }) => {
+const Home = ({ posts, authenticated }) => {
+  const history = useHistory();
+
+  if (authenticated !== true) {
+    history.push('login');
+  }
+
+  const postsArray = nestedIdObjectToArray(posts);
+  const sortedPosts = postsArray.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  // const sortedPosts = arrayIntoNestedIdObject(sortedArray);
+  sortedPosts.forEach(post =>  console.log(post.id))
 
   return authenticated === true ? (
     <div className='home'>
@@ -21,11 +36,11 @@ const Home = ({ postIds, authenticated }) => {
         <main className='home-main'>
           <CreatePost />
           <ul>
-            {postIds &&
-              postIds.map((id) => {
+            {sortedPosts &&
+              sortedPosts.map((post) => {
                 return (
-                  <li key={id}>
-                    <Post id={id} />
+                  <li key={post.id}>
+                    <Post id={post.id} />
                   </li>
                 );
               })}
@@ -36,14 +51,12 @@ const Home = ({ postIds, authenticated }) => {
         </aside>
       </div>
     </div>
-  ) : (
-    <ErrorMessage />
-  );
+  ) : null;
 };
 
 function mapStateToProps({ user, data }) {
   return {
-    postIds: Object.keys(data.posts),
+    posts: data.posts,
     authenticated: user.authenticated,
   };
 }

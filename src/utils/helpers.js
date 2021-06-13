@@ -38,6 +38,29 @@ export function formatPost(post, author, authedUser, parentPost) {
   };
 }
 
+export function arrayIntoNestedIdObject(array) {
+  let object = {};
+  
+  array.forEach((item) => {
+    object[item.id] = {
+      ...item,
+    };
+  });
+  
+  return object;
+};
+
+export function nestedIdObjectToArray(obj) {
+  const entriesArray = Object.entries(obj);
+  let newArray = [];
+
+  for (let i = 0; i < entriesArray.length; i++) {
+    newArray.push(entriesArray[i][1]);
+  }
+
+  return newArray;
+};
+
 const useOutsideClick = (ref, callback) => {
   const handleClick = (e) => {
     if (ref.current && !ref.current.contains(e.target)) {
@@ -55,3 +78,4 @@ const useOutsideClick = (ref, callback) => {
 };
 
 export default useOutsideClick;
+

@@ -21,7 +21,6 @@ export const DELETE_POST = 'DELETE_POST';
 export const POST_POST = 'POST_POST';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 
-export const ADD_POST = 'ADD_POST';
 export const SEND_POST_TO_SERVER = 'SEND_POST_TO_SERVER';
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE';
 export const TOGGLE_DOWNVOTE = 'TOGGLE_DOWNVOTE';

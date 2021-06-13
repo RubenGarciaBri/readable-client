@@ -1,6 +1,6 @@
 import {
   SET_POSTS,
-  ADD_POST,
+  POST_POST,
   ADD_COMMENT,
   TOGGLE_UPVOTE,
   TOGGLE_DOWNVOTE,
@@ -21,10 +21,13 @@ export default function data(state = initialState, action) {
         posts: action.payload,
       };
 
-    case ADD_POST:
+    case POST_POST:
       return {
         ...state,
-        [action.payload.post.id]: action.payload.post,
+        posts: {
+          ...state.posts,
+          [action.payload.id]: action.payload,
+        } 
       };
 
     case TOGGLE_UPVOTE:

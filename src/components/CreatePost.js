@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { FaCode } from 'react-icons/fa';
 import { GoAlert } from 'react-icons/go';
-import { handleAddPost } from '../redux/actions/data';
+import { postPost } from '../redux/actions/data';
 import useOutsideClick from '../utils/helpers';
 
 const CreatePost = ({ dispatch, authedUser }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [rows, setRows] = useState(1);
   const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
+  const [body, setBody] = useState('');
   const [category, setCategory] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
@@ -22,9 +22,15 @@ const CreatePost = ({ dispatch, authedUser }) => {
 
   const categories = ['sports', 'music', 'business'];
 
+  const newPost = {
+    title,
+    body,
+    category
+  }
+
   const clearValues = () => {
     setTitle('');
-    setText('');
+    setBody('');
     setCategory(null);
     setRows(1);
     setIsVisible(false);
@@ -45,7 +51,7 @@ const CreatePost = ({ dispatch, authedUser }) => {
   };
 
   const onTextareaChange = (value) => {
-    setText(value);
+    setBody(value);
   };
 
   const onCategoryChange = (value) => {
@@ -60,7 +66,7 @@ const CreatePost = ({ dispatch, authedUser }) => {
 
     // Category form validation
     if (category !== null) {
-      // dispatch(handleAddPost(title, text, category));
+      dispatch(postPost(newPost));
       clearValues();
     } else {
       setErrorMessage(true);
@@ -95,7 +101,7 @@ const CreatePost = ({ dispatch, authedUser }) => {
             />
           ) : null}
           <textarea
-            value={text}
+            value={body}
             required={true}
             placeholder='Create Post'
             rows={rows}

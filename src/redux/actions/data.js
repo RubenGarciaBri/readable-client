@@ -61,6 +61,7 @@ export const getPost = (postId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
 // Post a post
 export const postPost = (newPost) => (dispatch) => {
   dispatch({ type: LOADING_UI });
