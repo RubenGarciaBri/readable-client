@@ -1,6 +1,8 @@
 import {
   SET_POSTS,
   POST_POST,
+  FAV_POST,
+  UNFAV_POST,
   ADD_COMMENT,
   TOGGLE_UPVOTE,
   TOGGLE_DOWNVOTE,
@@ -29,6 +31,18 @@ export default function data(state = initialState, action) {
           [action.payload.id]: action.payload,
         } 
       };
+    
+    case FAV_POST:
+    case UNFAV_POST:
+    return {
+      ...state,
+      posts: {
+        ...state.posts,
+        [action.payload.postId]: action.payload,
+      } 
+    };
+
+  
 
     case TOGGLE_UPVOTE:
       // Upvoted and not downvoted previously

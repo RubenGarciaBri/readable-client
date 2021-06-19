@@ -103,7 +103,7 @@ const CreatePost = ({ dispatch, authedUser }) => {
           <textarea
             value={body}
             required={true}
-            placeholder='Create Post'
+            placeholder='Create post'
             rows={rows}
             className='createPost__right-form__textarea'
             onChange={(e) => onTextareaChange(e.target.value)}

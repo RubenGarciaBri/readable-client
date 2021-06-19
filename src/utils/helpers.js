@@ -16,6 +16,10 @@ export function formatDateYearOnly(timestamp) {
   return d.toLocaleDateString();
 }
 
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export function formatPost(post, author, authedUser, parentPost) {
   const { id, likes, replies, text, timestamp } = post;
   const { name, avatarURL } = author;
@@ -40,15 +44,15 @@ export function formatPost(post, author, authedUser, parentPost) {
 
 export function arrayIntoNestedIdObject(array) {
   let object = {};
-  
+
   array.forEach((item) => {
     object[item.id] = {
       ...item,
     };
   });
-  
+
   return object;
-};
+}
 
 export function nestedIdObjectToArray(obj) {
   const entriesArray = Object.entries(obj);
@@ -59,7 +63,7 @@ export function nestedIdObjectToArray(obj) {
   }
 
   return newArray;
-};
+}
 
 const useOutsideClick = (ref, callback) => {
   const handleClick = (e) => {
@@ -78,4 +82,3 @@ const useOutsideClick = (ref, callback) => {
 };
 
 export default useOutsideClick;
-

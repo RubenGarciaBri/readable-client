@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { formatPost, formatDate } from '../../utils/helpers';
+import { capitalizeFirstLetter, formatDate } from '../../utils/helpers';
 import {
   handleToggleUpvote,
   handleToggleDownvote,
@@ -16,31 +16,21 @@ import { toast } from 'react-toastify';
 import NewComment from '../NewComment';
 import Comment from './Comment';
 
-const images = {
-  music:
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf8sGs4-l0HyKAyW1kb46fXnEPQo7lUi3_iA&usqp=CAU',
-  sports:
-    'https://blogofthenet.files.wordpress.com/2020/07/taa.jpg?w=256&h=256&crop=1',
-  business:
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvW9Cbechc2qraRG4d84OWM0xvHtYzYcbrgQ&usqp=CAU',
-};
-
 const Post = ({ dispatch, post, opened, user }) => {
-    console.log(post)
-
-    const {
-      id,
-      title,
-      body,
-      category,
-      author,
-      createdAt,
-      favCount,
-      commentCount,
-      voteScore,
-      upvotes,
-      downvotes,
-    } = post;
+  const {
+    id,
+    title,
+    body,
+    category,
+    author,
+    createdAt,
+    favCount,
+    commentCount,
+    voteScore,
+    userImage,
+    upvotes,
+    downvotes,
+  } = post;
 
   // Change later!!
   const hasUpvoted = false;
@@ -99,23 +89,15 @@ const Post = ({ dispatch, post, opened, user }) => {
           <div className='post-right__top'>
             <ul className='post-right__top-list'>
               <li className='post-right__top-list__item'>
-                <img
-                  src={
-                    category === 'sports'
-                      ? images.sports
-                      : category === 'business'
-                      ? images.business
-                      : images.music
-                  }
-                  alt=''
-                />
+                <img src={userImage} alt="User's profile image" />
               </li>
-              <li className='post-right__top-list__item post-right__top-list__item--category'>
-                <a href='#'>r/{category}</a>
+              <li className='post-right__top-list__item post-right__top-list__item--author'>
+                <a href='#'>{author}</a>
               </li>
               <li className='post-right__top-list__item'>
                 <a href='#'>
-                  Posted by {author} at {createdAt}
+                  in <b>{capitalizeFirstLetter(category)}</b> at{' '}
+                  {formatDate(createdAt)}
                 </a>
               </li>
             </ul>
@@ -254,11 +236,11 @@ const Post = ({ dispatch, post, opened, user }) => {
   // } else {
   //   return openedPost();
   // }
-  return defaultPost()
+  return defaultPost();
 };
 
 function mapStateToProps({ data, user }, { id }) {
-  const post = data.posts[id]
+  const post = data.posts[id];
 
   return {
     post,

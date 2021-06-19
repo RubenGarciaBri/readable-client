@@ -23,8 +23,6 @@ const Home = ({ posts, authenticated }) => {
   const sortedPosts = postsArray.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
-  // const sortedPosts = arrayIntoNestedIdObject(sortedArray);
-  sortedPosts.forEach(post =>  console.log(post.id))
 
   return authenticated === true ? (
     <div className='home'>

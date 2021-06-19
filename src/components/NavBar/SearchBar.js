@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { formatDateYearOnly } from '../../utils/helpers';
 import {
   FaComment,
   FaCommentAlt,
@@ -11,8 +8,14 @@ import {
   FaStar,
 } from 'react-icons/fa';
 import useOutsideClick from '../../utils/helpers';
+import algoliasearch from 'algoliasearch';
+import _ from 'lodash';
 
-const SearchBar = ({ dispatch }) => {
+const algoliaAppId = 'RGLSVZ565B';
+const algoliaAdminKey = 'b42c90fe8c9f4f0a63301a1231bdc97d';
+const algoliaIndexName = 'posts';
+
+const SearchBar = () => {
   const [term, setTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -22,30 +25,34 @@ const SearchBar = ({ dispatch }) => {
     setTerm('');
   });
 
-  useEffect(() => {}, [term]);
+  // Algolia Initialisation and Config
+  const client = algoliasearch(algoliaAppId, algoliaAdminKey);
+  const index = client.initIndex(algoliaIndexName);
+  index.setSettings({
+    searchableAttributes: ['title', 'category', 'author'],
+  });
 
-  let history = useHistory();
-
-  const onInputChange = (value) => {
-    setTerm(value);
-
-    fetch(`http://localhost:3001/${term}/posts`, {
-      headers: {
-        Authorization: 'mytoken',
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-      .then((res) => res.json())
+  const getPosts = (value) => {
+    index
+      .search(value)
       .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          console.log(data);
-          setSearchResults(data);
-        }
+        setSearchResults(data.hits);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
+
+  const throttledSearch = useCallback(
+    _.throttle((value) => {
+      getPosts(value);
+    }, 500),
+    []
+  );
+
+  useEffect(() => {
+    throttledSearch(term);
+  }, [term, throttledSearch]);
 
   return (
     <form ref={node} action='#' className='searchBar'>
@@ -53,9 +60,9 @@ const SearchBar = ({ dispatch }) => {
         required={true}
         type='text'
         value={term}
-        placeholder='Title'
+        placeholder='Search posts...'
         className='searchBar__input'
-        onChange={(e) => onInputChange(e.target.value)}
+        onChange={(e) => setTerm(e.target.value)}
       />
       <ul
         className={`searchBar__results ${
@@ -65,9 +72,9 @@ const SearchBar = ({ dispatch }) => {
         {term.length >= 2
           ? searchResults.map((item) => {
               return (
-                <li key={item.id} className='searchBar__results-item'>
+                <li key={item.objectID} className='searchBar__results-item'>
                   <Link
-                    to={`/posts/${item.id}`}
+                    to={`/posts/${item.objectID}`}
                     className='searchBar__results-item__link'
                   >
                     <div className='searchBar__results-item__link-left'>
@@ -80,13 +87,13 @@ const SearchBar = ({ dispatch }) => {
                         </span>
                         <span>
                           <FaCommentAlt className='searchBar__results-item__link-left__sub-icon' />{' '}
-                          {item.comments.length}
+                          {item.commentCount}
                         </span>
                       </div>
                     </div>
                     <div className='searchBar__results-item__link-right'>
                       <span>
-                        {item.author} | {formatDateYearOnly(item.timestamp)}
+                        {item.author} | {item.createdAt}
                       </span>
                     </div>
                   </Link>
@@ -99,10 +106,4 @@ const SearchBar = ({ dispatch }) => {
   );
 };
 
-function mapStateToProps({ authedUser }) {
-  return {
-    authedUser,
-  };
-}
-
-export default connect(mapStateToProps)(SearchBar);
+export default SearchBar;
