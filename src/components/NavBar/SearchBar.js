@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils/helpers';
 import {
   FaComment,
   FaCommentAlt,
@@ -93,7 +94,7 @@ const SearchBar = () => {
                     </div>
                     <div className='searchBar__results-item__link-right'>
                       <span>
-                        {item.author} | {item.createdAt}
+                        {item.author} | {formatDate(item.createdAt)}
                       </span>
                     </div>
                   </Link>

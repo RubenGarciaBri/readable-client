@@ -1,8 +1,20 @@
 import React from 'react';
 import Nav from '../components/NavBar';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { formatDateYearOnly } from '../utils/helpers';
 
-const ProfilePage = () => {
+const ProfilePage = ({ user, posts}) => {
+
+  const {
+    bio,
+    email,
+    createdAt,
+    location,
+    imageUrl,
+    userName
+  } = user.credentials
+
   return (
     <div className='profilePage'>
       <Nav />
@@ -12,16 +24,12 @@ const ProfilePage = () => {
           <div className='profileCard-top'>
             <img
               className='profileCard-top__img shadow-slim'
-              src='https://i.imgur.com/AMFz23O.jpg'
+              src={imageUrl}
             />
-            <h4 className='profileCard-top__name'>@angus456</h4>
-            <h5 className='profileCard-top__points'>879 Exp</h5>
-            <p className='profileCard-top__bio'>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-              id voluptatum consequuntur ipsa sed. Ut nulla sed dignissimos qui
-              quam.
-            </p>
-            <Link className='profileCard-top__followBtn'>Follow @angus456</Link>
+            <h4 className='profileCard-top__name'>{userName}</h4>
+            <h5 className='profileCard-top__points'>Member since {formatDateYearOnly(createdAt)}</h5>
+            <p className='profileCard-top__bio'>{bio}</p>
+            <Link className='profileCard-top__followBtn'>Follow {userName}</Link>
           </div>
         </div>
         <div className='profileContent'>
@@ -87,4 +95,11 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+function mapStateToProps({ user, data }) {
+  return {
+    posts: data.posts,
+    user,
+  };
+}
+
+export default connect(mapStateToProps)(ProfilePage);
