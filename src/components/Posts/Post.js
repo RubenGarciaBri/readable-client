@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { capitalizeFirstLetter, formatDate } from '../../utils/helpers';
+import { capitalizeFirstLetter, formatDate, createExcerpt } from '../../utils/helpers';
 import {
   handleToggleUpvote,
   handleToggleDownvote,
@@ -104,7 +104,7 @@ const Post = ({ dispatch, post, opened, user }) => {
           </div>
           <Link to={`/posts/${id}`} className='post-right__center'>
             <h4 className='post-right__center-title'>{title}</h4>
-            <p className='post-right__center-content'>{body}</p>
+            <p className='post-right__center-content'>{createExcerpt(body)}</p>
           </Link>
           <div className='post-right__bottom'>
             <ul className='post-right__bottom-list'>

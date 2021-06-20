@@ -65,6 +65,28 @@ export function nestedIdObjectToArray(obj) {
   return newArray;
 }
 
+export function createExcerpt(text, wordLimit) {
+  let str;
+  const defaultWordLimit = 30;
+  const words = text.split(' ');
+  const wordCount = words.length;
+
+  if (wordLimit) {
+    if (wordCount > wordLimit) {
+      str = words.slice(0, wordLimit).join(' ') + '...';
+    } else {
+      str = text;
+    }
+  } else {
+    if (wordCount > defaultWordLimit) {
+      str = words.slice(0, defaultWordLimit).join(' ') + '...';
+    } else {
+      str = text;
+    }
+  }
+  return str;
+}
+
 const useOutsideClick = (ref, callback) => {
   const handleClick = (e) => {
     if (ref.current && !ref.current.contains(e.target)) {

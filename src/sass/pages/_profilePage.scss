@@ -78,23 +78,27 @@
         &-post {
           padding: 1rem 0;
           color: #222;
+          border-bottom: 1px solid #eee;
+          width: 100%;
 
-          &-title {
+          &__title {
             font-size: 1.6rem;
             margin-bottom: .7rem;
           }
 
-          &-text {
+          &__text {
             font-size: 1.4rem;
           }
 
           &__bottom {
-            margin-top: -.7rem;
+            margin-top: -.4rem;
 
             &-category {
               font-size: 1.2rem;
               color: #666;
               margin-right: .5rem;
+              text-transform: capitalize;
+              font-weight: bold;
             }
 
             &-date {
