@@ -33,10 +33,13 @@ function App({ dispatch }) {
         dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common['Authorization'] = token;
         dispatch(getUserData());
-        dispatch(getPosts());
       }
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [])
 
   return (
     <div className='App'>

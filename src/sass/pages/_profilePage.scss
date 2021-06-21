@@ -25,10 +25,32 @@
 
     &-top {
 
-      &__img {
-        margin-bottom: 0.5rem;
-        width: 20rem;
-        border: solid 7px #fff;
+      &__imgWrapper {
+        position: relative;
+
+        & img {
+          margin-bottom: 0.5rem;
+          width: 20rem;
+          border: solid 7px #fff;
+        }
+
+        &-btn {
+          position: absolute;
+          bottom: 19px;
+          left: 10px;
+          width: 3.8rem;
+          height: 3.8rem;
+          border-radius: 50%;
+          background-color: #eee;
+          color: #222;
+          box-shadow: 0 5px 13px rgba(0, 0, 0, 0.10),
+          0 6px 6px rgba(0, 0, 0, 0.15);
+          opacity: 0.4;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
       }
 
       &__name {

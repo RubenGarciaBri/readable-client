@@ -2,6 +2,8 @@ import React from 'react';
 import Nav from '../components/NavBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { uploadProfileImage } from '../redux/actions/user'
+import { FaPen } from 'react-icons/fa';
 import {
   formatDate,
   formatDateYearOnly,
@@ -10,7 +12,7 @@ import {
   createExcerpt
 } from '../utils/helpers';
 
-const ProfilePage = ({ user, posts }) => {
+const ProfilePage = ({ user, posts, dispatch }) => {
   const {
     bio,
     email,
@@ -25,6 +27,18 @@ const ProfilePage = ({ user, posts }) => {
     (post) => post.author === user.credentials.userName
   );
 
+  const handleImageChange = (e) => {
+    const image = e.target.files[0]
+    const formData = new FormData
+    formData.append('image', image, image.name)
+    dispatch(uploadProfileImage(formData))
+  }
+
+  const handleImageClick = () => {
+    const button = document.getElementById('imageUpload')
+    button.click()
+  }
+
   return (
     <div className='profilePage'>
       <Nav />
@@ -32,7 +46,12 @@ const ProfilePage = ({ user, posts }) => {
       <div className='profilePage-main'>
         <div className='profileCard'>
           <div className='profileCard-top'>
-            <img className='profileCard-top__img shadow-slim' src={imageUrl} />
+            <div className='profileCard-top__imgWrapper'>
+              <img className='shadow-slim' src={imageUrl} />
+              <input hidden='hidden' type='file' id='imageUpload' onChange={handleImageChange}/>
+              <button className='profileCard-top__imgWrapper-btn'><FaPen size={14} onClick={handleImageClick}/></button>
+            </div>
+            
             <h4 className='profileCard-top__name'>{userName}</h4>
             <h5 className='profileCard-top__points'>
               Member since {formatDateYearOnly(createdAt)}
