@@ -1,9 +1,9 @@
-.home {
+.categoryPage {
   background-color: #e4e8ed;
   min-height: 100vh;
 }
 
-.home-container {
+.categoryPage-container {
   max-width: 120rem;
   margin: 0 auto;
   display: flex;
@@ -11,15 +11,15 @@
   margin-top: 2.5rem;
 }
 
-.home-left {
+.categoryPage-left {
   flex-basis: 25%;
 }
 
-.home-main {
+.categoryPage-main {
   flex-basis: 50%;
 }
 
-.home-right {
+.categoryPage-right {
   flex-basis: 25%;
 }
 

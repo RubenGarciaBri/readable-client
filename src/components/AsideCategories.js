@@ -14,9 +14,10 @@ const AsideCategories = () => {
         <ul className='asideCategories__body-list'>
           <li className='asideCategories__body-list__item '>
             <NavLink
-              to='/home'
-              activeClassName='active'
-              className='asideCategories__body-list__item-link asideCategories__body-list__item-link--active'
+              to='/'
+              exact
+              activeClassName='asideCategories__body-list__item-link--active'
+              className='asideCategories__body-list__item-link'
             >
               <FaHome size={18} />
               Home
@@ -24,8 +25,8 @@ const AsideCategories = () => {
           </li>
           <li className='asideCategories__body-list__item'>
             <NavLink
-              to='/add'
-              activeClassName='active'
+              to='/sports'
+              activeClassName='asideCategories__body-list__item-link--active'
               className='asideCategories__body-list__item-link'
             >
               <FaBasketballBall size={16} />
@@ -34,8 +35,8 @@ const AsideCategories = () => {
           </li>
           <li className='asideCategories__body-list__item'>
             <NavLink
-              to='/leaderboard'
-              activeClassName='active'
+              to='/music'
+              activeClassName='asideCategories__body-list__item-link--active'
               className='asideCategories__body-list__item-link'
             >
               <FaMusic size={16} />
@@ -44,8 +45,8 @@ const AsideCategories = () => {
           </li>
           <li className='asideCategories__body-list__item'>
             <NavLink
-              to='/leaderboard'
-              activeClassName='active'
+              to='/business'
+              activeClassName='asideCategories__body-list__item-link--active'
               className='asideCategories__body-list__item-link'
             >
               <FaSuitcase size={16} />

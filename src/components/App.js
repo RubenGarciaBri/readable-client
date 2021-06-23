@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import { getPosts } from '../redux/actions/data';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import Home from '../screens/Home';
+import HomePage from '../screens/HomePage';
 import PostPage from '../screens/PostPage';
-import ProfilePage from '../screens/ProfilePage';
+import SportsPage from '../screens/SportsPage';
+import MusicPage from '../screens/MusicPage';
+import BusinessPage from '../screens/BusinessPage';
 import SignupPage from '../screens/SignupPage';
 import LoginPage from '../screens/LoginPage';
+import ProfilePage from '../screens/ProfilePage';
 import { ToastContainer, toast } from 'react-toastify';
 import { SET_AUTHENTICATED } from '../redux/types';
 import { logoutUser, getUserData } from '../redux/actions/user';
@@ -39,14 +42,17 @@ function App({ dispatch }) {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [])
+  }, []);
 
   return (
     <div className='App'>
       <Switch>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/' component={HomePage} />
         <Route path='/posts/:id' component={PostPage} />
         <Route path='/profile' component={ProfilePage} />
+        <Route path='/sports' component={SportsPage} />
+        <Route path='/music' component={MusicPage} />
+        <Route path='/business' component={BusinessPage} />
         <AuthRoute path='/signup' component={SignupPage} />
         <AuthRoute path='/login' component={LoginPage} />
       </Switch>

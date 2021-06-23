@@ -1,41 +1,34 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { getPosts } from '../redux/actions/data';
 import { useHistory } from 'react-router-dom';
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
-import AsideUsers from '../components/AsideUsers';
+import AsideMenu from '../components/AsideMenu';
 import AsideCategories from '../components/AsideCategories';
 import CreatePost from '../components/CreatePost';
 import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
-import { arrayIntoNestedIdObject } from '../utils/helpers';
 import { nestedIdObjectToArray } from '../utils/helpers';
 
-const Home = ({ posts, authenticated }) => {
+const SportsPage = ({ posts, authenticated }) => {
   const history = useHistory();
 
   if (authenticated !== true) {
     history.push('login');
   }
 
-  const postsArray = nestedIdObjectToArray(posts);
-  const sortedPosts = postsArray.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-
   return authenticated === true ? (
-    <div className='home'>
+    <div className='categoryPage'>
       <Nav />
-      <div className='home-container'>
-        <aside class='home-left'>
+      <div className='categoryPage-container'>
+        <aside class='categoryPage-left'>
           <AsideCategories />
         </aside>
-        <main className='home-main'>
+        <main className='categoryPage-main'>
           <CreatePost />
           <ul>
-            {sortedPosts &&
-              sortedPosts.map((post) => {
+            {posts &&
+              posts.map((post) => {
                 return (
                   <li key={post.id}>
                     <Post id={post.id} />
@@ -44,8 +37,10 @@ const Home = ({ posts, authenticated }) => {
               })}
           </ul>
         </main>
-        <aside className='home-right'>
-          <AsideUsers />
+        <aside className='categoryPage-right'>
+          <AsideMenu
+          category='Sports'
+          description='The space for every sports enthusiast. From football to weightlifting, here is where the discussion is happening.'/>
         </aside>
       </div>
     </div>
@@ -53,10 +48,19 @@ const Home = ({ posts, authenticated }) => {
 };
 
 function mapStateToProps({ user, data }) {
+  // Turn nested object into array
+  const postsArr = nestedIdObjectToArray(data.posts)
+  // Filter by correct category
+  const filteredPosts = postsArr.filter(post => post.category === 'sports')
+  // Sort from newest to oldest
+  const sortedPosts = filteredPosts.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   return {
-    posts: data.posts,
+    posts: sortedPosts,
     authenticated: user.authenticated,
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(SportsPage)

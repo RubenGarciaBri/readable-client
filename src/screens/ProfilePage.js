@@ -26,8 +26,6 @@ const ProfilePage = ({ user, posts, dispatch }) => {
     setLocation(user.credentials.location);
   }, [user.credentials.bio, user.credentials.location]);
 
-  console.log(location);
-
   const { email, createdAt, imageUrl, userName } = user.credentials;
 
   const postsArray = nestedIdObjectToArray(posts);
