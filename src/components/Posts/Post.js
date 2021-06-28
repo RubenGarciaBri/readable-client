@@ -89,10 +89,12 @@ const Post = ({ dispatch, post, opened, user }) => {
           <div className='post-right__top'>
             <ul className='post-right__top-list'>
               <li className='post-right__top-list__item'>
-                <img src={userImage} alt="User's profile image" />
+                <Link to={`/profile/${author}`}>
+                  <img src={userImage} alt="User's profile image" />
+                </Link>
               </li>
               <li className='post-right__top-list__item post-right__top-list__item--author'>
-                <a href='#'>{author}</a>
+                <Link to={`/profile/${author}`}>{author}</Link>
               </li>
               <li className='post-right__top-list__item'>
                 <a href='#'>

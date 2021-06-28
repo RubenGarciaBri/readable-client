@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const ProfileLink = ({ authenticated, imageUrl, userName }) => {
   return (
-    <Link to='/profile' className='navbar__right-profile'>
+    <Link to={`/profile/${userName}`} className='navbar__right-profile'>
       <img
         className='navbar__right-profile__userImg shadow-slim'
         src={authenticated && imageUrl}

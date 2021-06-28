@@ -13,8 +13,6 @@ const SignupPage = ({ dispatch, UI }) => {
 
   const history = useHistory();
 
-  console.log(errors)
-
   useEffect(() => {
     setErrors(UI.errors);
   }, [UI.errors]);

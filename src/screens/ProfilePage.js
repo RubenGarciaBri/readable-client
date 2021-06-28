@@ -15,23 +15,29 @@ import {
   createExcerpt,
 } from '../utils/helpers';
 
-const ProfilePage = ({ user, posts, dispatch }) => {
+const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [isBioOpen, setIsBioOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
   useEffect(() => {
-    setBio(user.credentials.bio);
-    setLocation(user.credentials.location);
-  }, [user.credentials.bio, user.credentials.location]);
+    if (profileUser.userName === user.credentials.userName) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [profileUser]);
 
-  const { email, createdAt, imageUrl, userName } = user.credentials;
+  useEffect(() => {
+    setBio(profileUser.bio);
+    setLocation(profileUser.location);
+  }, [profileUser.bio, profileUser.location]);
 
-  const postsArray = nestedIdObjectToArray(posts);
-  const userPosts = postsArray.filter(
-    (post) => post.author === user.credentials.userName
-  );
+  console.log(isLoggedIn);
+
+  const { email, createdAt, imageUrl, userName } = profileUser;
 
   const handleImageChange = (e) => {
     const image = e.target.files[0];
@@ -64,82 +70,114 @@ const ProfilePage = ({ user, posts, dispatch }) => {
     handleSubmit();
   };
 
+  const loggedInMenu = () => {
+    return (
+      <div className='profileCard'>
+        <div className='profileCard-top'>
+          <div className='profileCard-top__imgWrapper'>
+            <img className='shadow-slim' src={imageUrl} />
+            <input
+              hidden='hidden'
+              type='file'
+              id='imageUpload'
+              onChange={handleImageChange}
+            />
+            <button className='profileCard-top__imgWrapper-btn'>
+              <FaPen size={14} onClick={handleImageClick} />
+            </button>
+          </div>
+          <h4 className='profileCard-top__name'>{userName}</h4>
+          <div>
+            {/* <MdLocationOn size={19} /> */}
+            {isLocationOpen ? (
+              <input
+                type='text'
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className='profileCard-top__input'
+              />
+            ) : (
+              <p className='profileCard-top__location'>{location}</p>
+            )}
+            <button className='profileCard-top__editBtn'>
+              {isLocationOpen ? (
+                <FaCheck size={14} onClick={handleLocationUpdate} />
+              ) : (
+                <FaPen
+                  size={14}
+                  onClick={() => setIsLocationOpen(!isLocationOpen)}
+                />
+              )}
+            </button>
+          </div>
+
+          <p className='profileCard-top__since'>
+            Member since {formatDateYearOnly(createdAt)}
+          </p>
+          <div>
+            {isBioOpen ? (
+              <input
+                type='text'
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                className='profileCard-top__input'
+              />
+            ) : (
+              <p className='profileCard-top__bio'>{bio}</p>
+            )}
+            <button className='profileCard-top__editBtn'>
+              {isBioOpen ? (
+                <FaCheck size={14} onClick={handleBioUpdate} />
+              ) : (
+                <FaPen size={14} onClick={() => setIsBioOpen(!isBioOpen)} />
+              )}
+            </button>
+          </div>
+
+          {/* <Link className='profileCard-top__followBtn'>
+              Follow {userName}
+            </Link> */}
+        </div>
+      </div>
+    );
+  };
+
+  const loggedOutMenu = () => {
+    return (
+      <div className='profileCard'>
+        <div className='profileCard-top'>
+          <div className='profileCard-top__imgWrapper'>
+            <img className='shadow-slim' src={imageUrl} />
+          </div>
+          <h4 className='profileCard-top__name'>{userName}</h4>
+          <div>
+            {/* <MdLocationOn size={19} /> */}
+            <p className='profileCard-top__location'>{location}</p>
+          </div>
+          <p className='profileCard-top__since'>
+            Member since {formatDateYearOnly(createdAt)}
+          </p>
+          <div>
+            <p className='profileCard-top__bio'>{bio}</p>
+          </div>
+          {/* <Link className='profileCard-top__followBtn'>
+              Follow {userName}
+            </Link> */}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className='profilePage'>
       <Nav />
       <div className='profilePage-banner'></div>
       <div className='profilePage-main'>
-        <div className='profileCard'>
-          <div className='profileCard-top'>
-            <div className='profileCard-top__imgWrapper'>
-              <img className='shadow-slim' src={imageUrl} />
-              <input
-                hidden='hidden'
-                type='file'
-                id='imageUpload'
-                onChange={handleImageChange}
-              />
-              <button className='profileCard-top__imgWrapper-btn'>
-                <FaPen size={14} onClick={handleImageClick} />
-              </button>
-            </div>
-            <h4 className='profileCard-top__name'>{userName}</h4>
-            <div>
-              {/* <MdLocationOn size={19} /> */}
-              {isLocationOpen ? (
-                <input
-                  type='text'
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className='profileCard-top__input'
-                />
-              ) : (
-                <p className='profileCard-top__location'>{location}</p>
-              )}
-              <button className='profileCard-top__editBtn'>
-                {isLocationOpen ? (
-                  <FaCheck size={14} onClick={handleLocationUpdate} />
-                ) : (
-                  <FaPen
-                    size={14}
-                    onClick={() => setIsLocationOpen(!isLocationOpen)}
-                  />
-                )}
-              </button>
-            </div>
-
-            <p className='profileCard-top__since'>
-              Member since {formatDateYearOnly(createdAt)}
-            </p>
-            <div>
-              {isBioOpen ? (
-                <input
-                  type='text'
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  className='profileCard-top__input'
-                />
-              ) : (
-                <p className='profileCard-top__bio'>{bio}</p>
-              )}
-              <button className='profileCard-top__editBtn'>
-                {isBioOpen ? (
-                  <FaCheck size={14} onClick={handleBioUpdate} />
-                ) : (
-                  <FaPen size={14} onClick={() => setIsBioOpen(!isBioOpen)} />
-                )}
-              </button>
-            </div>
-
-            {/* <Link className='profileCard-top__followBtn'>
-              Follow {userName}
-            </Link> */}
-          </div>
-        </div>
+        {isLoggedIn ? loggedInMenu() : loggedOutMenu()}
         <div className='profileContent'>
           <h4 className='profileContent-title'>Latest Posts</h4>
           <ul className='profileContent-list'>
-            {postsArray.map((post) => {
+            {posts.map((post) => {
               return (
                 <li key={post.id} className='profileContent-list__item'>
                   <Link
@@ -171,10 +209,19 @@ const ProfilePage = ({ user, posts, dispatch }) => {
   );
 };
 
-function mapStateToProps({ user, data }) {
+function mapStateToProps({ user, data, users }, props) {
+  const { userName } = props.match.params;
+  const profileUser = users[userName];
+
+  const postsArray = nestedIdObjectToArray(data.posts);
+  const userPosts = postsArray.filter(
+    (post) => post.author === profileUser.userName
+  );
+
   return {
-    posts: data.posts,
+    posts: userPosts,
     user,
+    profileUser,
   };
 }
 

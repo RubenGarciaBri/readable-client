@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getPosts } from '../redux/actions/data';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import HomePage from '../screens/HomePage';
@@ -14,6 +13,8 @@ import LoginPage from '../screens/LoginPage';
 import ProfilePage from '../screens/ProfilePage';
 import { ToastContainer, toast } from 'react-toastify';
 import { SET_AUTHENTICATED } from '../redux/types';
+import { getPosts } from '../redux/actions/data';
+import { getUsers } from '../redux/actions/users';
 import { logoutUser, getUserData } from '../redux/actions/user';
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
@@ -42,6 +43,7 @@ function App({ dispatch }) {
 
   useEffect(() => {
     dispatch(getPosts());
+    dispatch(getUsers());
   }, []);
 
   return (
@@ -49,7 +51,7 @@ function App({ dispatch }) {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/posts/:id' component={PostPage} />
-        <Route path='/profile' component={ProfilePage} />
+        <Route path='/profile/:userName' component={ProfilePage} />
         <Route path='/sports' component={SportsPage} />
         <Route path='/music' component={MusicPage} />
         <Route path='/business' component={BusinessPage} />
