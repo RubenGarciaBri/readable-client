@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { capitalizeFirstLetter, formatDate, createExcerpt } from '../../utils/helpers';
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  createExcerpt,
+} from '../../utils/helpers';
 import {
   handleToggleUpvote,
   handleToggleDownvote,
@@ -17,6 +21,8 @@ import NewComment from '../NewComment';
 import Comment from './Comment';
 
 const Post = ({ dispatch, post, opened, user }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const {
     id,
     title,
@@ -31,6 +37,14 @@ const Post = ({ dispatch, post, opened, user }) => {
     upvotes,
     downvotes,
   } = post;
+
+  useEffect(() => {
+    if (user.credentials.userName === author) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [user]);
 
   // Change later!!
   const hasUpvoted = false;
@@ -53,12 +67,8 @@ const Post = ({ dispatch, post, opened, user }) => {
             <a
               href='#'
               className='post-left__rating-upvote'
-              onClick={() => {
-                if (author === user.credentials.userName) {
-                  toast.error("You can't vote on your own posts");
-                } else {
-                  // dispatch(handleToggleUpvote(id))
-                }
+              onClick={() => { 
+                // dispatch(handleToggleUpvote(id))
               }}
             >
               <ImArrowUp
@@ -70,12 +80,8 @@ const Post = ({ dispatch, post, opened, user }) => {
             <a
               href='#'
               className='post-left__rating-downvote'
-              onClick={() => {
-                if (author === user.credentials.userName) {
-                  toast.error("You can't vote on your own posts");
-                } else {
-                  // dispatch(handleToggleDownvote(id))
-                }
+              onClick={() => {     
+                // dispatch(handleToggleDownvote(id))
               }}
             >
               <ImArrowDown
@@ -117,14 +123,16 @@ const Post = ({ dispatch, post, opened, user }) => {
                 </Link>
               </li>
               <li className='post-right__bottom-list__item'>
-                <a href='#' onClick={onFavClick}>
-                  {hasFaved === true ? (
-                    <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
-                  ) : (
-                    <FaRegStar className='post-right__bottom-list__item-starIcon' />
-                  )}
-                  Fav
-                </a>
+                {!isLoggedIn ? (
+                  <a href='#' onClick={onFavClick}>
+                    {hasFaved === true ? (
+                      <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
+                    ) : (
+                      <FaRegStar className='post-right__bottom-list__item-starIcon' />
+                    )}
+                    Fav
+                  </a>
+                ) : null}
               </li>
             </ul>
           </div>
