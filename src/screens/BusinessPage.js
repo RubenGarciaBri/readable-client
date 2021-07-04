@@ -13,11 +13,7 @@ import { nestedIdObjectToArray } from '../utils/helpers';
 const BusinessPage = ({ posts, authenticated }) => {
   const history = useHistory();
 
-  if (authenticated !== true) {
-    history.push('login');
-  }
-
-  return authenticated === true ? (
+  return (
     <div className='categoryPage'>
       <Nav />
       <div className='categoryPage-container'>
@@ -39,19 +35,20 @@ const BusinessPage = ({ posts, authenticated }) => {
         </main>
         <aside className='categoryPage-right'>
           <AsideMenu
-          category='Business'
-          description='Our especial space for all the aspiring business people and entrepreneurs out there who make things happen.'/>
+            category='Business'
+            description='Our especial space for all the aspiring business people and entrepreneurs out there who make things happen.'
+          />
         </aside>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 function mapStateToProps({ user, data }) {
   // Turn nested object into array
-  const postsArr = nestedIdObjectToArray(data.posts)
+  const postsArr = nestedIdObjectToArray(data.posts);
   // Filter by correct category
-  const filteredPosts = postsArr.filter(post => post.category === 'business')
+  const filteredPosts = postsArr.filter((post) => post.category === 'business');
   // Sort from newest to oldest
   const sortedPosts = filteredPosts.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -63,4 +60,4 @@ function mapStateToProps({ user, data }) {
   };
 }
 
-export default connect(mapStateToProps)(BusinessPage)
+export default connect(mapStateToProps)(BusinessPage);

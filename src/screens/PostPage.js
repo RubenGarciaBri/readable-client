@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Nav from '../components/NavBar/Nav';
-import Post from '../components/Posts';
+import OpenedPost from '../components/Posts/OpenedPost';
 
 const PostPage = ({ id, postIds }) => {
   return (
@@ -12,7 +12,7 @@ const PostPage = ({ id, postIds }) => {
           {postIds
             .filter((postId) => postId === id)
             .map((p) => {
-              return <Post key={p} id={p} opened={true} />;
+              return <OpenedPost key={p} id={p} />;
             })}
         </div>
       </div>
@@ -20,12 +20,12 @@ const PostPage = ({ id, postIds }) => {
   );
 };
 
-function mapStateToProps({ posts }, props) {
+function mapStateToProps({ data }, props) {
   const { id } = props.match.params;
 
   return {
     id,
-    postIds: Object.keys(posts),
+    postIds: Object.keys(data.posts),
   };
 }
 

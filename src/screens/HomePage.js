@@ -13,11 +13,7 @@ import { nestedIdObjectToArray } from '../utils/helpers';
 const HomePage = ({ posts, authenticated }) => {
   const history = useHistory();
 
-  if (authenticated !== true) {
-    history.push('login');
-  }
-
-  return authenticated === true ? (
+  return (
     <div className='categoryPage'>
       <Nav />
       <div className='categoryPage-container'>
@@ -39,17 +35,18 @@ const HomePage = ({ posts, authenticated }) => {
         </main>
         <aside className='categoryPage-right'>
           <AsideMenu
-          category='Home'
-          description='This is to front page of Readable. Here you can find all the latest posts and updates from the community.'/>
+            category='Home'
+            description='This is to front page of Readable. Here you can find all the latest posts and updates from the community.'
+          />
         </aside>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 function mapStateToProps({ user, data }) {
   // Turn nested object into array
-  const postsArr = nestedIdObjectToArray(data.posts)
+  const postsArr = nestedIdObjectToArray(data.posts);
   // Sort from newest to oldest
   const sortedPosts = postsArr.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)

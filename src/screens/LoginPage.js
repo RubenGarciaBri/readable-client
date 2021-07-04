@@ -3,12 +3,18 @@ import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/user';
 
-const LoginPage = ({ dispatch, UI }) => {
+const LoginPage = ({ dispatch, UI, authenticated }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
   const history = useHistory();
+
+  // useEffect(() => {
+  //   if ( authenticated === true ) {
+  //     history.push('/')
+  //   }
+  // }, [authenticated])
 
   useEffect(() => {
     setErrors(UI.errors);
@@ -72,9 +78,10 @@ const LoginPage = ({ dispatch, UI }) => {
   );
 };
 
-function mapStateToProps({ UI }) {
+function mapStateToProps({ UI, user }) {
   return {
     UI,
+    authenticated: user.authenticated,
   };
 }
 

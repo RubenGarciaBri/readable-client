@@ -3,7 +3,7 @@ import {
   POST_POST,
   FAV_POST,
   UNFAV_POST,
-  ADD_COMMENT,
+  SUBMIT_COMMENT,
   TOGGLE_UPVOTE,
   TOGGLE_DOWNVOTE,
   TOGGLE_FAV,
@@ -42,7 +42,17 @@ export default function data(state = initialState, action) {
       } 
     };
 
-  
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        [action.payload.postId]: {
+          ...state[action.payload.postId],
+          comments: state[action.payload.postId].comments.concat(
+            action.payload
+          ),
+        },
+      };
+
 
     case TOGGLE_UPVOTE:
       // Upvoted and not downvoted previously
@@ -182,17 +192,6 @@ export default function data(state = initialState, action) {
           },
         };
       }
-
-    case ADD_COMMENT:
-      return {
-        ...state,
-        [action.payload.comment.postId]: {
-          ...state[action.payload.comment.postId],
-          comments: state[action.payload.comment.postId].comments.concat(
-            action.payload.comment
-          ),
-        },
-      };
 
     default:
       return state;

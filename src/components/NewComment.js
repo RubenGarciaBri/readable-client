@@ -1,33 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { GoAlert } from 'react-icons/go';
-import { handleAddComment } from '../redux/actions/data';
+import { submitComment } from '../redux/actions/data';
 
 const NewComment = ({ dispatch, authedUser, id }) => {
-  const [text, setText] = useState('');
+  const [body, setBody] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
-
-  console.log(id);
-
-  const onTextareaChange = (value) => {
-    setText(value);
-  };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    // dispatch(handleAddComment(text, id));
+    dispatch(submitComment(id, commentData));
   };
+
+  const commentData = {
+    body
+  }
 
   return (
     <div className='newComment'>
       <form className='newComment__form' onSubmit={(e) => onFormSubmit(e)}>
         <textarea
-          value={text}
+          value={body}
           required={true}
           placeholder='Add Comment'
           rows={4}
           className='newComment__form-textarea'
-          onChange={(e) => onTextareaChange(e.target.value)}
+          onChange={(e) => setBody(e.target.value)}
         ></textarea>
         <>
           {errorMessage === true ? (

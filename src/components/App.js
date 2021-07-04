@@ -32,7 +32,7 @@ function App({ dispatch }) {
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         dispatch(logoutUser());
-        history.push('/login');
+        history.push('/');
       } else {
         dispatch({ type: SET_AUTHENTICATED });
         axios.defaults.headers.common['Authorization'] = token;

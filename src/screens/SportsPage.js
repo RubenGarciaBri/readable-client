@@ -13,11 +13,7 @@ import { nestedIdObjectToArray } from '../utils/helpers';
 const SportsPage = ({ posts, authenticated }) => {
   const history = useHistory();
 
-  if (authenticated !== true) {
-    history.push('login');
-  }
-
-  return authenticated === true ? (
+  return (
     <div className='categoryPage'>
       <Nav />
       <div className='categoryPage-container'>
@@ -39,19 +35,20 @@ const SportsPage = ({ posts, authenticated }) => {
         </main>
         <aside className='categoryPage-right'>
           <AsideMenu
-          category='Sports'
-          description='The space for every sports enthusiast. From football to weightlifting, here is where the discussion is happening.'/>
+            category='Sports'
+            description='The space for every sports enthusiast. From football to weightlifting, here is where the discussion is happening.'
+          />
         </aside>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 function mapStateToProps({ user, data }) {
   // Turn nested object into array
-  const postsArr = nestedIdObjectToArray(data.posts)
+  const postsArr = nestedIdObjectToArray(data.posts);
   // Filter by correct category
-  const filteredPosts = postsArr.filter(post => post.category === 'sports')
+  const filteredPosts = postsArr.filter((post) => post.category === 'sports');
   // Sort from newest to oldest
   const sortedPosts = filteredPosts.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -63,4 +60,4 @@ function mapStateToProps({ user, data }) {
   };
 }
 
-export default connect(mapStateToProps)(SportsPage)
+export default connect(mapStateToProps)(SportsPage);

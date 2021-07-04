@@ -13,11 +13,7 @@ import { nestedIdObjectToArray } from '../utils/helpers';
 const MusicPage = ({ posts, authenticated }) => {
   const history = useHistory();
 
-  if (authenticated !== true) {
-    history.push('login');
-  }
-
-  return authenticated === true ? (
+  return (
     <div className='categoryPage'>
       <Nav />
       <div className='categoryPage-container'>
@@ -45,7 +41,7 @@ const MusicPage = ({ posts, authenticated }) => {
         </aside>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 function mapStateToProps({ user, data }) {

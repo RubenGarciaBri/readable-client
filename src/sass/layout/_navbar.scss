@@ -41,6 +41,26 @@
     align-items: center;
     justify-content: flex-end;
 
+    &-login {
+      border-radius: 25rem;
+      background: #eee;
+      padding: 1.2rem 2.2rem;
+      font-weight: 700;
+      &:hover {
+        filter: brightness(0.95);
+      }
+    }
+
+    &-signup {
+      border-radius: 25rem;
+      background: #eee;
+      padding: 1.2rem 2.2rem;
+      font-weight: 700;
+      &:hover {
+        filter: brightness(0.95);
+      }
+    }
+
     &-profile {
       padding: .4rem 1.4rem .4rem 1rem;
       border-radius: 25rem;
