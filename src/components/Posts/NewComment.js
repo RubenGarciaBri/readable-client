@@ -10,6 +10,7 @@ const NewComment = ({ dispatch, authedUser, id }) => {
   const onFormSubmit = (e) => {
     e.preventDefault();
     dispatch(submitComment(id, commentData));
+    setBody('')
   };
 
   const commentData = {
