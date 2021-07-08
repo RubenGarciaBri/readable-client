@@ -17,14 +17,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarReg } from '@fortawesome/free-regular-svg-icons';
 import { toast } from 'react-toastify';
-import NewComment from '../NewComment';
+import NewComment from './NewComment';
 import Comment from './Comment';
 import axios from 'axios';
 
 const OpenedPost = ({ user, dispatch, post }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [favs, setFavs] = useState([]);
-  const [comments, setComments] = useState([]);
 
   const {
     id,
@@ -39,16 +37,14 @@ const OpenedPost = ({ user, dispatch, post }) => {
     userImage,
     upvotes,
     downvotes,
+    favs,
+    comments
   } = post;
 
-  console.log(comments[0]);
-
-  useEffect(() => {
-    axios.get(`/post/${id}`).then((res) => {
-      setFavs(res.data.favs);
-      setComments(res.data.comments);
-    });
-  }, [post]);
+  // Sort comments from newest to oldest
+  const sortedComments = comments.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   useEffect(() => {
     if (user.credentials.userName === author) {
@@ -138,9 +134,9 @@ const OpenedPost = ({ user, dispatch, post }) => {
         <NewComment id={id} />
         <div className='comment-section'>
           <ul className='comment-list'>
-            {comments.length > 0
-              ? comments.map((comment) => {
-                  return <Comment data={comment} />;
+            {sortedComments.length > 0
+              ? sortedComments.map((comment) => {
+                  return <Comment data={comment} key={comment.id} />;
                 })
               : null}
           </ul>

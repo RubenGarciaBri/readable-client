@@ -45,12 +45,15 @@ export default function data(state = initialState, action) {
     case SUBMIT_COMMENT:
       return {
         ...state,
-        [action.payload.postId]: {
-          ...state[action.payload.postId],
-          comments: state[action.payload.postId].comments.concat(
-            action.payload
-          ),
-        },
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            comments: state.posts[action.payload.postId].comments.concat(
+              action.payload
+            ),
+          },
+        }
       };
 
 

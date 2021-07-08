@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { formatDate } from '../../utils/helpers';
 import { FaCommentAlt } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
-import NewComment from '../NewComment';
+import NewComment from './NewComment';
 
 const Comment = ({ data }) => {
   const [showNewComment, setShowNewComment] = useState(false);

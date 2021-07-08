@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faStarReg } from '@fortawesome/free-regular-svg-icons';
 import { toast } from 'react-toastify';
-import NewComment from '../NewComment';
+import NewComment from './NewComment';
 import Comment from './Comment';
 import axios from 'axios'
 
