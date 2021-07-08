@@ -7,7 +7,6 @@ export const LOADING_USERS = 'LOADING_USERS';
 export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
 export const SET_USERS = 'SET_USERS';
 
-
 // UI types
 export const SET_ERRORS = 'SET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
@@ -23,6 +22,7 @@ export const UNFAV_POST = 'UNFAV_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const POST_POST = 'POST_POST';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const SEND_POST_TO_SERVER = 'SEND_POST_TO_SERVER';
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE';

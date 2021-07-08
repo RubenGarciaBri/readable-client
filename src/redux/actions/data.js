@@ -16,6 +16,7 @@ import {
   SET_POST,
   STOP_LOADING_UI,
   SUBMIT_COMMENT,
+  DELETE_COMMENT,
   RECEIVE_POSTS,
   ADD_COMMENT,
   ADD_POST,
@@ -127,6 +128,30 @@ export const submitComment = (postId, commentData) => (dispatch) => {
       });
     });
 };
+
+// Delete a comment
+export const deleteComment = (postId, commentId) => (dispatch) => {
+  axios
+    .delete(`/post/${postId}/comment/${commentId}`)
+    .then((res) => {
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: {
+          postId,
+          commentId
+        },
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      console.log(err)
+      // dispatch({
+      //   type: SET_ERRORS,
+      //   payload: err.response.data,
+      // });
+    });
+};
+
 export const deletePost = (postId) => (dispatch) => {
   axios
     .delete(`/post/${postId}`)

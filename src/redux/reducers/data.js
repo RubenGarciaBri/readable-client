@@ -4,6 +4,7 @@ import {
   FAV_POST,
   UNFAV_POST,
   SUBMIT_COMMENT,
+  DELETE_COMMENT,
   TOGGLE_UPVOTE,
   TOGGLE_DOWNVOTE,
   TOGGLE_FAV,
@@ -12,7 +13,7 @@ import {
 const initialState = {
   posts: {},
   post: {},
-  loading: false
+  loading: false,
 };
 
 export default function data(state = initialState, action) {
@@ -29,18 +30,18 @@ export default function data(state = initialState, action) {
         posts: {
           ...state.posts,
           [action.payload.id]: action.payload,
-        } 
+        },
       };
-    
+
     case FAV_POST:
     case UNFAV_POST:
-    return {
-      ...state,
-      posts: {
-        ...state.posts,
-        [action.payload.postId]: action.payload,
-      } 
-    };
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: action.payload,
+        },
+      };
 
     case SUBMIT_COMMENT:
       return {
@@ -53,9 +54,20 @@ export default function data(state = initialState, action) {
               action.payload
             ),
           },
-        }
+        },
       };
 
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            comments: state.posts[action.payload.postId].comments.filter(comment => comment.id !== action.payload.commentId)
+          },
+        },
+      };
 
     case TOGGLE_UPVOTE:
       // Upvoted and not downvoted previously

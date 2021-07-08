@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { GoAlert } from 'react-icons/go';
 import { submitComment } from '../../redux/actions/data';
 
-const NewComment = ({ dispatch, authedUser, id }) => {
+const NewComment = ({ dispatch, id }) => {
   const [body, setBody] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
 

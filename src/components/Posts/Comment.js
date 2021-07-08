@@ -1,25 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { formatDate } from '../../utils/helpers';
-import { FaCommentAlt } from 'react-icons/fa';
+import { FaCommentAlt, FaTimesCircle } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import NewComment from './NewComment';
+import { deleteComment } from '../../redux/actions/data'
 
-const Comment = ({ data }) => {
+const Comment = ({ data, user, dispatch }) => {
   const [showNewComment, setShowNewComment] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { userName, userImage, postId, createdAt, body } = data
+  const { userName, userImage, id, postId, createdAt, body } = data;
+
+  useEffect(() => {
+    if (user.credentials.userName === userName) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [user]);
 
   const handleReply = () => {
     setShowNewComment(!showNewComment);
   };
 
+  const handleDelete = () => {
+    dispatch(deleteComment(postId, id))
+  };
+
   return (
     <li className='comment'>
       <div className='comment-top'>
-        <img
-          src={userImage}
-          className='comment-top__img'
-        />
+        <img src={userImage} className='comment-top__img' />
         <span className='comment-top__author'>{userName}</span>
         <span className='comment-top__timestamp'>{formatDate(createdAt)}</span>
       </div>
@@ -60,16 +72,33 @@ const Comment = ({ data }) => {
               <ImArrowDown className='comment-bottom__list-item__icon comment-bottom__list-item__icon--arrow' />
             </a>
           </li>
-          <li className='comment-bottom__list-item'>
-            <a href='#' onClick={handleReply}>
-              <FaCommentAlt className='comment-bottom__list-item__icon comment-bottom__list-item__icon--comment' />{' '}
-              <span className='comment-bottom__list-item__reply'>Reply</span>
-            </a>
-          </li>
+          {!isLoggedIn ? (
+            <li className='comment-bottom__list-item'>
+              <a href='#' onClick={handleReply}>
+                <FaCommentAlt className='comment-bottom__list-item__icon comment-bottom__list-item__icon--comment' />{' '}
+                <span className='comment-bottom__list-item__reply'>Reply</span>
+              </a>
+            </li>
+          ) : null}
+          {isLoggedIn ? (
+            <li className='comment-bottom__list-item'>
+              <a href='#' onClick={handleDelete}>
+                <FaTimesCircle className='comment-bottom__list-item__icon comment-bottom__list-item__icon--delete' />{' '}
+                <span className='comment-bottom__list-item__delete'> Delete</span>
+              </a>
+            </li>
+          ) : null}
         </ul>
       </div>
     </li>
   );
 };
 
-export default Comment;
+function mapStateToProps({ user }) {
+
+  return {
+    user,
+  };
+}
+
+export default connect(mapStateToProps)(Comment);

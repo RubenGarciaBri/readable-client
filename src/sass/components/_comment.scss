@@ -42,6 +42,7 @@
       gap: 1rem;
 
       &-item {
+        font-size: 1.2rem; 
 
         a {
           display: flex;
@@ -51,14 +52,27 @@
           font-weight: 600;            
         }  
 
+        &__icon {
+
+          &--delete {
+            color: #dc3545;
+          }
+        }
+
         &__voteScore {
           font-weight: bold;
-          font-size: 1.2rem;
+         
         }
 
         &__reply {
           margin-left: .3rem;
-          font-size: 1.2rem; 
+       
+        }
+
+        &__delete {
+          margin-left: .3rem;
+          color: #dc3545;
+          font-weight: 400;
         }
       }
     }
