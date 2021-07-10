@@ -264,6 +264,15 @@
             color: #666;
             margin-right: 1.2rem;
           }   
+
+          &--delete a {
+            color: #dc3545;
+          }
+
+          &-deleteIcon {
+            color: #dc3545;
+            margin-right: .4rem;
+          }
           
           &-icon {
             margin-right: .4rem;

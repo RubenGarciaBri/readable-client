@@ -1,6 +1,7 @@
 import {
   SET_POSTS,
   POST_POST,
+  DELETE_POST,
   FAV_POST,
   UNFAV_POST,
   SUBMIT_COMMENT,
@@ -9,6 +10,7 @@ import {
   TOGGLE_DOWNVOTE,
   TOGGLE_FAV,
 } from '../types';
+import { nestedIdObjectToArray, arrayIntoNestedIdObject } from '../../utils/helpers'
 
 const initialState = {
   posts: {},
@@ -32,6 +34,18 @@ export default function data(state = initialState, action) {
           [action.payload.id]: action.payload,
         },
       };
+
+    case DELETE_POST:
+
+      const postsArray = nestedIdObjectToArray(state.posts)
+      const filteredArray = postsArray.filter(post => post.id !== action.payload.postId)
+      const newPostsObject = arrayIntoNestedIdObject(filteredArray)
+      
+      return  {
+        ...state,
+        posts: newPostsObject
+      }
+    
 
     case FAV_POST:
     case UNFAV_POST:
@@ -64,7 +78,9 @@ export default function data(state = initialState, action) {
           ...state.posts,
           [action.payload.postId]: {
             ...state.posts[action.payload.postId],
-            comments: state.posts[action.payload.postId].comments.filter(comment => comment.id !== action.payload.commentId)
+            comments: state.posts[action.payload.postId].comments.filter(
+              (comment) => comment.id !== action.payload.commentId
+            ),
           },
         },
       };

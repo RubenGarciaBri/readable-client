@@ -121,7 +121,7 @@ export const submitComment = (postId, commentData) => (dispatch) => {
       dispatch(clearErrors());
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data,
@@ -138,13 +138,13 @@ export const deleteComment = (postId, commentId) => (dispatch) => {
         type: DELETE_COMMENT,
         payload: {
           postId,
-          commentId
+          commentId,
         },
       });
       dispatch(clearErrors());
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
       // dispatch({
       //   type: SET_ERRORS,
       //   payload: err.response.data,
@@ -156,7 +156,12 @@ export const deletePost = (postId) => (dispatch) => {
   axios
     .delete(`/post/${postId}`)
     .then(() => {
-      dispatch({ type: DELETE_POST, payload: postId });
+      dispatch({
+        type: DELETE_POST,
+        payload: {
+          postId,
+        },
+      });
     })
     .catch((err) => console.log(err));
 };
@@ -246,7 +251,6 @@ export const clearErrors = () => (dispatch) => {
 //     }
 //   }
 // }
-
 
 // function addComment(comment) {
 //   return {

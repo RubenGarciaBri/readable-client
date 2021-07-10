@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   capitalizeFirstLetter,
   formatDate,
@@ -10,7 +11,15 @@ import {
   handleToggleDownvote,
 } from '../../redux/actions/data';
 import { handleToggleFav } from '../../redux/actions/data';
-import { FaCommentAlt, FaRegStar, FaShareAlt, FaStar } from 'react-icons/fa';
+import { deletePost } from '../../redux/actions/data';
+import {
+  FaCommentAlt,
+  FaRegStar,
+  FaShareAlt,
+  FaStar,
+  FaTimesCircle,
+  FaTrashAlt,
+} from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +32,7 @@ import axios from 'axios';
 
 const OpenedPost = ({ user, dispatch, post }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory();
 
   const {
     id,
@@ -38,7 +48,7 @@ const OpenedPost = ({ user, dispatch, post }) => {
     upvotes,
     downvotes,
     favs,
-    comments
+    comments,
   } = post;
 
   // Sort comments from newest to oldest
@@ -55,6 +65,11 @@ const OpenedPost = ({ user, dispatch, post }) => {
   }, [user]);
 
   const onFavClick = () => {};
+
+  const handleDelete = () => {
+    dispatch(deletePost(id));
+    history.push('/')
+  };
 
   // Change later!!
   const hasUpvoted = false;
@@ -101,7 +116,7 @@ const OpenedPost = ({ user, dispatch, post }) => {
             </li>
             <li className='postOpened-right__top-list__item'>
               <a href='#'>
-                 in <b>{capitalizeFirstLetter(category)}</b> at{' '}
+                in <b>{capitalizeFirstLetter(category)}</b> at{' '}
                 {formatDate(createdAt)}
               </a>
             </li>
@@ -119,16 +134,26 @@ const OpenedPost = ({ user, dispatch, post }) => {
                 {commentCount} comments
               </a>
             </li>
-            <li className='postOpened-right__bottom-list__item'>
-              <a href='#' onClick={onFavClick}>
-                {hasFaved === true ? (
-                  <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
-                ) : (
-                  <FaRegStar className='post-right__bottom-list__item-starIcon' />
-                )}
-                Fav
-              </a>
-            </li>
+            {!isLoggedIn ? (
+              <li className='postOpened-right__bottom-list__item'>
+                <a href='#' onClick={onFavClick}>
+                  {hasFaved === true ? (
+                    <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
+                  ) : (
+                    <FaRegStar className='post-right__bottom-list__item-starIcon' />
+                  )}
+                  Fav
+                </a>
+              </li>
+            ) : null}
+            {isLoggedIn ? (
+              <li className='postOpened-right__bottom-list__item postOpened-right__bottom-list__item--delete'>
+                <a href='#' onClick={handleDelete}>
+                  <FaTrashAlt className='post-right__bottom-list__item-deleteIcon' />{' '}
+                  Delete
+                </a>
+              </li>
+            ) : null}
           </ul>
         </div>
         <NewComment id={id} />
