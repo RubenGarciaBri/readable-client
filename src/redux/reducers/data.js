@@ -53,7 +53,11 @@ export default function data(state = initialState, action) {
         ...state,
         posts: {
           ...state.posts,
-          [action.payload.postId]: action.payload,
+          [action.payload.id]: {
+            ...state.posts[action.payload.id],
+            favCount: action.payload.favCount,
+            favs: action.payload.favs
+          }
         },
       };
 

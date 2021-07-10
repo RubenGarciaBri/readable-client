@@ -86,7 +86,7 @@ export const postPost = (newPost) => (dispatch) => {
 // Fav a post
 export const favPost = (postId) => (dispatch) => {
   axios
-    .get(`/post/${postId}/fav`)
+    .post(`/post/${postId}/fav`)
     .then((res) => {
       dispatch({
         type: FAV_POST,
@@ -99,7 +99,7 @@ export const favPost = (postId) => (dispatch) => {
 // Unfav a post
 export const unfavPost = (postId) => (dispatch) => {
   axios
-    .get(`/post/${postId}/unfav`)
+    .post(`/post/${postId}/unfav`)
     .then((res) => {
       dispatch({
         type: UNFAV_POST,

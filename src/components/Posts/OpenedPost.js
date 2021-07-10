@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-  capitalizeFirstLetter,
-  formatDate,
-  createExcerpt,
-} from '../../utils/helpers';
-import {
-  handleToggleUpvote,
-  handleToggleDownvote,
-} from '../../redux/actions/data';
-import { handleToggleFav } from '../../redux/actions/data';
+import { capitalizeFirstLetter, formatDate } from '../../utils/helpers';
+import { favPost, unfavPost } from '../../redux/actions/data';
 import { deletePost } from '../../redux/actions/data';
 import {
   FaCommentAlt,
@@ -22,16 +14,13 @@ import {
 } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarReg } from '@fortawesome/free-regular-svg-icons';
-import { toast } from 'react-toastify';
 import NewComment from './NewComment';
 import Comment from './Comment';
-import axios from 'axios';
 
 const OpenedPost = ({ user, dispatch, post }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isFaved, setIsFaved] = useState(false);
+
   const history = useHistory();
 
   const {
@@ -64,17 +53,37 @@ const OpenedPost = ({ user, dispatch, post }) => {
     }
   }, [user]);
 
-  const onFavClick = () => {};
+  useEffect(() => {
+    // Create an array containing the user names of all the users that have faved this post
+    const usersArray = [];
+    favs.forEach((fav) => {
+      usersArray.push(fav.userName);
+    });
+
+    // If any of the user names in the array matches the authenticated user, set isFaved to true
+    if (usersArray.includes(user.credentials.userName)) {
+      setIsFaved(true);
+    } else {
+      setIsFaved(false);
+    }
+  }, [user, post]);
+
+  const handleFav = () => {
+    if (isFaved === false) {
+      dispatch(favPost(id));
+    } else {
+      dispatch(unfavPost(id));
+    }
+  };
 
   const handleDelete = () => {
     dispatch(deletePost(id));
-    history.push('/')
+    history.push('/');
   };
 
   // Change later!!
   const hasUpvoted = false;
   const hasDownvoted = false;
-  const hasFaved = false;
 
   return (
     <div className='postOpened shadow-slim'>
@@ -136,13 +145,13 @@ const OpenedPost = ({ user, dispatch, post }) => {
             </li>
             {!isLoggedIn ? (
               <li className='postOpened-right__bottom-list__item'>
-                <a href='#' onClick={onFavClick}>
-                  {hasFaved === true ? (
+                <a href='#' onClick={handleFav}>
+                  {isFaved === true ? (
                     <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
                   ) : (
                     <FaRegStar className='post-right__bottom-list__item-starIcon' />
                   )}
-                  Fav
+                  {isFaved === true ? 'Unfav' : 'Fav'}
                 </a>
               </li>
             ) : null}
