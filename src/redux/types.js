@@ -24,8 +24,7 @@ export const POST_POST = 'POST_POST';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
-export const SEND_POST_TO_SERVER = 'SEND_POST_TO_SERVER';
 export const TOGGLE_UPVOTE = 'TOGGLE_UPVOTE';
 export const TOGGLE_DOWNVOTE = 'TOGGLE_DOWNVOTE';
 export const ADD_COMMENT = 'ADD_COMMENT';
-export const TOGGLE_FAV = 'TOGGLE_FAV';
+

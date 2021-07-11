@@ -1,18 +1,37 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import { IoNotificationsSharp } from 'react-icons/io5';
+import { FaComment, FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import useOutsideClick from '../../utils/helpers';
+import { markNotificationsRead } from '../../redux/actions/user';
 
-const NotificationsDropdown = () => {
+const NotificationsDropdown = ({ notifications, dispatch }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const node = useRef();
+
+  let unreadNotifications;
+  const unreadNotificationIds = []
+
+  if (notifications && notifications.length > 0) {
+    unreadNotifications = notifications.filter((notif) => notif.read === false);
+    unreadNotifications.forEach((notif) => {
+      unreadNotificationIds.push(notif.notificationId)
+    })
+  }
+
 
   useOutsideClick(node, () => {
     if (isOpen === true) {
       setIsOpen(false);
     }
   });
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen)
+    dispatch(markNotificationsRead(unreadNotificationIds))
+  }
 
   return (
     <div
@@ -22,9 +41,16 @@ const NotificationsDropdown = () => {
     >
       <button
         className='navbar__right-notifications'
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleOpen}
       >
         <IoNotificationsSharp className='navbar__right-notifications__icon' />
+        {unreadNotifications && unreadNotifications.length > 0 ? (
+          <span className='navbar__right-notifications__new'>
+            <span className='navbar__right-notifications__number'>
+              {unreadNotifications.length}
+            </span>
+          </span>
+        ) : null}
       </button>
       {isOpen && (
         <div
@@ -37,11 +63,46 @@ const NotificationsDropdown = () => {
             </span>
           </div>
           <ul className='navbar__right-notifications__dropdown-list'>
-            <li className='navbar__right-notifications__dropdown-list__item'>
-              <Link className='navbar__right-notifications__dropdown-list__item-link'>
-                @andre_ops has liked your post
-              </Link>
-            </li>
+            {notifications && notifications.length > 0 ? (
+              notifications.map((notif) => {
+                return (
+                  <li
+                    key={notif.notificationId}
+                    className='navbar__right-notifications__dropdown-list__item'
+                  >
+                    <Link
+                      to={`/posts/${notif.postId}`}
+                      className={`navbar__right-notifications__dropdown-list__item-link ${
+                        notif.read === false
+                          ? 'navbar__right-notifications__dropdown-list__item-link--unread'
+                          : ''
+                      }`}
+                    >
+                      {notif.type === 'comment' ? (
+                        <FaComment
+                          size={16}
+                          color={notif.read === false ? '#0275d8' : '#666'}
+                        />
+                      ) : (
+                        <FaHeart
+                          size={16}
+                          color={notif.read === false ? '#dc3545' : '#666'}
+                        />
+                      )}{' '}
+                      {notif.sender} has{' '}
+                      {notif.type === 'comment' ? 'commented on' : 'faved'} your
+                      post
+                    </Link>
+                  </li>
+                );
+              })
+            ) : (
+              <li className='navbar__right-notifications__dropdown-list__item'>
+                <div className='navbar__right-notifications__dropdown-list__item-noNotifications'>
+                  You don't have any notifications
+                </div>
+              </li>
+            )}
           </ul>
         </div>
       )}
@@ -49,4 +110,10 @@ const NotificationsDropdown = () => {
   );
 };
 
-export default NotificationsDropdown;
+function mapStateToProps({ user }) {
+  return {
+    notifications: user.notifications,
+  };
+}
+
+export default connect(mapStateToProps)(NotificationsDropdown);

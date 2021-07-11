@@ -42,7 +42,7 @@ const OpenedPost = ({ user, dispatch, post }) => {
 
   // Sort comments from newest to oldest
   const sortedComments = comments.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
   );
 
   useEffect(() => {

@@ -12,7 +12,6 @@ const initialState = {
   authenticated: false,
   loading: false,
   credentials: {},
-  likes: [],
   notifications: []
 };
 
@@ -35,6 +34,13 @@ export default function user(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    
+    case MARK_NOTIFICATIONS_READ:
+      state.notifications.forEach((notif) => notif.read = true)
+      
+      return {
+        ...state
       };
 
     default:

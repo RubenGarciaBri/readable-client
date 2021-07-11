@@ -8,7 +8,6 @@ import {
   DELETE_COMMENT,
   TOGGLE_UPVOTE,
   TOGGLE_DOWNVOTE,
-  TOGGLE_FAV,
 } from '../types';
 import { nestedIdObjectToArray, arrayIntoNestedIdObject } from '../../utils/helpers'
 
@@ -198,35 +197,35 @@ export default function data(state = initialState, action) {
         };
       }
 
-    case TOGGLE_FAV:
-      // Check if the post has already been faved
-      if (
-        state[action.payload.postId].favourites.includes(
-          action.payload.authedUser.id
-        )
-      ) {
-        return {
-          ...state,
-          [action.payload.postId]: {
-            ...state[action.payload.postId],
-            favourites: state[action.payload.postId].favourites.filter(
-              (user) => user !== action.payload.authedUser.id
-            ),
-          },
-        };
-      }
-      // Add favourite
-      else {
-        return {
-          ...state,
-          [action.payload.postId]: {
-            ...state[action.payload.postId],
-            favourites: state[action.payload.postId].favourites.concat(
-              action.payload.authedUser.id
-            ),
-          },
-        };
-      }
+    // case TOGGLE_FAV:
+    //   // Check if the post has already been faved
+    //   if (
+    //     state[action.payload.postId].favourites.includes(
+    //       action.payload.authedUser.id
+    //     )
+    //   ) {
+    //     return {
+    //       ...state,
+    //       [action.payload.postId]: {
+    //         ...state[action.payload.postId],
+    //         favourites: state[action.payload.postId].favourites.filter(
+    //           (user) => user !== action.payload.authedUser.id
+    //         ),
+    //       },
+    //     };
+    //   }
+    //   // Add favourite
+    //   else {
+    //     return {
+    //       ...state,
+    //       [action.payload.postId]: {
+    //         ...state[action.payload.postId],
+    //         favourites: state[action.payload.postId].favourites.concat(
+    //           action.payload.authedUser.id
+    //         ),
+    //       },
+    //     };
+    //   }
 
     default:
       return state;

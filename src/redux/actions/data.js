@@ -20,7 +20,6 @@ import {
   RECEIVE_POSTS,
   ADD_COMMENT,
   ADD_POST,
-  TOGGLE_FAV,
 } from '../types';
 
 const options = {
