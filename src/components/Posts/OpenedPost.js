@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { capitalizeFirstLetter, formatDate } from '../../utils/helpers';
-import { favPost, unfavPost } from '../../redux/actions/data';
+import { favPost, unfavPost, togglePostUpvote, togglePostDownvote } from '../../redux/actions/data';
 import { deletePost } from '../../redux/actions/data';
 import {
   FaCommentAlt,
@@ -20,6 +20,8 @@ import Comment from './Comment';
 const OpenedPost = ({ user, dispatch, post }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFaved, setIsFaved] = useState(false);
+  const [hasUpvoted, setHasUpvoted] = useState(false);
+  const [hasDownvoted, setHasDownvoted] = useState(false);  
 
   const history = useHistory();
 
@@ -40,11 +42,6 @@ const OpenedPost = ({ user, dispatch, post }) => {
     comments,
   } = post;
 
-  // Sort comments from newest to oldest
-  const sortedComments = comments.sort(
-    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-  );
-
   useEffect(() => {
     if (user.credentials.userName === author) {
       setIsLoggedIn(true);
@@ -54,18 +51,43 @@ const OpenedPost = ({ user, dispatch, post }) => {
   }, [user]);
 
   useEffect(() => {
-    // Create an array containing the user names of all the users that have faved this post
-    const usersArray = [];
+    // Create array containing the usernames of all the users that have faved this post
+    const usersFavArray = [];
     favs.forEach((fav) => {
-      usersArray.push(fav.userName);
+      usersFavArray.push(fav.userName);
     });
 
-    // If any of the user names in the array matches the authenticated user, set isFaved to true
-    if (usersArray.includes(user.credentials.userName)) {
+    // If any of the usernames in the array matches the authenticated user, set isFaved to true
+    if (usersFavArray.includes(user.credentials.userName)) {
       setIsFaved(true);
     } else {
       setIsFaved(false);
     }
+
+    // Create array containing the usernames of all the users that have upvoted and downvoted this post
+    const usersUpvoteArray = [];
+    upvotes.forEach((upvote) => {
+      usersUpvoteArray.push(upvote.userName);
+    });
+
+    const usersDownvoteArray = [];
+    downvotes.forEach((downvote) => {
+      usersDownvoteArray.push(downvote.userName);
+    });
+
+    // If any of the usernames in the arrays match the authenticated user, set hasUpvoted and hasDownvoted accordingly
+    if (usersUpvoteArray.includes(user.credentials.userName)) {
+      setHasUpvoted(true);
+    } else {
+      setHasUpvoted(false);
+    }
+
+    if (usersDownvoteArray.includes(user.credentials.userName)) {
+      setHasDownvoted(true);
+    } else {
+      setHasDownvoted(false);
+    }
+
   }, [user, post]);
 
   const handleFav = () => {
@@ -81,10 +103,6 @@ const OpenedPost = ({ user, dispatch, post }) => {
     history.push('/');
   };
 
-  // Change later!!
-  const hasUpvoted = false;
-  const hasDownvoted = false;
-
   return (
     <div className='postOpened shadow-slim'>
       <div className='postOpened-left'>
@@ -92,21 +110,25 @@ const OpenedPost = ({ user, dispatch, post }) => {
           <a
             href='#'
             className='postOpened-left__rating-upvote'
-            onClick={() => {}}
+            onClick={() => {
+              dispatch(togglePostUpvote(id))
+            }}
           >
             <ImArrowUp
-              // style={{ color: hasUpvoted === true ? 'orange' : null }}
+              style={{ color: hasUpvoted === true ? 'orange' : null }}
               className='postOpened-left__rating-upvote__icon'
             />
           </a>
-          <span className='postOpened-left__rating-number'>{voteScore}</span>
+          <span className='postOpened-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? 'orange' : null }}>{voteScore}</span>
           <a
             href='#'
             className='postOpened-left__rating-downvote'
-            onClick={() => {}}
+            onClick={() => {
+              dispatch(togglePostDownvote(id))
+            }}
           >
             <ImArrowDown
-              // style={{ color: hasDownvoted === true ? 'orange' : null }}
+              style={{ color: hasDownvoted === true ? 'orange' : null }}
               className='postOpened-left__rating-downvote__icon'
             />
           </a>
@@ -168,8 +190,8 @@ const OpenedPost = ({ user, dispatch, post }) => {
         <NewComment id={id} />
         <div className='comment-section'>
           <ul className='comment-list'>
-            {sortedComments.length > 0
-              ? sortedComments.map((comment) => {
+            {comments.length > 0
+              ? comments.map((comment) => {
                   return <Comment data={comment} key={comment.id} />;
                 })
               : null}

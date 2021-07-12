@@ -17,9 +17,8 @@ import {
   STOP_LOADING_UI,
   SUBMIT_COMMENT,
   DELETE_COMMENT,
-  RECEIVE_POSTS,
-  ADD_COMMENT,
-  ADD_POST,
+  TOGGLE_POST_UPVOTE,
+  TOGGLE_POST_DOWNVOTE
 } from '../types';
 
 const options = {
@@ -102,6 +101,32 @@ export const unfavPost = (postId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UNFAV_POST,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// Toggle post upvote
+export const togglePostUpvote = (postId) => (dispatch) => {
+  axios
+    .post(`/post/${postId}/togglePostUpvote`)
+    .then((res) => {
+      dispatch({
+        type: TOGGLE_POST_UPVOTE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// Toggle post downvote
+export const togglePostDownvote = (postId) => (dispatch) => {
+  axios
+    .post(`/post/${postId}/togglePostDownvote`)
+    .then((res) => {
+      dispatch({
+        type: TOGGLE_POST_DOWNVOTE,
         payload: res.data,
       });
     })

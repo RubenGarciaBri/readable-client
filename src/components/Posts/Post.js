@@ -5,7 +5,7 @@ import {
   formatDate,
   createExcerpt,
 } from '../../utils/helpers';
-import { favPost, unfavPost } from '../../redux/actions/data';
+import { favPost, unfavPost, togglePostUpvote, togglePostDownvote } from '../../redux/actions/data';
 import { FaCommentAlt, FaRegStar, FaShareAlt, FaStar } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
@@ -13,7 +13,9 @@ import { Link, withRouter } from 'react-router-dom';
 const Post = ({ dispatch, post, opened, user }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFaved, setIsFaved] = useState(false);
- 
+  const [hasUpvoted, setHasUpvoted] = useState(false);
+  const [hasDownvoted, setHasDownvoted] = useState(false);  
+
   const {
     id,
     title,
@@ -39,23 +41,44 @@ const Post = ({ dispatch, post, opened, user }) => {
   }, [user]);
 
   useEffect(() => {
-    // Create an array containing the user names of all the users that have faved this post
-    const usersArray = [];
+    // Create array containing the usernames of all the users that have faved this post
+    const usersFavArray = [];
     favs.forEach((fav) => {
-      usersArray.push(fav.userName);
+      usersFavArray.push(fav.userName);
     });
 
-    // If any of the user names in the array matches the authenticated user, set isFaved to true
-    if (usersArray.includes(user.credentials.userName)) {
+    // If any of the usernames in the array matches the authenticated user, set isFaved to true
+    if (usersFavArray.includes(user.credentials.userName)) {
       setIsFaved(true);
     } else {
       setIsFaved(false);
     }
-  }, [user, post]);
 
-  // Change later!!
-  const hasUpvoted = false;
-  const hasDownvoted = false;
+    // Create array containing the usernames of all the users that have upvoted and downvoted this post
+    const usersUpvoteArray = [];
+    upvotes.forEach((upvote) => {
+      usersUpvoteArray.push(upvote.userName);
+    });
+
+    const usersDownvoteArray = [];
+    downvotes.forEach((downvote) => {
+      usersDownvoteArray.push(downvote.userName);
+    });
+
+    // If any of the usernames in the arrays match the authenticated user, set hasUpvoted and hasDownvoted accordingly
+    if (usersUpvoteArray.includes(user.credentials.userName)) {
+      setHasUpvoted(true);
+    } else {
+      setHasUpvoted(false);
+    }
+
+    if (usersDownvoteArray.includes(user.credentials.userName)) {
+      setHasDownvoted(true);
+    } else {
+      setHasDownvoted(false);
+    }
+
+  }, [user, post]);
 
   const handleFav = () => {
     if (isFaved === false) {
@@ -73,7 +96,7 @@ const Post = ({ dispatch, post, opened, user }) => {
             href='#'
             className='post-left__rating-upvote'
             onClick={() => {
-              // dispatch(handleToggleUpvote(id))
+              dispatch(togglePostUpvote(id))
             }}
           >
             <ImArrowUp
@@ -81,12 +104,12 @@ const Post = ({ dispatch, post, opened, user }) => {
               className='post-left__rating-upvote__icon'
             />
           </a>
-          <span className='post-left__rating-number'>{voteScore}</span>
+          <span className='post-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? 'orange' : null }}>{voteScore}</span>
           <a
             href='#'
             className='post-left__rating-downvote'
             onClick={() => {
-              // dispatch(handleToggleDownvote(id))
+              dispatch(togglePostDownvote(id))
             }}
           >
             <ImArrowDown
