@@ -73,6 +73,7 @@ export default function data(state = initialState, action) {
             comments: state.posts[action.payload.postId].comments.concat(
               action.payload
             ),
+            commentCount: state.posts[action.payload.postId].commentCount + 1
           },
         },
       };
@@ -85,8 +86,8 @@ export default function data(state = initialState, action) {
           [action.payload.postId]: {
             ...state.posts[action.payload.postId],
             comments: state.posts[action.payload.postId].comments.filter(
-              (comment) => comment.id !== action.payload.commentId
-            ),
+              (comment) => comment.id !== action.payload.commentId),
+            commentCount: state.posts[action.payload.postId].commentCount - 1
           },
         },
       };
