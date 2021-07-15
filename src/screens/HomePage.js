@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
 import AsideMenu from '../components/AsideMenu';
@@ -11,16 +13,26 @@ import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
 import { nestedIdObjectToArray } from '../utils/helpers';
 
-const HomePage = ({ posts, latestPosts, ratedPosts, commentedPosts }) => {
+const HomePage = ({
+  posts,
+  latestPosts,
+  ratedPosts,
+  commentedPosts,
+  loading,
+}) => {
   const [filter, setFilter] = useState('latest');
 
   const history = useHistory();
 
-  console.log('Latest: ', latestPosts);
-  console.log('Rating: ', ratedPosts);
-  console.log('Commented: ', commentedPosts);
+  const spinnerStyles = css`
+    display: block;
+    margin: 50px auto;
+    text-align: center;
+  `;
 
-  console.log(filter);
+  // console.log('Latest: ', latestPosts);
+  // console.log('Rating: ', ratedPosts);
+  // console.log('Commented: ', commentedPosts);
 
   const onSelectChange = (e) => {
     setFilter(e.target.value);
@@ -30,40 +42,45 @@ const HomePage = ({ posts, latestPosts, ratedPosts, commentedPosts }) => {
     <div className='categoryPage'>
       <Nav />
       <div className='categoryPage-container'>
-        <aside class='categoryPage-left'>
+        <aside className='categoryPage-left'>
           <AsideCategories />
         </aside>
         <main className='categoryPage-main'>
           <CreatePost />
           <FilterBar onSelectChange={onSelectChange} />
-          <ul>
-            {filter === 'latest'
-              ? latestPosts.map((post) => {
-                  return (
-                    <li key={post.id}>
-                      <Post id={post.id} />
-                    </li>
-                    // <p>Latest</p>
-                  );
-                })
-              : filter === 'rating'
-              ? ratedPosts.map((post) => {
-                  return (
-                    <li key={post.id}>
-                      <Post id={post.id} />
-                    </li>
-                    // <p>Rating</p>
-                  );
-                })
-              : commentedPosts.map((post) => {
-                  return (
-                    <li key={post.id}>
-                      <Post id={post.id} />
-                    </li>
-                    // <p>Commented</p>
-                  );
-                })}
-          </ul>
+          {loading === true ? (
+            <BeatLoader css={spinnerStyles} loading />
+          ) : (
+            <ul>
+              {filter === 'latest'
+                ? latestPosts.map((post) => {
+                    return (
+                      <li key={post.id}>
+                        <Post id={post.id} />
+                      </li>
+                    );
+                  })
+                : null}
+              {filter === 'rating'
+                ? ratedPosts.map((post) => {
+                    return (
+                      <li key={post.id}>
+                        <Post id={post.id} />
+                      </li>
+                    );
+                  })
+                : null}
+              {filter === 'comments'
+                ? commentedPosts.map((post) => {
+                    return (
+                      <li key={post.id}>
+                        <Post id={post.id} />
+                      </li>
+                    );
+                  })
+                : null}
+            </ul>
+          )}
         </main>
         <aside className='categoryPage-right'>
           <AsideMenu
@@ -92,7 +109,9 @@ function mapStateToProps({ user, data }) {
     latestPosts,
     ratedPosts,
     commentedPosts,
+    posts: data.posts,
     authenticated: user.authenticated,
+    loading: data.loading,
   };
 }
 

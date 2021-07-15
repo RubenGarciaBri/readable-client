@@ -1,10 +1,10 @@
-import { savePost, saveComment } from '../../utils/api';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 // New Imports
 import {
   SET_POSTS,
+  SET_USERS,
   LOADING_DATA,
   FAV_POST,
   UNFAV_POST,
@@ -27,6 +27,19 @@ const options = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
+};
+
+// Get all users
+export const getUsers = () => (dispatch) => {
+  axios
+    .get('/users')
+    .then((res) => {
+      dispatch({
+        type: SET_USERS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 // Get all posts

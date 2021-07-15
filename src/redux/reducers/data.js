@@ -1,4 +1,6 @@
 import {
+  LOADING_DATA,
+  SET_USERS,
   SET_POSTS,
   POST_POST,
   DELETE_POST,
@@ -16,16 +18,30 @@ import {
 
 const initialState = {
   posts: {},
-  post: {},
+  users: {},
   loading: false,
 };
 
 export default function data(state = initialState, action) {
   switch (action.type) {
+    case LOADING_DATA:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case SET_USERS:
+      return {
+        ...state,
+        users: action.payload,
+        loading: Object.keys(state.posts).length === 0 ? true : false
+      };
+
     case SET_POSTS:
       return {
         ...state,
         posts: action.payload,
+        loading: false,
       };
 
     case POST_POST:
@@ -73,7 +89,7 @@ export default function data(state = initialState, action) {
             comments: state.posts[action.payload.postId].comments.concat(
               action.payload
             ),
-            commentCount: state.posts[action.payload.postId].commentCount + 1
+            commentCount: state.posts[action.payload.postId].commentCount + 1,
           },
         },
       };
@@ -86,8 +102,9 @@ export default function data(state = initialState, action) {
           [action.payload.postId]: {
             ...state.posts[action.payload.postId],
             comments: state.posts[action.payload.postId].comments.filter(
-              (comment) => comment.id !== action.payload.commentId),
-            commentCount: state.posts[action.payload.postId].commentCount - 1
+              (comment) => comment.id !== action.payload.commentId
+            ),
+            commentCount: state.posts[action.payload.postId].commentCount - 1,
           },
         },
       };
