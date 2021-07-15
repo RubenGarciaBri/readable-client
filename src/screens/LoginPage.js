@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 import { loginUser } from '../redux/actions/user';
 
 const LoginPage = ({ dispatch, UI, authenticated }) => {
@@ -10,11 +12,11 @@ const LoginPage = ({ dispatch, UI, authenticated }) => {
 
   const history = useHistory();
 
-  // useEffect(() => {
-  //   if ( authenticated === true ) {
-  //     history.push('/')
-  //   }
-  // }, [authenticated])
+  const spinnerStyles = css`
+    display: block;
+    margin: 250px auto;
+    text-align: center;
+  `;
 
   useEffect(() => {
     setErrors(UI.errors);
@@ -33,46 +35,50 @@ const LoginPage = ({ dispatch, UI, authenticated }) => {
   return (
     <div className='loginSection'>
       <div className='login-container main-container'>
-        <div className='login shadow-xs'>
-          <div className='login-card session-card'>
-            <h3 className='login-card__heading'>Log in</h3>
-            <form
-              action=''
-              className='login-card__form'
-              onSubmit={(e) => onFormSubmit(e)}
-            >
-              <input
-                type='email'
-                placeholder='Email'
-                className='login-card__email'
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type='password'
-                placeholder='Password'
-                className='login-card__form-password'
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {
-                // Return the first and unique property of the object that contains the error
-                errors && (
-                  <small className='login-card__form-errors'>
-                    {errors[Object.keys(errors)[0]]}
-                  </small>
-                )
-              }
-              <button
-                type='submit'
-                className='login-card__form-btn shadow-slim'
+        {UI.loading === true ? (
+          <BeatLoader css={spinnerStyles} loading />
+        ) : (
+          <div className='login shadow-xs'>
+            <div className='login-card session-card'>
+              <h3 className='login-card__heading'>Log in</h3>
+              <form
+                action=''
+                className='login-card__form'
+                onSubmit={(e) => onFormSubmit(e)}
               >
-                Submit
-              </button>
-              <span className='login-card__form-account'>
-                First time here? <Link to='/signup'>Create an account</Link>
-              </span>
-            </form>
+                <input
+                  type='email'
+                  placeholder='Email'
+                  className='login-card__email'
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type='password'
+                  placeholder='Password'
+                  className='login-card__form-password'
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {
+                  // Return the first and unique property of the object that contains the error
+                  errors && (
+                    <small className='login-card__form-errors'>
+                      {errors[Object.keys(errors)[0]]}
+                    </small>
+                  )
+                }
+                <button
+                  type='submit'
+                  className='login-card__form-btn shadow-slim'
+                >
+                  Submit
+                </button>
+                <span className='login-card__form-account'>
+                  First time here? <Link to='/signup'>Create an account</Link>
+                </span>
+              </form>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

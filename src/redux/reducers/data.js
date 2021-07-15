@@ -29,7 +29,6 @@ export default function data(state = initialState, action) {
         ...state,
         loading: true,
       };
-
     case SET_USERS:
       return {
         ...state,
