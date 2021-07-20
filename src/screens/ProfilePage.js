@@ -87,8 +87,10 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
             </button>
           </div>
           <h4 className='profileCard-top__name'>{userName}</h4>
+          <p className='profileCard-top__since'>
+            Member since {formatDateYearOnly(createdAt)}
+          </p>
           <div>
-            {/* <MdLocationOn size={19} /> */}
             {isLocationOpen ? (
               <input
                 type='text'
@@ -111,9 +113,7 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
             </button>
           </div>
 
-          <p className='profileCard-top__since'>
-            Member since {formatDateYearOnly(createdAt)}
-          </p>
+          
           <div>
             {isBioOpen ? (
               <input
@@ -133,10 +133,9 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
               )}
             </button>
           </div>
-
-          {/* <Link className='profileCard-top__followBtn'>
-              Follow {userName}
-            </Link> */}
+          {/* <button className='profileCard-top__deleteAccount'>
+            Delete Account
+          </button> */}
         </div>
       </div>
     );
@@ -160,9 +159,6 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
           <div>
             <p className='profileCard-top__bio'>{bio}</p>
           </div>
-          {/* <Link className='profileCard-top__followBtn'>
-              Follow {userName}
-            </Link> */}
         </div>
       </div>
     );
@@ -209,9 +205,9 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
   );
 };
 
-function mapStateToProps({ user, data, users }, props) {
+function mapStateToProps({ user, data }, props) {
   const { userName } = props.match.params;
-  const profileUser = users[userName];
+  const profileUser = data.users[userName];
 
   const postsArray = nestedIdObjectToArray(data.posts);
   const userPosts = postsArray.filter(

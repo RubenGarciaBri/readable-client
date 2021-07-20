@@ -19,8 +19,15 @@
   &__body {
 
     &-list {
+      @include respond(tab-port) {
+        display: flex;
+      }
 
       &__item {
+        @include respond(tab-port) {
+          flex-grow: 1;
+          width: 100%;
+        }
 
         &-link {
           display: flex;
@@ -31,6 +38,10 @@
           font-weight: 600;
           padding: 1.3rem 0 1.3rem 2.5rem;
           border-bottom: 1px solid #eee;
+
+          @include respond(phone) {
+            gap: 1.2rem;
+          }
 
           &:hover {
             background: #eee;

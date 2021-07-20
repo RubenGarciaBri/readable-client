@@ -7,19 +7,43 @@
   max-width: 120rem;
   margin: 0 auto;
   display: flex;
+  flex-direction: row;
   gap: 25px;
   margin-top: 2.5rem;
+  padding: 0 2rem;
+
+  @include respond(tab-port) {
+    flex-direction: column;
+  }
 }
 
 .categoryPage-left {
   flex-basis: 25%;
+  order: 1;
+
+  @include respond(tab-port) {
+    flex-basis: 100%;
+    order: 1;
+  }
 }
 
 .categoryPage-main {
   flex-basis: 50%;
+  order: 2;
+
+  @include respond(tab-port) {
+    flex-basis: 100%;
+    order: 3;
+  }
 }
 
 .categoryPage-right {
   flex-basis: 25%;
+  order: 3;
+
+  @include respond(tab-port) {
+    flex-basis: 100%;
+    order: 2;
+  }
 }
 

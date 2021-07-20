@@ -1,6 +1,7 @@
 .signupPage {
   background-color: #e4e8ed;
   min-height: 100vh;
+  padding: 0 2rem;
 
   .signup-container {
     @include flex-center;

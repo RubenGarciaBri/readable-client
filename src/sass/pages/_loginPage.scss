@@ -1,6 +1,7 @@
 .loginSection {
   background-color: #e4e8ed;
   min-height: 100vh;
+  padding: 0 2rem;
 
   .login-container {
     @include flex-center;

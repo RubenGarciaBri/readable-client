@@ -9,10 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    @include respond(tab-port) {
-      flex-direction: column;
-    }
+    padding: 0 2rem;
   }
 
   &__left {
@@ -32,6 +29,13 @@
   &__center {
     flex-grow: 4;
     
+    @include respond(tab-port) {
+      flex-grow: 3;
+    }
+
+    @include respond(phone) {
+      flex-grow: 1;
+    }
   }
 
   &__right {
@@ -69,20 +73,29 @@
       justify-content: flex-end;
       background: #eee;
 
+      @include respond(phone) {
+        padding: .5rem;
+      }
+
       &:hover {
         background: #e6e6e6;
       }
 
       &__userImg {
         width: 3.2rem;
-        border-radius: 50%;
+        border-radius: 50%; 
       }
+
   
       &__userName {
         font-size: 1.2rem;
         font-weight: 600;
         margin-left: 1rem;
         color: #222;
+
+        @include respond(phone) {
+          display: none;
+        }
       }
     }
 
