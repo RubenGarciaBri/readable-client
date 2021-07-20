@@ -53,7 +53,7 @@ const SignupPage = ({ dispatch, UI }) => {
               >
                 <input
                   type='text'
-                  placeholder='Name'
+                  placeholder='Username'
                   className='signup-card__form-name'
                   onChange={(e) => setUserName(e.target.value)}
                 />
