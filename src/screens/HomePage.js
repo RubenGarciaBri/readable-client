@@ -12,6 +12,7 @@ import FilterBar from '../components/FilterBar';
 import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
 import { nestedIdObjectToArray } from '../utils/helpers';
+import { IoNotificationsCircleOutline } from 'react-icons/io5';
 
 const HomePage = ({
   posts,
@@ -52,7 +53,15 @@ const HomePage = ({
             <BeatLoader css={spinnerStyles} loading />
           ) : (
             <ul>
-              {filter === 'latest'
+              {latestPosts &&
+                latestPosts.map((post) => {
+                  return (
+                    <li key={post.id}>
+                      <Post id={post.id} />
+                    </li>
+                  );
+                })}
+              {/* {filter === 'latest'
                 ? latestPosts.map((post) => {
                     return (
                       <li key={post.id}>
@@ -69,7 +78,7 @@ const HomePage = ({
                       </li>
                     );
                   })
-                : null}
+                : null} */}
               {filter === 'comments'
                 ? commentedPosts.map((post) => {
                     return (
