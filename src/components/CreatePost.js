@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { FaCode } from 'react-icons/fa';
 import { GoAlert } from 'react-icons/go';
 import { postPost } from '../redux/actions/data';
 import useOutsideClick from '../utils/helpers';
 
-const CreatePost = ({ dispatch, authedUser }) => {
+const CreatePost = ({ dispatch, user }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [rows, setRows] = useState(1);
   const [title, setTitle] = useState('');
@@ -15,7 +16,8 @@ const CreatePost = ({ dispatch, authedUser }) => {
   const [errorMessage, setErrorMessage] = useState(false);
 
   const node = useRef();
-
+  const history = useHistory();
+  
   useOutsideClick(node, () => {
     onInputBlur();
   });
@@ -37,8 +39,13 @@ const CreatePost = ({ dispatch, authedUser }) => {
   };
 
   const onInputFocus = () => {
-    setIsVisible(true);
-    setRows(5);
+    // Check if there is no authenticated user to prevent post to be created
+    if (user.authenticated === false) {
+      history.push('/login')
+    } else {
+      setIsVisible(true);
+      setRows(5);
+    }
   };
 
   const onInputBlur = () => {
@@ -151,9 +158,9 @@ const CreatePost = ({ dispatch, authedUser }) => {
   );
 };
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ user }) {
   return {
-    authedUser,
+    user,
   };
 }
 
