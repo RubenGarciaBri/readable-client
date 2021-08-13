@@ -94,7 +94,7 @@ const HomePage = ({
         <aside className='categoryPage-right'>
           <AsideMenu
             category='Home'
-            description='This is to front page of Readable. Here you can find all the latest posts and updates from the community.'
+            description='This is the front page of Readable. Here you can find all the latest posts and updates from the community.'
           />
         </aside>
       </div>

@@ -9,6 +9,7 @@ import { favPost, unfavPost, togglePostUpvote, togglePostDownvote } from '../../
 import { FaCommentAlt, FaRegStar, FaShareAlt, FaStar } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Post = ({ dispatch, post, opened, user }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -80,11 +81,33 @@ const Post = ({ dispatch, post, opened, user }) => {
 
   }, [user, post]);
 
-  const handleFav = () => {
-    if (isFaved === false) {
-      dispatch(favPost(id));
+  const handleUpvote = () => {
+    if (isLoggedIn === true) {
+      toast.error("You can't upvote your own posts")
     } else {
-      dispatch(unfavPost(id));
+      dispatch(togglePostUpvote(id))
+    } 
+  };
+
+  const handleDownvote = () => {
+    if (isLoggedIn === true) {
+      toast.error("You can't downvote your own posts")
+    } else {
+      dispatch(togglePostDownvote(id))
+    } 
+  };
+
+  const handleFav = () => {
+    // Check if the author is logged in
+    if (isLoggedIn === true) {
+      toast.error("You can't fav your own posts")
+    } else {
+      // Check if the post has been faved
+      if (isFaved === false) {
+        dispatch(favPost(id));
+      } else {
+        dispatch(unfavPost(id));
+      }
     }
   };
 
@@ -92,31 +115,25 @@ const Post = ({ dispatch, post, opened, user }) => {
     <div className='post shadow-slim'>
       <div className='post-left'>
         <div className='post-left__rating'>
-          <a
-            href='#'
+          <button
             className='post-left__rating-upvote'
-            onClick={() => {
-              dispatch(togglePostUpvote(id))
-            }}
+            onClick={handleUpvote}
           >
             <ImArrowUp
               style={{ color: hasUpvoted === true ? 'orange' : null }}
               className='post-left__rating-upvote__icon'
             />
-          </a>
+          </button>
           <span className='post-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? 'orange' : null }}>{voteScore}</span>
-          <a
-            href='#'
+          <button
             className='post-left__rating-downvote'
-            onClick={() => {
-              dispatch(togglePostDownvote(id))
-            }}
+            onClick={handleDownvote}
           >
             <ImArrowDown
               style={{ color: hasDownvoted === true ? 'orange' : null }}
               className='post-left__rating-downvote__icon'
             />
-          </a>
+          </button>
         </div>
       </div>
       <div className='post-right'>
@@ -152,14 +169,14 @@ const Post = ({ dispatch, post, opened, user }) => {
             </li>
             {!isLoggedIn ? (
               <li className='post-right__bottom-list__item'>
-                <a href='#' onClick={handleFav}>
+                <button className='post-right__bottom-list__item-favBtn' onClick={handleFav} >
                   {isFaved === true ? (
-                    <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
+                    <FaStar className='post-right__bottom-list__item-favBtn__starIcon post-right__bottom-list__item-favBtn__starIcon--active' />
                   ) : (
-                    <FaRegStar className='post-right__bottom-list__item-starIcon' />
+                    <FaRegStar className='post-right__bottom-list__item-favBtn__starIcon ' />
                   )}
                   {isFaved === true ? 'Unfav' : 'Fav'}
-                </a>
+                </button>
               </li>
             ) : null}
           </ul>
