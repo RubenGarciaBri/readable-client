@@ -72,14 +72,14 @@ const Comment = ({ data, user, dispatch }) => {
               <ImArrowDown className='comment-bottom__list-item__icon comment-bottom__list-item__icon--arrow' />
             </a>
           </li>
-          {!isLoggedIn ? (
+          {/* {!isLoggedIn ? (
             <li className='comment-bottom__list-item'>
               <a href='#' onClick={handleReply}>
                 <FaCommentAlt className='comment-bottom__list-item__icon comment-bottom__list-item__icon--comment' />{' '}
                 <span className='comment-bottom__list-item__reply'>Reply</span>
               </a>
             </li>
-          ) : null}
+          ) : null} */}
           {isLoggedIn ? (
             <li className='comment-bottom__list-item'>
               <a href='#' onClick={handleDelete}>
