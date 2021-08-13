@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   capitalizeFirstLetter,
   formatDate,
@@ -17,6 +18,8 @@ const Post = ({ dispatch, post, opened, user }) => {
   const [hasUpvoted, setHasUpvoted] = useState(false);
   const [hasDownvoted, setHasDownvoted] = useState(false);  
 
+  const history = useHistory();
+
   const {
     id,
     title,
@@ -32,6 +35,7 @@ const Post = ({ dispatch, post, opened, user }) => {
     downvotes,
     favs,
   } = post;
+  
 
   useEffect(() => {
     if (user.credentials.userName === author) {
@@ -82,31 +86,48 @@ const Post = ({ dispatch, post, opened, user }) => {
   }, [user, post]);
 
   const handleUpvote = () => {
-    if (isLoggedIn === true) {
-      toast.error("You can't upvote your own posts")
+    // Check if there's an authenticated user
+    if (user.authenticated === false) {
+      history.push('/login');
     } else {
-      dispatch(togglePostUpvote(id))
-    } 
+      // Check if the author is logged in
+      if (isLoggedIn === true) {
+        toast.error("You can't upvote your own posts")
+      } else {
+        dispatch(togglePostUpvote(id))
+      } 
+    }
   };
 
   const handleDownvote = () => {
-    if (isLoggedIn === true) {
-      toast.error("You can't downvote your own posts")
+    // Check if there's an authenticated user
+    if (user.authenticated === false) {
+      history.push('/login');
     } else {
-      dispatch(togglePostDownvote(id))
-    } 
+      // Check if the author is logged in
+      if (isLoggedIn === true) {
+        toast.error("You can't downvote your own posts")
+      } else {
+        dispatch(togglePostDownvote(id))
+      } 
+    }
   };
 
   const handleFav = () => {
-    // Check if the author is logged in
-    if (isLoggedIn === true) {
-      toast.error("You can't fav your own posts")
+     // Check if there's an authenticated user
+    if (user.authenticated === false) {
+      history.push('/login');
     } else {
-      // Check if the post has been faved
-      if (isFaved === false) {
-        dispatch(favPost(id));
+      // Check if the author is logged in
+      if (isLoggedIn === true) {
+        toast.error("You can't fav your own posts")
       } else {
-        dispatch(unfavPost(id));
+        // Check if the post has been faved and perform the correct action
+        if (isFaved === false) {
+          dispatch(favPost(id));
+        } else {
+          dispatch(unfavPost(id));
+        }
       }
     }
   };
