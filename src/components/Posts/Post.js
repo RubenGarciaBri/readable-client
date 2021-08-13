@@ -12,7 +12,7 @@ import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Post = ({ dispatch, post, opened, user }) => {
+const Post = ({ dispatch, post, user }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFaved, setIsFaved] = useState(false);
   const [hasUpvoted, setHasUpvoted] = useState(false);
@@ -169,10 +169,10 @@ const Post = ({ dispatch, post, opened, user }) => {
               <Link to={`/profile/${author}`}>{author}</Link>
             </li>
             <li className='post-right__top-list__item'>
-              <a href='#'>
+              <Link to={`/${category}`}>
                 in <b>{capitalizeFirstLetter(category)}</b> at{' '}
                 {formatDate(createdAt)}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

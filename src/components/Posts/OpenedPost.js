@@ -14,8 +14,10 @@ import {
 } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import NewComment from './NewComment';
 import Comment from './Comment';
+
 
 const OpenedPost = ({ user, dispatch, post }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -90,13 +92,52 @@ const OpenedPost = ({ user, dispatch, post }) => {
 
   }, [user, post]);
 
-  const handleFav = () => {
-    if (isFaved === false) {
-      dispatch(favPost(id));
+  const handleUpvote = () => {
+    // Check if there's an authenticated user
+    if (user.authenticated === false) {
+      history.push('/login');
     } else {
-      dispatch(unfavPost(id));
+      // Check if the author is logged in
+      if (isLoggedIn === true) {
+        toast.error("You can't upvote your own posts")
+      } else {
+        dispatch(togglePostUpvote(id))
+      } 
     }
   };
+
+  const handleDownvote = () => {
+    // Check if there's an authenticated user
+    if (user.authenticated === false) {
+      history.push('/login');
+    } else {
+      // Check if the author is logged in
+      if (isLoggedIn === true) {
+        toast.error("You can't downvote your own posts")
+      } else {
+        dispatch(togglePostDownvote(id))
+      } 
+    }
+  };
+
+  const handleFav = () => {
+    // Check if there's an authenticated user
+   if (user.authenticated === false) {
+     history.push('/login');
+   } else {
+     // Check if the author is logged in
+     if (isLoggedIn === true) {
+       toast.error("You can't fav your own posts")
+     } else {
+       // Check if the post has been faved and perform the correct action
+       if (isFaved === false) {
+         dispatch(favPost(id));
+       } else {
+         dispatch(unfavPost(id));
+       }
+     }
+   }
+ };
 
   const handleDelete = () => {
     dispatch(deletePost(id));
@@ -107,31 +148,25 @@ const OpenedPost = ({ user, dispatch, post }) => {
     <div className='postOpened shadow-slim'>
       <div className='postOpened-left'>
         <div className='postOpened-left__rating'>
-          <a
-            href='#'
+          <button
             className='postOpened-left__rating-upvote'
-            onClick={() => {
-              dispatch(togglePostUpvote(id))
-            }}
+            onClick={handleUpvote}
           >
             <ImArrowUp
               style={{ color: hasUpvoted === true ? 'orange' : null }}
               className='postOpened-left__rating-upvote__icon'
             />
-          </a>
+          </button>
           <span className='postOpened-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? 'orange' : null }}>{voteScore}</span>
-          <a
-            href='#'
+          <button
             className='postOpened-left__rating-downvote'
-            onClick={() => {
-              dispatch(togglePostDownvote(id))
-            }}
+            onClick={handleDownvote}
           >
             <ImArrowDown
               style={{ color: hasDownvoted === true ? 'orange' : null }}
               className='postOpened-left__rating-downvote__icon'
             />
-          </a>
+          </button>
         </div>
       </div>
       <div className='postOpened-right'>
@@ -146,10 +181,10 @@ const OpenedPost = ({ user, dispatch, post }) => {
               <Link to={`/profile/${author}`}>{author}</Link>
             </li>
             <li className='postOpened-right__top-list__item'>
-              <a href='#'>
+              <Link to={`/${category}`}>
                 in <b>{capitalizeFirstLetter(category)}</b> at{' '}
                 {formatDate(createdAt)}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -160,34 +195,39 @@ const OpenedPost = ({ user, dispatch, post }) => {
         <div className='postOpened-right__bottom'>
           <ul className='postOpened-right__bottom-list'>
             <li className='postOpened-right__bottom-list__item'>
-              <a href='#'>
+              <Link to={`/posts/${id}`}>
                 <FaCommentAlt className='postOpened-right__bottom-list__item-icon' />{' '}
                 {commentCount} comments
-              </a>
+              </Link>
             </li>
             {!isLoggedIn ? (
               <li className='postOpened-right__bottom-list__item'>
-                <a href='#' onClick={handleFav}>
+                <button onClick={handleFav} className='postOpened-right__bottom-list__item-favBtn'>
                   {isFaved === true ? (
-                    <FaStar className='post-right__bottom-list__item-starIcon post-right__bottom-list__item-starIcon--active' />
+                    <FaStar className='postOpened-right__bottom-list__item-favBtn__starIcon postOpened-right__bottom-list__item-favBtn__starIcon--active' />
                   ) : (
-                    <FaRegStar className='post-right__bottom-list__item-starIcon' />
+                    <FaRegStar className='postOpened-right__bottom-list__item-favBtn__starIcon' />
                   )}
                   {isFaved === true ? 'Unfav' : 'Fav'}
-                </a>
+                </button>
               </li>
             ) : null}
             {isLoggedIn ? (
               <li className='postOpened-right__bottom-list__item postOpened-right__bottom-list__item--delete'>
-                <a href='#' onClick={handleDelete}>
+                <button onClick={handleDelete}>
                   <FaTrashAlt className='post-right__bottom-list__item-deleteIcon' />{' '}
                   Delete
-                </a>
+                </button>
               </li>
             ) : null}
           </ul>
         </div>
-        <NewComment id={id} />
+        {
+          // Only show New Comment component if there is an authenticated user
+          user.authenticated !== false ? (
+            <NewComment id={id} />
+          ) : null
+        }
         <div className='comment-section'>
           <ul className='comment-list'>
             {comments.length > 0
