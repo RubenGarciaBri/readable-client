@@ -3,6 +3,7 @@ import Nav from '../components/NavBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { uploadProfileImage } from '../redux/actions/user';
+import Pagination from '../components/Pagination'
 import { updateUserDetails } from '../redux/actions/user';
 import { FaPen, FaCheck, FaCalendarAlt } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
@@ -21,6 +22,16 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
   const [location, setLocation] = useState('');
   const [isBioOpen, setIsBioOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   useEffect(() => {
     if (profileUser.userName === user.credentials.userName) {
@@ -111,9 +122,7 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
                 />
               )}
             </button>
-          </div>
-
-          
+          </div>          
           <div>
             {isBioOpen ? (
               <input
@@ -173,7 +182,7 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
         <div className='profileContent'>
           <h4 className='profileContent-title'>Latest Posts</h4>
           <ul className='profileContent-list'>
-            {posts.map((post) => {
+            {currentPosts.map((post) => {
               return (
                 <li key={post.id} className='profileContent-list__item'>
                   <Link
@@ -199,6 +208,14 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
               );
             })}
           </ul>
+          {posts.length > 5 ? (
+            <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={posts.length}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+          ) : null}
         </div>
       </div>
     </div>
