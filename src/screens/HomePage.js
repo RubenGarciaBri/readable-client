@@ -9,31 +9,35 @@ import AsideMenu from '../components/AsideMenu';
 import AsideCategories from '../components/AsideCategories';
 import CreatePost from '../components/CreatePost';
 import FilterBar from '../components/FilterBar';
+import Pagination from '../components/Pagination'
 import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
 import { nestedIdObjectToArray } from '../utils/helpers';
 import { IoNotificationsCircleOutline } from 'react-icons/io5';
 
 const HomePage = ({
-  posts,
-  latestPosts,
-  ratedPosts,
-  commentedPosts,
+  postsArr,
   loading,
 }) => {
   const [filter, setFilter] = useState('latest');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
 
   const history = useHistory();
+
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = postsArr.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const spinnerStyles = css`
     display: block;
     margin: 50px auto;
     text-align: center;
   `;
-
-  // console.log('Latest: ', latestPosts);
-  // console.log('Rating: ', ratedPosts);
-  // console.log('Commented: ', commentedPosts);
 
   const onSelectChange = (e) => {
     setFilter(e.target.value);
@@ -53,43 +57,44 @@ const HomePage = ({
             <BeatLoader css={spinnerStyles} loading />
           ) : (
             <ul>
-              {latestPosts &&
-                latestPosts.map((post) => {
-                  return (
-                    <li key={post.id}>
-                      <Post id={post.id} />
-                    </li>
-                  );
-                })}
-              {/* {filter === 'latest'
-                ? latestPosts.map((post) => {
+              {filter === 'latest'
+                ? currentPosts.sort(
+                  (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                ).map((post) => {
                     return (
                       <li key={post.id}>
                         <Post id={post.id} />
                       </li>
                     );
                   })
-                : null}
-              {filter === 'rating'
-                ? ratedPosts.map((post) => {
+                : filter === 'rating'
+                ? currentPosts.sort((a, b) => b.voteScore - a.voteScore)
+                .map((post) => {
                     return (
                       <li key={post.id}>
                         <Post id={post.id} />
                       </li>
                     );
                   })
-                : null} */}
-              {filter === 'comments'
-                ? commentedPosts.map((post) => {
+                : currentPosts.sort(
+                  (a, b) => b.commentCount - a.commentCount
+                ).map((post) => {
                     return (
                       <li key={post.id}>
                         <Post id={post.id} />
                       </li>
                     );
-                  })
-                : null}
-            </ul>
+                  })}
+            </ul>  
           )}
+          {postsArr.length > 10 ? (
+            <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={postsArr.length}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+          ) : null} 
         </main>
         <aside className='categoryPage-right'>
           <AsideMenu
@@ -106,19 +111,8 @@ function mapStateToProps({ user, data }) {
   // Turn nested object into array and sort by available options
   const postsArr = nestedIdObjectToArray(data.posts);
 
-  const latestPosts = postsArr.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-  const ratedPosts = postsArr.sort((a, b) => b.voteScore - a.voteScore);
-  const commentedPosts = postsArr.sort(
-    (a, b) => b.commentCount - a.commentCount
-  );
-
   return {
-    latestPosts,
-    ratedPosts,
-    commentedPosts,
-    posts: data.posts,
+    postsArr,
     authenticated: user.authenticated,
     loading: data.loading,
   };

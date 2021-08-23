@@ -1,0 +1,31 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 3rem;
+}
+
+.page-item {
+  
+  .page-link {
+    height: 35px;
+    width: 35px;
+    font-size: 1.4rem;
+    color: #aaa;
+    font-weight: 600;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: .3rem;
+
+    &--active {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+  
+    &:hover {
+      // color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+  }
+}

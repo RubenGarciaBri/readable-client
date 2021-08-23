@@ -18,7 +18,9 @@ import {
   SUBMIT_COMMENT,
   DELETE_COMMENT,
   TOGGLE_POST_UPVOTE,
-  TOGGLE_POST_DOWNVOTE
+  TOGGLE_POST_DOWNVOTE,
+  TOGGLE_COMMENT_UPVOTE,
+  TOGGLE_COMMENT_DOWNVOTE
 } from '../types';
 
 const options = {
@@ -114,6 +116,32 @@ export const unfavPost = (postId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UNFAV_POST,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// Toggle comment upvote
+export const toggleCommentUpvote = (commentId) => (dispatch) => {
+  axios
+    .post(`/comment/${commentId}/toggleCommentUpvote`)
+    .then((res) => {
+      dispatch({
+        type: TOGGLE_COMMENT_UPVOTE,
+        payload: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+// Toggle comment downvote
+export const toggleCommentDownvote = (commentId) => (dispatch) => {
+  axios
+    .post(`/comment/${commentId}/toggleCommentDownvote`)
+    .then((res) => {
+      dispatch({
+        type: TOGGLE_COMMENT_DOWNVOTE,
         payload: res.data,
       });
     })

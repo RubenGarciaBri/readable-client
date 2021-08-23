@@ -10,6 +10,8 @@ import {
   DELETE_COMMENT,
   TOGGLE_POST_UPVOTE,
   TOGGLE_POST_DOWNVOTE,
+  TOGGLE_COMMENT_UPVOTE,
+  TOGGLE_COMMENT_DOWNVOTE
 } from '../types';
 import {
   nestedIdObjectToArray,
@@ -136,118 +138,29 @@ export default function data(state = initialState, action) {
         },
       };
 
-    // case TOGGLE_POST_UPVOTE:
-    //   const userNameList = [];
+      case TOGGLE_COMMENT_UPVOTE:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            comments: state.posts[action.payload.postId].comments.concat(action.payload)        
+          },
+        },
+      };
 
-    //   action.payload.forEach((upvote) => {
-    //     userNameList.push(upvote.userName);
-    //   });
-
-    //   // Upvoted and not downvoted previously
-    //   if (
-    //     userNameList.includes(action.payload.authedUser.id) &&
-    //     !state[action.payload.id].downvotes.includes(
-    //       action.payload.authedUser.id
-    //     )
-    //   ) {
-    //     return {
-    //       ...state,
-    //       [action.payload.id]: {
-    //         ...state[action.payload.id],
-    //         voteScore: state[action.payload.id].voteScore - 1,
-    //         upvotes: state[action.payload.id].upvotes.filter(
-    //           (user) => user !== action.payload.authedUser.id
-    //         ),
-    //       },
-    //     };
-    //   }
-    //   // Upvoted and downvoted previously
-    //   else if (
-    //     !state[action.payload.id].upvotes.includes(
-    //       action.payload.authedUser.id
-    //     ) &&
-    //     state[action.payload.id].downvotes.includes(
-    //       action.payload.authedUser.id
-    //     )
-    //   ) {
-    //     return {
-    //       ...state,
-    //       [action.payload.id]: {
-    //         ...state[action.payload.id],
-    //         voteScore: state[action.payload.id].voteScore + 2,
-    //         downvotes: state[action.payload.id].downvotes.filter(
-    //           (user) => user !== action.payload.authedUser.id
-    //         ),
-    //         upvotes: state[action.payload.id].upvotes.concat(
-    //           action.payload.authedUser.id
-    //         ),
-    //       },
-    //     };
-    //   }
-    //   // Upvote post
-    //   else {
-    //     return {
-    //       ...state,
-    //       [action.payload.id]: {
-    //         ...state[action.payload.id],
-    //         voteScore: state[action.payload.id].voteScore + 1,
-    //         upvotes: state[action.payload.id].upvotes.concat(
-    //           action.payload.authedUser.id
-    //         ),
-    //       },
-    //     };
-    //   }
-
-    // case TOGGLE_POST_DOWNVOTE:
-    //   // Downvoted and not upvoted previously
-    //   if (
-    //     state[action.payload.id].downvotes.includes(
-    //       action.payload.authedUser.id
-    //     ) &&
-    //     !state[action.payload.id].upvotes.includes(action.payload.authedUser.id)
-    //   ) {
-    //     return {
-    //       ...state,
-    //       [action.payload.id]: {
-    //         ...state[action.payload.id],
-    //         voteScore: state[action.payload.id].voteScore + 1,
-    //         downvotes: state[action.payload.id].downvotes.filter(
-    //           (user) => user !== action.payload.authedUser.id
-    //         ),
-    //       },
-    //     };
-    //   }
-    //   // Downvoted and upvoted previously
-    //   else if (
-    //     state[action.payload.id].upvotes.includes(action.payload.authedUser.id)
-    //   ) {
-    //     return {
-    //       ...state,
-    //       [action.payload.id]: {
-    //         ...state[action.payload.id],
-    //         voteScore: state[action.payload.id].voteScore - 2,
-    //         upvotes: state[action.payload.id].upvotes.filter(
-    //           (user) => user !== action.payload.authedUser.id
-    //         ),
-    //         downvotes: state[action.payload.id].downvotes.concat(
-    //           action.payload.authedUser.id
-    //         ),
-    //       },
-    //     };
-    //   }
-    //   // Downvote post
-    //   else {
-    //     return {
-    //       ...state,
-    //       [action.payload.id]: {
-    //         ...state[action.payload.id],
-    //         voteScore: state[action.payload.id].voteScore - 1,
-    //         downvotes: state[action.payload.id].downvotes.concat(
-    //           action.payload.authedUser.id
-    //         ),
-    //       },
-    //     };
-    //   }
+    case TOGGLE_COMMENT_DOWNVOTE:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            comments: state.posts[action.payload.postId].comments.concat(action.payload)        
+          },
+        },
+      };
 
     default:
       return state;
