@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { formatDate } from '../../utils/helpers';
 import { FaCommentAlt, FaTimesCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import NewComment from './NewComment';
 import { deleteComment } from '../../redux/actions/data'
@@ -31,8 +32,11 @@ const Comment = ({ data, user, dispatch }) => {
   return (
     <li className='comment'>
       <div className='comment-top'>
-        <img src={userImage} className='comment-top__img' />
-        <span className='comment-top__author'>{userName}</span>
+        <Link to={`/profile/${userName}`}>
+          <img src={userImage} className='comment-top__img' />
+        </Link>
+        <Link to={`/profile/${userName}`} className='comment-top__author'>{userName}
+        </Link>
         <span className='comment-top__timestamp'>{formatDate(createdAt)}</span>
       </div>
       <div className='comment-middle'>
@@ -41,7 +45,8 @@ const Comment = ({ data, user, dispatch }) => {
       </div>
       <div className='comment-bottom'>
         <ul className='comment-bottom__list'>
-          <li className='comment-bottom__list-item'>
+          {/* Upvote and downvote funcitonality disabled */}
+          {/* <li className='comment-bottom__list-item'>
             <a
               href='#'
               onClick={() => {
@@ -71,7 +76,7 @@ const Comment = ({ data, user, dispatch }) => {
             >
               <ImArrowDown className='comment-bottom__list-item__icon comment-bottom__list-item__icon--arrow' />
             </a>
-          </li>
+          </li> */}
           {/* {!isLoggedIn ? (
             <li className='comment-bottom__list-item'>
               <a href='#' onClick={handleReply}>
@@ -82,10 +87,10 @@ const Comment = ({ data, user, dispatch }) => {
           ) : null} */}
           {isLoggedIn ? (
             <li className='comment-bottom__list-item'>
-              <a href='#' onClick={handleDelete}>
+              <button onClick={handleDelete}>
                 <FaTimesCircle className='comment-bottom__list-item__icon comment-bottom__list-item__icon--delete' />{' '}
                 <span className='comment-bottom__list-item__delete'> Delete</span>
-              </a>
+              </button>
             </li>
           ) : null}
         </ul>

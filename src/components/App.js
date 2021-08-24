@@ -68,9 +68,10 @@ function App({ dispatch }) {
   );
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, data }) {
   return {
     authedUser,
+    isLoaded: data.loading
   };
 }
 

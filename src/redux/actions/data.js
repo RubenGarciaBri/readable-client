@@ -176,6 +176,7 @@ export const togglePostDownvote = (postId) => (dispatch) => {
 
 // Submit a comment
 export const submitComment = (postId, commentData) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
   axios
     .post(`/post/${postId}/comment`, commentData)
     .then((res) => {

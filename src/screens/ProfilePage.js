@@ -16,7 +16,7 @@ import {
   createExcerpt,
 } from '../utils/helpers';
 
-const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
+const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
@@ -25,31 +25,46 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
+  let userPosts;
+
+  const profileUser = data.users && data.users.length > 0 ? data.users[userName] : ''
+
+  const postsArray = nestedIdObjectToArray(data.posts);
+
+  userPosts = postsArray.filter(
+    (post) => post.author === profileUser.userName)
+
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = userPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
-
+  
   useEffect(() => {
-    if (profileUser.userName === user.credentials.userName) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
+    if (profileUser) {
+      if (profileUser.userName === user.credentials.userName) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
     }
   }, [profileUser]);
 
   useEffect(() => {
-    setBio(profileUser.bio);
-    setLocation(profileUser.location);
-  }, [profileUser.bio, profileUser.location]);
+    if (profileUser) {
+      setBio(profileUser.bio);
+      setLocation(profileUser.location);
+    }
+  }, [profileUser]);
 
-  console.log(isLoggedIn);
-
-  const { email, createdAt, imageUrl, userName } = profileUser;
-
+  // const { email, createdAt, imageUrl, userName } = profileUser;
+  const email = profileUser && profileUser.length > 0 ? profileUser.email : ''
+  const createdAt = profileUser && profileUser.length > 0 ? profileUser.createdAt : ''
+  const imageUrl = profileUser && profileUser.length > 0 ? profileUser.imageUrl : ''
+  const userName = profileUser && profileUser.length > 0 ? profileUser.userName : ''
+  
   const handleImageChange = (e) => {
     const image = e.target.files[0];
     const formData = new FormData();
@@ -83,71 +98,71 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
 
   const loggedInMenu = () => {
     return (
-      <div className='profileCard'>
-        <div className='profileCard-top'>
-          <div className='profileCard-top__imgWrapper'>
-            <img className='shadow-slim' src={imageUrl} />
-            <input
-              hidden='hidden'
-              type='file'
-              id='imageUpload'
-              onChange={handleImageChange}
-            />
-            <button className='profileCard-top__imgWrapper-btn'>
-              <FaPen size={14} onClick={handleImageClick} />
-            </button>
-          </div>
-          <h4 className='profileCard-top__name'>{userName}</h4>
-          <p className='profileCard-top__since'>
-            Member since {formatDateYearOnly(createdAt)}
-          </p>
-          <div>
-            {isLocationOpen ? (
+        <div className='profileCard'>
+          <div className='profileCard-top'>
+            <div className='profileCard-top__imgWrapper'>
+              <img className='shadow-slim' src={imageUrl} />
               <input
-                type='text'
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className='profileCard-top__input'
+                hidden='hidden'
+                type='file'
+                id='imageUpload'
+                onChange={handleImageChange}
               />
-            ) : (
-              <p className='profileCard-top__location'>{location}</p>
-            )}
-            <button className='profileCard-top__editBtn'>
+              <button className='profileCard-top__imgWrapper-btn'>
+                <FaPen size={14} onClick={handleImageClick} />
+              </button>
+            </div>
+            <h4 className='profileCard-top__name'>{userName}</h4>
+            <p className='profileCard-top__since'>
+              Member since {formatDateYearOnly(createdAt)}
+            </p>
+            <div>
               {isLocationOpen ? (
-                <FaCheck size={14} onClick={handleLocationUpdate} />
-              ) : (
-                <FaPen
-                  size={14}
-                  onClick={() => setIsLocationOpen(!isLocationOpen)}
+                <input
+                  type='text'
+                  value={isLocationOpen}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className='profileCard-top__input'
                 />
-              )}
-            </button>
-          </div>          
-          <div>
-            {isBioOpen ? (
-              <input
-                type='text'
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                className='profileCard-top__input'
-              />
-            ) : (
-              <p className='profileCard-top__bio'>{bio}</p>
-            )}
-            <button className='profileCard-top__editBtn'>
-              {isBioOpen ? (
-                <FaCheck size={14} onClick={handleBioUpdate} />
               ) : (
-                <FaPen size={14} onClick={() => setIsBioOpen(!isBioOpen)} />
+                <p className='profileCard-top__location'>{location}</p>
               )}
-            </button>
+              <button className='profileCard-top__editBtn'>
+                {isLocationOpen ? (
+                  <FaCheck size={14} onClick={handleLocationUpdate} />
+                ) : (
+                  <FaPen
+                    size={14}
+                    onClick={() => setIsLocationOpen(!isLocationOpen)}
+                  />
+                )}
+              </button>
+            </div>          
+            <div>
+              {isBioOpen ? (
+                <input
+                  type='text'
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className='profileCard-top__input'
+                />
+              ) : (
+                <p className='profileCard-top__bio'>{bio}</p>
+              )}
+              <button className='profileCard-top__editBtn'>
+                {isBioOpen ? (
+                  <FaCheck size={14} onClick={handleBioUpdate} />
+                ) : (
+                  <FaPen size={14} onClick={() => setIsBioOpen(!isBioOpen)} />
+                )}
+              </button>
+            </div>
+            {/* <button className='profileCard-top__deleteAccount'>
+              Delete Account
+            </button> */}
           </div>
-          {/* <button className='profileCard-top__deleteAccount'>
-            Delete Account
-          </button> */}
         </div>
-      </div>
-    );
+      )
   };
 
   const loggedOutMenu = () => {
@@ -170,11 +185,13 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
           </div>
         </div>
       </div>
-    );
+      )
   };
 
   return (
-    <div className='profilePage'>
+    isLoaded === false ? null 
+    : (
+      <div className='profilePage'>
       <Nav />
       <div className='profilePage-banner'></div>
       <div className='profilePage-main'>
@@ -219,22 +236,19 @@ const ProfilePage = ({ user, posts, dispatch, profileUser }) => {
         </div>
       </div>
     </div>
-  );
+    )   
+  )
 };
 
-function mapStateToProps({ user, data }, props) {
+function mapStateToProps({ user, data, UI }, props) {
   const { userName } = props.match.params;
-  const profileUser = data.users[userName];
 
-  const postsArray = nestedIdObjectToArray(data.posts);
-  const userPosts = postsArray.filter(
-    (post) => post.author === profileUser.userName
-  );
+  
 
   return {
-    posts: userPosts,
     user,
-    profileUser,
+    isLoaded: data.loading,
+    data
   };
 }
 

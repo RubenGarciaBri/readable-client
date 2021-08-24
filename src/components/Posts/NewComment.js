@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { GoAlert } from 'react-icons/go';
+import { BeatLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 import { submitComment } from '../../redux/actions/data';
 
-const NewComment = ({ dispatch, id }) => {
+const NewComment = ({ dispatch, id, UI }) => {
   const [body, setBody] = useState('');
   const [errorMessage, setErrorMessage] = useState(false);
 
@@ -13,13 +15,22 @@ const NewComment = ({ dispatch, id }) => {
     setBody('')
   };
 
+  const spinnerStyles = css`
+    display: block;
+    margin: 50px auto;
+    text-align: center;
+  `;
+
   const commentData = {
     body
   }
 
   return (
     <div className='newComment'>
-      <form className='newComment__form' onSubmit={(e) => onFormSubmit(e)}>
+      {UI.loading === true ? (
+        <BeatLoader css={spinnerStyles} loading />
+      ) : (
+        <form className='newComment__form' onSubmit={(e) => onFormSubmit(e)}>
         <textarea
           value={body}
           required={true}
@@ -39,13 +50,15 @@ const NewComment = ({ dispatch, id }) => {
           </button>
         </>
       </form>
+      )}
     </div>
   );
 };
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, UI }) {
   return {
     authedUser,
+    UI
   };
 }
 
