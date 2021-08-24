@@ -194,6 +194,11 @@
               font-size: 1.4rem;
               color: #222;
 
+              & svg {
+                margin-bottom: -.4rem;
+                margin-right: .5rem;
+              }
+
               &--unread {
                 color: #0275d8;
                 font-weight: 600;
