@@ -23,6 +23,10 @@
         display: flex;
       }
 
+      @include respond(phone-small) {
+        flex-direction: column;
+      }
+
       &__item {
         @include respond(tab-port) {
           flex-grow: 1;

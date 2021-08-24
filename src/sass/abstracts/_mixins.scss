@@ -1,6 +1,14 @@
 // Media Queries Manager
 // 1em = 16px
 @mixin respond($breakpoint) {
+  @if $breakpoint==phone-small {
+    @media (max-width: 31.25em) {
+      @content
+    }
+
+    ; // 500px
+  }
+
   @if $breakpoint==phone {
     @media (max-width: 37.5em) {
       @content
