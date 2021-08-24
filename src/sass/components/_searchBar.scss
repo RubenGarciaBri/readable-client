@@ -1,12 +1,16 @@
 .searchBar {
   position: relative;
 
+  @include respond(phone) {
+    width: 90%;
+    margin: 0 auto;
+  }
+
   &__input {
     width: 100%;
     font-family: 'Open Sans',
     sans-serif;
     font-size: 1.4rem;
-    width: 100%;
     padding: 1rem 1.5rem;
     background: #eee;
     border: 1px solid #eee;
@@ -16,8 +20,12 @@
 
   &__results {    
     position: absolute;
-    width: 75rem;
+    max-width: 75rem;
     background: #fff;
+    
+    @include respond(phone) {
+      left: -10rem;
+    }
 
     &-item {
 
@@ -67,3 +75,24 @@
     }
   }
 }
+
+// .searchBarButton {
+//   width: 4rem;
+//   height: 4rem;
+//   border-radius: 25rem;
+//   position: relative;
+//   background: #eee;
+
+//   &:hover {
+//     filter: brightness(0.95);
+//   }
+
+//   &__icon {
+//     font-size: 1.8rem;
+//     color: #222;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     position: absolute;
+//    }
+// }

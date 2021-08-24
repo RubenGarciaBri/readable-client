@@ -7,6 +7,7 @@ import {
   FaRegStar,
   FaShareAlt,
   FaStar,
+  FaSearch
 } from 'react-icons/fa';
 import useOutsideClick from '../../utils/helpers';
 import algoliasearch from 'algoliasearch';
@@ -19,6 +20,7 @@ const algoliaIndexName = 'posts';
 const SearchBar = () => {
   const [term, setTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  // const [isOpen, setIsOpen] = useState(false);
 
   const node = useRef();
 
@@ -56,54 +58,76 @@ const SearchBar = () => {
   }, [term, throttledSearch]);
 
   return (
-    <form ref={node} action='#' className='searchBar'>
-      <input
-        required={true}
-        type='text'
-        value={term}
-        placeholder='Search posts...'
-        className='searchBar__input'
-        onChange={(e) => setTerm(e.target.value)}
-      />
-      <ul
-        className={`searchBar__results ${
-          term.length > 0 ? 'searchBar__results--hidden' : ''
-        }`}
+    <>
+      {/* Default Desktop */}
+      <form
+        ref={node}
+        action='#'
+        className='searchBar'
       >
-        {term.length >= 2
-          ? searchResults.map((item) => {
-              return (
-                <li key={item.objectID} className='searchBar__results-item'>
-                  <Link
-                    to={`/posts/${item.objectID}`}
-                    className='searchBar__results-item__link'
-                  >
-                    <div className='searchBar__results-item__link-left'>
-                      <span className='searchBar__results-item__link-left__title'>
-                        {item.title}
-                      </span>
-                      <div className='searchBar__results-item__link-left__sub'>
-                        <span className='searchBar__results-item__link-left__sub-category'>
-                          /{item.category}
+        {/* Mobile Button */}
+        {/* <div
+        style={{
+          position: 'relative',
+        }}
+        >
+          <button
+            className='searchBarButton'
+            onClick={() => setIsOpen(true)}
+            ref={node2}
+          >
+            <FaSearch className='searchBarButton__icon' />
+          </button>
+        </div> */}
+
+        <input
+          required={true}
+          type='text'
+          value={term}
+          placeholder='Search posts...'
+          className='searchBar__input'
+          onChange={(e) => setTerm(e.target.value)}
+        />
+        <ul
+          className={`searchBar__results ${
+            term.length > 0 ? 'searchBar__results--hidden' : ''
+          }`}
+        >
+          {term.length >= 2
+            ? searchResults.map((item) => {
+                return (
+                  <li key={item.objectID} className='searchBar__results-item'>
+                    <Link
+                      to={`/posts/${item.objectID}`}
+                      className='searchBar__results-item__link'
+                    >
+                      <div className='searchBar__results-item__link-left'>
+                        <span className='searchBar__results-item__link-left__title'>
+                          {item.title}
                         </span>
+                        <div className='searchBar__results-item__link-left__sub'>
+                          <span className='searchBar__results-item__link-left__sub-category'>
+                            /{item.category}
+                          </span>
+                          <span>
+                            <FaCommentAlt className='searchBar__results-item__link-left__sub-icon' />{' '}
+                            {item.commentCount}
+                          </span>
+                        </div>
+                      </div>
+                      <div className='searchBar__results-item__link-right'>
                         <span>
-                          <FaCommentAlt className='searchBar__results-item__link-left__sub-icon' />{' '}
-                          {item.commentCount}
+                          {item.author} | {formatDate(item.createdAt)}
                         </span>
                       </div>
-                    </div>
-                    <div className='searchBar__results-item__link-right'>
-                      <span>
-                        {item.author} | {formatDate(item.createdAt)}
-                      </span>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })
-          : null}
-      </ul>
-    </form>
+                    </Link>
+                  </li>
+                )
+              })
+            : null}
+        </ul>
+      </form>
+    </>
   );
 };
 

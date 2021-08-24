@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import SearchBar from './SearchBar';
 import NotificationsDropdown from './NotificationsDropdown';
 import SignoutButton from './SignoutButton';
+import MobileMenu from './MobileMenu';
 import ProfileLink from './ProfileLink';
 import LoginButton from './LoginButton';
 import SignupButton from './SignupButton';
@@ -18,34 +19,63 @@ const Nav = ({ authenticated, loading }) => {
   `;
 
   return (
-    <nav className='navbar'>
-      <div className='navbar__container main-container'>
-        <div className='navbar__left'>
+    <>
+    {/* Default Navbar Desktop */}
+      <nav className='navbar'>
+        <div className='navbar__container main-container'>
+          <div className='navbar__left'>
+            <a className='logo' href='/'>
+              Readable
+            </a>
+          </div>
+          <div className='navbar__center'>
+            <SearchBar />
+          </div>
+          <div className='navbar__right'>
+            {loading === true ? (
+              <BeatLoader css={spinnerStyles} size={10} loading />
+            ) : authenticated === true ? (
+              <>
+                <ProfileLink />
+                <NotificationsDropdown />
+                <SignoutButton />
+              </>
+            ) : (
+              <>
+                <LoginButton />
+                <SignupButton />
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* Navbar Mobile */}
+      <nav className='navbarMobile'>
+      <div className='navbarMobile__container main-container'>
+        <div className='navbarMobile__left'>
           <a className='logo' href='/'>
             Readable
           </a>
         </div>
-        <div className='navbar__center'>
+        <div className='navbarMobile__center'>
           <SearchBar />
         </div>
-        <div className='navbar__right'>
+        <div className='navbarMobile__right'>
           {loading === true ? (
-             <BeatLoader css={spinnerStyles} size={10} loading />
+            <BeatLoader css={spinnerStyles} size={10} loading />
           ) : authenticated === true ? (
             <>
-              <ProfileLink />
               <NotificationsDropdown />
-              <SignoutButton />
+              <MobileMenu authenticated={true} />
             </>
           ) : (
-            <>
-              <LoginButton />
-              <SignupButton />
-            </>
+            <MobileMenu authenticated={false} />
           )}
         </div>
       </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 
