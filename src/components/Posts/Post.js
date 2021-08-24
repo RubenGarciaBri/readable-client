@@ -141,17 +141,17 @@ const Post = ({ dispatch, post, user }) => {
             onClick={handleUpvote}
           >
             <ImArrowUp
-              style={{ color: hasUpvoted === true ? 'orange' : null }}
+              style={{ color: hasUpvoted === true ? '#ff4500' : null }}
               className='post-left__rating-upvote__icon'
             />
           </button>
-          <span className='post-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? 'orange' : null }}>{voteScore}</span>
+          <span className='post-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? '#ff4500' : null }}>{voteScore}</span>
           <button
             className='post-left__rating-downvote'
             onClick={handleDownvote}
           >
             <ImArrowDown
-              style={{ color: hasDownvoted === true ? 'orange' : null }}
+              style={{ color: hasDownvoted === true ? '#ff4500' : null }}
               className='post-left__rating-downvote__icon'
             />
           </button>

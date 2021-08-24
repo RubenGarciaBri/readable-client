@@ -153,17 +153,17 @@ const OpenedPost = ({ user, dispatch, post }) => {
             onClick={handleUpvote}
           >
             <ImArrowUp
-              style={{ color: hasUpvoted === true ? 'orange' : null }}
+              style={{ color: hasUpvoted === true ? '#ff4500' : null }}
               className='postOpened-left__rating-upvote__icon'
             />
           </button>
-          <span className='postOpened-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? 'orange' : null }}>{voteScore}</span>
+          <span className='postOpened-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? '#ff4500' : null }}>{voteScore}</span>
           <button
             className='postOpened-left__rating-downvote'
             onClick={handleDownvote}
           >
             <ImArrowDown
-              style={{ color: hasDownvoted === true ? 'orange' : null }}
+              style={{ color: hasDownvoted === true ? '#ff4500' : null }}
               className='postOpened-left__rating-downvote__icon'
             />
           </button>

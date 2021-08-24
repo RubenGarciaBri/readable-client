@@ -20,18 +20,8 @@ const HomePage = ({
   loading,
 }) => {
   const [filter, setFilter] = useState('latest');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
 
   const history = useHistory();
-
-  // Get current posts
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = postsArr.slice(indexOfFirstPost, indexOfLastPost);
-
-  // Change page
-  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const spinnerStyles = css`
     display: block;
@@ -58,7 +48,7 @@ const HomePage = ({
           ) : (
             <ul>
               {filter === 'latest'
-                ? currentPosts.sort(
+                ? postsArr.sort(
                   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                 ).map((post) => {
                     return (
@@ -68,7 +58,7 @@ const HomePage = ({
                     );
                   })
                 : filter === 'rating'
-                ? currentPosts.sort((a, b) => b.voteScore - a.voteScore)
+                ? postsArr.sort((a, b) => b.voteScore - a.voteScore)
                 .map((post) => {
                     return (
                       <li key={post.id}>
@@ -76,7 +66,7 @@ const HomePage = ({
                       </li>
                     );
                   })
-                : currentPosts.sort(
+                : postsArr.sort(
                   (a, b) => b.commentCount - a.commentCount
                 ).map((post) => {
                     return (
@@ -87,14 +77,6 @@ const HomePage = ({
                   })}
             </ul>  
           )}
-          {postsArr.length > 10 ? (
-            <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={postsArr.length}
-            currentPage={currentPage}
-            paginate={paginate}
-          />
-          ) : null} 
         </main>
         <aside className='categoryPage-right'>
           <AsideMenu

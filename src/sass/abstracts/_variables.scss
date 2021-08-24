@@ -1,8 +1,10 @@
 :root {
-  --color-primary: orange;
+  // Colors
+  --color-primary: #ff4500;
+  --color-primary-dk: #ee4000;
   --color-bg: #1c1e1f;
   --color-text-dk: #888;
-  
 }
 
+// Gradients
 $gradient-primary: linear-gradient(to right, var(--color-primary), #FF416C);

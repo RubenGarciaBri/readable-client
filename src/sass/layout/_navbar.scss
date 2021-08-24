@@ -47,21 +47,25 @@
 
     &-login {
       border-radius: 25rem;
-      background: #eee;
-      padding: 1.2rem 2.2rem;
-      font-weight: 700;
+      background-color: #eee;
+      padding: 1rem 2rem;
+      font-weight: 600;
+
       &:hover {
-        filter: brightness(0.95);
+        background-color: var(--color-primary);
+        color: #fff;
       }
     }
 
     &-signup {
       border-radius: 25rem;
-      background: #eee;
-      padding: 1.2rem 2.2rem;
-      font-weight: 700;
+      background-color: #eee;
+      padding: 1rem 2rem;
+      font-weight: 600;
+
       &:hover {
-        filter: brightness(0.95);
+        background-color: var(--color-primary);
+        color: #fff;
       }
     }
 
