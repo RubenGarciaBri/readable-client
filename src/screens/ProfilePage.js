@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Nav from '../components/NavBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { BeatLoader } from 'react-spinners';
+import { css } from '@emotion/react';
 import { uploadProfileImage } from '../redux/actions/user';
 import Pagination from '../components/Pagination'
 import { updateUserDetails } from '../redux/actions/user';
@@ -16,23 +18,23 @@ import {
   createExcerpt,
 } from '../utils/helpers';
 
-const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
+const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [isBioOpen, setIsBioOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [userPosts, setUserPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
 
-  let userPosts;
-
-  const profileUser = data.users && data.users.length > 0 ? data.users[userName] : ''
+  const spinnerStyles = css`
+    display: block;
+    margin: 100px auto;
+    text-align: center;
+  `;
 
   const postsArray = nestedIdObjectToArray(data.posts);
-
-  userPosts = postsArray.filter(
-    (post) => post.author === profileUser.userName)
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
@@ -41,29 +43,30 @@ const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
 
   // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
-  
-  useEffect(() => {
-    if (profileUser) {
+
+  useEffect(() => {    
+    if (profileUser !== undefined) {
+      // Set data in component state
+      setBio(profileUser.bio);
+      setLocation(profileUser.location);
+
+      // Get profile user posts in an array
+      setUserPosts(postsArray.filter((post) => post.author === profileUser.userName))
+
+      // Detect if the profile user is logged in
       if (profileUser.userName === user.credentials.userName) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
       }
     }
-  }, [profileUser]);
-
-  useEffect(() => {
-    if (profileUser) {
-      setBio(profileUser.bio);
-      setLocation(profileUser.location);
-    }
-  }, [profileUser]);
+  }, [profileUser, data, user]);
 
   // const { email, createdAt, imageUrl, userName } = profileUser;
-  const email = profileUser && profileUser.length > 0 ? profileUser.email : ''
-  const createdAt = profileUser && profileUser.length > 0 ? profileUser.createdAt : ''
-  const imageUrl = profileUser && profileUser.length > 0 ? profileUser.imageUrl : ''
-  const userName = profileUser && profileUser.length > 0 ? profileUser.userName : ''
+  const email = profileUser !== undefined ? profileUser.email : ''
+  const createdAt = profileUser !== undefined ? profileUser.createdAt : ''
+  const imageUrl = profileUser !== undefined ? profileUser.imageUrl : ''
+  const userName = profileUser !== undefined ? profileUser.userName : ''
   
   const handleImageChange = (e) => {
     const image = e.target.files[0];
@@ -120,7 +123,7 @@ const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
               {isLocationOpen ? (
                 <input
                   type='text'
-                  value={isLocationOpen}
+                  value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   className='profileCard-top__input'
                 />
@@ -189,7 +192,9 @@ const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
   };
 
   return (
-    isLoaded === false ? null 
+      isLoading === true ? (
+        <BeatLoader css={spinnerStyles} loading />
+      ) 
     : (
       <div className='profilePage'>
       <Nav />
@@ -225,14 +230,12 @@ const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
               );
             })}
           </ul>
-          {posts.length > 5 ? (
-            <Pagination
+          <Pagination
             postsPerPage={postsPerPage}
-            totalPosts={posts.length}
+            totalPosts={userPosts.length}
             currentPage={currentPage}
             paginate={paginate}
           />
-          ) : null}
         </div>
       </div>
     </div>
@@ -242,13 +245,13 @@ const ProfilePage = ({ user, posts, dispatch, isLoaded, data}) => {
 
 function mapStateToProps({ user, data, UI }, props) {
   const { userName } = props.match.params;
-
-  
+  const profileUser = data.users[userName]
 
   return {
     user,
-    isLoaded: data.loading,
-    data
+    isLoading: data.loading,
+    data,
+    profileUser
   };
 }
 
