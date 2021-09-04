@@ -11,7 +11,7 @@ const ProfileLink = ({ authenticated, imageUrl, userName }) => {
         alt=''
       />
       <span className='navbar__right-profile__userName'>
-        {authenticated && userName}
+        @{authenticated && userName}
       </span>
     </Link>
   );

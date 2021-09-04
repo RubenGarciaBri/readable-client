@@ -117,7 +117,7 @@ const SearchBar = () => {
                       </div>
                       <div className='searchBar__results-item__link-right'>
                         <span>
-                          {item.author} | {formatDate(item.createdAt)}
+                          @{item.author} | {formatDate(item.createdAt)}
                         </span>
                       </div>
                     </Link>

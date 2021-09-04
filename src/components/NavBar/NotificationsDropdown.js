@@ -89,7 +89,7 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
                           color={notif.read === false ? '#dc3545' : '#666'}
                         />
                       )}{' '}
-                      {notif.sender} has{' '}
+                      @{notif.sender} has{' '}
                       {notif.type === 'comment' ? 'commented on' : 'faved'} your
                       post
                     </Link>

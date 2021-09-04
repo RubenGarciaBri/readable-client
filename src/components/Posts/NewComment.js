@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { GoAlert } from 'react-icons/go';
 import { BeatLoader } from 'react-spinners';
+import { FaPlus } from 'react-icons/fa';
 import { css } from '@emotion/react';
 import { submitComment } from '../../redux/actions/data';
 
@@ -46,7 +47,7 @@ const NewComment = ({ dispatch, id, UI }) => {
             </span>
           ) : null}
           <button type='submit' className='newComment__form-btn'>
-            Add Comment
+            <FaPlus /> Add Comment
           </button>
         </>
       </form>

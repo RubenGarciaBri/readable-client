@@ -166,7 +166,7 @@ const Post = ({ dispatch, post, user }) => {
               </Link>
             </li>
             <li className='post-right__top-list__item post-right__top-list__item--author'>
-              <Link to={`/profile/${author}`}>{author}</Link>
+              <Link to={`/profile/${author}`}>@{author}</Link>
             </li>
             <li className='post-right__top-list__item'>
               <Link to={`/${category}`}>

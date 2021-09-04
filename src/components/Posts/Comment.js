@@ -35,7 +35,7 @@ const Comment = ({ data, user, dispatch }) => {
         <Link to={`/profile/${userName}`}>
           <img src={userImage} className='comment-top__img' />
         </Link>
-        <Link to={`/profile/${userName}`} className='comment-top__author'>{userName}
+        <Link to={`/profile/${userName}`} className='comment-top__author'>@{userName}
         </Link>
         <span className='comment-top__timestamp'>{formatDate(createdAt)}</span>
       </div>

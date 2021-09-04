@@ -115,7 +115,7 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
                 <FaPen size={14} onClick={handleImageClick} />
               </button>
             </div>
-            <h4 className='profileCard-top__name'>{userName}</h4>
+            <h4 className='profileCard-top__name'>@{userName}</h4>
             <p className='profileCard-top__since'>
               Member since {formatDateYearOnly(createdAt)}
             </p>
@@ -175,7 +175,7 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
           <div className='profileCard-top__imgWrapper'>
             <img className='shadow-slim' src={imageUrl} />
           </div>
-          <h4 className='profileCard-top__name'>{userName}</h4>
+          <h4 className='profileCard-top__name'>@{userName}</h4>
           <div>
             {/* <MdLocationOn size={19} /> */}
             <p className='profileCard-top__location'>{location}</p>

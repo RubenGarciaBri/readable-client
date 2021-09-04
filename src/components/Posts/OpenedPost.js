@@ -178,7 +178,7 @@ const OpenedPost = ({ user, dispatch, post }) => {
               </Link>
             </li>
             <li className='postOpened-right__top-list__item postOpened-right__top-list__item--author'>
-              <Link to={`/profile/${author}`}>{author}</Link>
+              <Link to={`/profile/${author}`}>@{author}</Link>
             </li>
             <li className='postOpened-right__top-list__item'>
               <Link to={`/${category}`}>
