@@ -46,7 +46,7 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
         <IoNotificationsSharp className='navbar__right-notifications__icon' />
         {unreadNotifications && unreadNotifications.length > 0 ? (
           <span className='navbar__right-notifications__new'>
-            <span className='navbar__right-notifications__number'>
+            <span className='navbar__right-notifications__new-number'>
               {unreadNotifications.length}
             </span>
           </span>

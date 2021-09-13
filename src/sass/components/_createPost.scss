@@ -6,21 +6,21 @@
   border-radius: .7rem;
   overflow: hidden;
   margin-bottom: 2rem;
-  padding: .5rem .5rem .1rem 1.5rem;
+  padding: .5rem .5rem 0rem .5rem;
 
   
   &__left {
-    flex-basis: 8%;   
+    // flex-basis: 8%;   
  
-    &-icon {
-      margin: 1.7rem 0 0 .3rem;
-      display: inline-block;
-      font-size: 3.2rem;
-    }
+    // &-icon {
+    //   margin: 1.7rem 0 0 .3rem;
+    //   display: inline-block;
+    //   font-size: 3.2rem;
+    // }
   }
 
   &__right {
-    flex-basis: 92%;
+    width: 100%;
     padding: 1rem;
 
     &-form {

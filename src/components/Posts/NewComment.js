@@ -47,7 +47,7 @@ const NewComment = ({ dispatch, id, UI }) => {
             </span>
           ) : null}
           <button type='submit' className='newComment__form-btn'>
-            <FaPlus /> Add Comment
+            Add Comment
           </button>
         </>
       </form>

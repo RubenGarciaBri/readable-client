@@ -38,7 +38,8 @@
         justify-content: space-between;
         font-size: 1.2rem;
         font-weight: 600;
-        color: #222;
+        gap: 3rem;
+        color: var(--color-primary);
         
         &-left {
           
@@ -46,6 +47,7 @@
             display:block; 
             font-size: 1.4rem;
             margin-bottom: .5rem;
+            color: var(--color-primary);
           }
 
           &__sub {
@@ -64,6 +66,10 @@
         }
 
         &-right {
+
+          @include respond(phone) {
+            display: none;
+          }
 
           & span {
             display: inline-block;

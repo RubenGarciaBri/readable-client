@@ -5,6 +5,7 @@ import { FaCode } from 'react-icons/fa';
 import { BeatLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 import { GoAlert } from 'react-icons/go';
+import { FaSearch } from 'react-icons/fa';
 import { postPost } from '../redux/actions/data';
 import useOutsideClick from '../utils/helpers';
 
@@ -101,7 +102,6 @@ const CreatePost = ({ dispatch, user, UI}) => {
         onClick={onInputFocus}
       >
         <div className='createPost__left'>
-          <FaCode className='createPost__left-icon' />
         </div>
         <div className='createPost__right'>
           <form
@@ -126,7 +126,8 @@ const CreatePost = ({ dispatch, user, UI}) => {
               rows={rows}
               className='createPost__right-form__textarea'
               onChange={(e) => onTextareaChange(e.target.value)}
-            ></textarea>
+            >
+            </textarea>
 
             {isVisible === true ? (
               <>
