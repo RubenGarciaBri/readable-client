@@ -17,6 +17,7 @@ import { getPosts, getUsers } from '../redux/actions/data';
 import { logoutUser, getUserData } from '../redux/actions/user';
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
+import MetaDecorator from '../utils/MetaDecorator'
 
 axios.defaults.baseURL =
   'https://europe-west1-readable-bf7a6.cloudfunctions.net/api';

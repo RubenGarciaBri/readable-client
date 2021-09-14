@@ -198,7 +198,7 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
       ) 
     : (
       <div className='profilePage'>
-        <MetaDecorator />
+      <MetaDecorator />
       <Nav />
       <div className='profilePage-banner'></div>
       <div className='profilePage-main'>
