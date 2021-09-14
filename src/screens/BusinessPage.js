@@ -9,12 +9,14 @@ import CreatePost from '../components/CreatePost';
 import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
 import { nestedIdObjectToArray } from '../utils/helpers';
+import MetaDecorator from '../utils/MetaDecorator';
 
 const BusinessPage = ({ posts, authenticated }) => {
   const history = useHistory();
 
   return (
     <div className='categoryPage'>
+      <MetaDecorator />
       <Nav />
       <div className='categoryPage-container'>
         <aside class='categoryPage-left'>

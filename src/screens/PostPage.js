@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Nav from '../components/NavBar/Nav';
 import OpenedPost from '../components/Posts/OpenedPost';
+import MetaDecorator from '../utils/MetaDecorator';
 
 const PostPage = ({ id, postIds }) => {
   return (
     <>
+      <MetaDecorator />
       <Nav />
       <div className='postPage'>
         <div className='postPage-container'>

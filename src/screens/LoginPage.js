@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 import { loginUser } from '../redux/actions/user';
+import MetaDecorator from '../utils/MetaDecorator';
 
 const LoginPage = ({ dispatch, UI, authenticated }) => {
   const [email, setEmail] = useState('');
@@ -34,6 +35,7 @@ const LoginPage = ({ dispatch, UI, authenticated }) => {
 
   return (
     <div className='loginSection'>
+      <MetaDecorator />
       <div className='login-container main-container'>
         {UI.loading === true ? (
           <BeatLoader css={spinnerStyles} loading />

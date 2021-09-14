@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import { signupUser } from '../redux/actions/user';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import MetaDecorator from '../utils/MetaDecorator';
 
 const SignupPage = ({ dispatch, UI }) => {
   const [userName, setUserName] = useState(null);
@@ -39,6 +40,7 @@ const SignupPage = ({ dispatch, UI }) => {
 
   return (
     <div className='signupPage'>
+      <MetaDecorator />
       <div className='signup-container'>
         {UI.loading === true ? (
           <BeatLoader css={spinnerStyles} loading />

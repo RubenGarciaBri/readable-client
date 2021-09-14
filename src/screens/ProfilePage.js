@@ -9,6 +9,7 @@ import Pagination from '../components/Pagination'
 import { updateUserDetails } from '../redux/actions/user';
 import { FaPen, FaCheck, FaCalendarAlt } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
+import MetaDecorator from '../utils/MetaDecorator';
 
 import {
   formatDate,
@@ -197,6 +198,7 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
       ) 
     : (
       <div className='profilePage'>
+        <MetaDecorator />
       <Nav />
       <div className='profilePage-banner'></div>
       <div className='profilePage-main'>

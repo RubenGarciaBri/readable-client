@@ -14,6 +14,7 @@ import Footer from '../components/Footer';
 import ErrorMessage from '../components/ErrorMessage';
 import { nestedIdObjectToArray } from '../utils/helpers';
 import { IoNotificationsCircleOutline } from 'react-icons/io5';
+import MetaDecorator from '../utils/MetaDecorator';
 
 const HomePage = ({
   postsArr,
@@ -34,7 +35,8 @@ const HomePage = ({
   };
 
   return (
-    <div className='categoryPage'>
+      <div className='categoryPage'>
+      <MetaDecorator />
       <Nav />
       <div className='categoryPage-container'>
         <aside className='categoryPage-left'>
@@ -85,7 +87,7 @@ const HomePage = ({
           />
         </aside>
       </div>
-    </div>
+    </div>    
   );
 };
 
