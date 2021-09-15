@@ -4,7 +4,6 @@ import { BeatLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 import { signupUser } from '../redux/actions/user';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import MetaDecorator from '../utils/MetaDecorator';
 
 const SignupPage = ({ dispatch, UI }) => {
@@ -33,66 +32,66 @@ const SignupPage = ({ dispatch, UI }) => {
     confirmPassword,
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = e => {
     e.preventDefault();
     dispatch(signupUser(newUserData, history));
   };
 
   return (
-    <div className='signupPage'>
+    <div className="signupPage">
       <MetaDecorator />
-      <div className='signup-container'>
+      <div className="signup-container">
         {UI.loading === true ? (
           <BeatLoader css={spinnerStyles} loading />
         ) : (
-          <div className='signup shadow-xs'>
-            <div className='signup-card session-card'>
-              <h3 className='signup-card__heading'>Create account</h3>
+          <div className="signup shadow-xs">
+            <div className="signup-card session-card">
+              <h3 className="signup-card__heading">Create account</h3>
               <form
-                action=''
-                className='signup-card__form'
-                onSubmit={(e) => onFormSubmit(e)}
+                action=""
+                className="signup-card__form"
+                onSubmit={e => onFormSubmit(e)}
               >
                 <input
-                  type='text'
-                  placeholder='Username'
-                  className='signup-card__form-name'
-                  onChange={(e) => setUserName(e.target.value)}
+                  type="text"
+                  placeholder="Username"
+                  className="signup-card__form-name"
+                  onChange={e => setUserName(e.target.value)}
                 />
                 <input
-                  type='email'
-                  placeholder='Email'
-                  className='signup-card__email'
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  placeholder="Email"
+                  className="signup-card__email"
+                  onChange={e => setEmail(e.target.value)}
                 />
                 <input
-                  type='password'
-                  placeholder='Password'
-                  className='signup-card__form-password'
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                  className="signup-card__form-password"
+                  onChange={e => setPassword(e.target.value)}
                 />
                 <input
-                  type='password'
-                  placeholder='Confirm password'
-                  className='signup-card__form-password'
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  type="password"
+                  placeholder="Confirm password"
+                  className="signup-card__form-password"
+                  onChange={e => setConfirmPassword(e.target.value)}
                 />
                 {
                   // Return the first and unique property of the object that contains the error
                   errors && (
-                    <small className='signup-card__form-errors'>
+                    <small className="signup-card__form-errors">
                       {errors[Object.keys(errors)[0]]}
                     </small>
                   )
                 }
                 <button
-                  type='submit'
-                  className='signup-card__form-btn shadow-slim'
+                  type="submit"
+                  className="signup-card__form-btn shadow-slim"
                 >
                   Sign Up
                 </button>
-                <span className='signup-card__form-account'>
-                  Already have an account? <Link to='/login'>Log in</Link>
+                <span className="signup-card__form-account">
+                  Already have an account? <Link to="/login">Log in</Link>
                 </span>
               </form>
             </div>
@@ -103,7 +102,7 @@ const SignupPage = ({ dispatch, UI }) => {
   );
 };
 
-function mapStateToProps({ UI, user }) {
+function mapStateToProps({ UI }) {
   return {
     UI,
   };

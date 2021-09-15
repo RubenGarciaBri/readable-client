@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 import Nav from '../components/NavBar';
@@ -9,20 +8,11 @@ import AsideMenu from '../components/AsideMenu';
 import AsideCategories from '../components/AsideCategories';
 import CreatePost from '../components/CreatePost';
 import FilterBar from '../components/FilterBar';
-import Pagination from '../components/Pagination'
-import Footer from '../components/Footer';
-import ErrorMessage from '../components/ErrorMessage';
 import { nestedIdObjectToArray } from '../utils/helpers';
-import { IoNotificationsCircleOutline } from 'react-icons/io5';
 import MetaDecorator from '../utils/MetaDecorator';
 
-const HomePage = ({
-  postsArr,
-  loading,
-}) => {
+const HomePage = ({ postsArr, loading }) => {
   const [filter, setFilter] = useState('latest');
-
-  const history = useHistory();
 
   const spinnerStyles = css`
     display: block;
@@ -30,19 +20,19 @@ const HomePage = ({
     text-align: center;
   `;
 
-  const onSelectChange = (e) => {
+  const onSelectChange = e => {
     setFilter(e.target.value);
   };
 
   return (
-      <div className='categoryPage'>
+    <div className="categoryPage">
       <MetaDecorator />
       <Nav />
-      <div className='categoryPage-container'>
-        <aside className='categoryPage-left'>
+      <div className="categoryPage-container">
+        <aside className="categoryPage-left">
           <AsideCategories />
         </aside>
-        <main className='categoryPage-main'>
+        <main className="categoryPage-main">
           <CreatePost />
           <FilterBar onSelectChange={onSelectChange} />
           {loading === true ? (
@@ -50,54 +40,56 @@ const HomePage = ({
           ) : (
             <ul>
               {filter === 'latest'
-                ? postsArr.sort(
-                  (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-                ).map((post) => {
-                    return (
-                      <li key={post.id}>
-                        <Post id={post.id} />
-                      </li>
-                    );
-                  })
+                ? postsArr
+                    .sort(
+                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                    )
+                    .map(post => {
+                      return (
+                        <li key={post.id}>
+                          <Post id={post.id} />
+                        </li>
+                      );
+                    })
                 : filter === 'rating'
-                ? postsArr.sort((a, b) => b.voteScore - a.voteScore)
-                .map((post) => {
-                    return (
-                      <li key={post.id}>
-                        <Post id={post.id} />
-                      </li>
-                    );
-                  })
-                : postsArr.sort(
-                  (a, b) => b.commentCount - a.commentCount
-                ).map((post) => {
-                    return (
-                      <li key={post.id}>
-                        <Post id={post.id} />
-                      </li>
-                    );
-                  })}
-            </ul>  
+                ? postsArr
+                    .sort((a, b) => b.voteScore - a.voteScore)
+                    .map(post => {
+                      return (
+                        <li key={post.id}>
+                          <Post id={post.id} />
+                        </li>
+                      );
+                    })
+                : postsArr
+                    .sort((a, b) => b.commentCount - a.commentCount)
+                    .map(post => {
+                      return (
+                        <li key={post.id}>
+                          <Post id={post.id} />
+                        </li>
+                      );
+                    })}
+            </ul>
           )}
         </main>
-        <aside className='categoryPage-right'>
+        <aside className="categoryPage-right">
           <AsideMenu
-            category='Home'
-            description='This is the front page of Readable. Here you can find all the latest posts and updates from the community.'
+            category="Home"
+            description="This is the front page of Readable. Here you can find all the latest posts and updates from the community."
           />
         </aside>
       </div>
-    </div>    
+    </div>
   );
 };
 
-function mapStateToProps({ user, data }) {
+function mapStateToProps({ data }) {
   // Turn nested object into array and sort by available options
   const postsArr = nestedIdObjectToArray(data.posts);
 
   return {
     postsArr,
-    authenticated: user.authenticated,
     loading: data.loading,
   };
 }

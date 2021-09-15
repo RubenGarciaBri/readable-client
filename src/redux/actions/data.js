@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 // New Imports
 import {
@@ -20,75 +19,68 @@ import {
   TOGGLE_POST_UPVOTE,
   TOGGLE_POST_DOWNVOTE,
   TOGGLE_COMMENT_UPVOTE,
-  TOGGLE_COMMENT_DOWNVOTE
+  TOGGLE_COMMENT_DOWNVOTE,
 } from '../types';
 
-const options = {
-  headers: {
-    Authorization: 'mytoken',
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-};
-
 // Get all users
-export const getUsers = () => (dispatch) => {
+export const getUsers = () => dispatch => {
   axios
     .get('/users')
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: SET_USERS,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Get all posts
-export const getPosts = () => (dispatch) => {
+export const getPosts = () => dispatch => {
   dispatch({ type: LOADING_DATA });
   axios
     .get('/posts')
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: SET_POSTS,
         payload: res.data,
       });
     })
-    .catch((err) => {
+    .catch(err => {
+      console.log(err);
       dispatch({
         type: SET_POSTS,
         payload: [],
       });
     });
 };
-export const getPost = (postId) => (dispatch) => {
+export const getPost = postId => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
     .get(`/post/${postId}`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: SET_POST,
         payload: res.data,
       });
       dispatch({ type: STOP_LOADING_UI });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Post a post
-export const postPost = (newPost) => (dispatch) => {
+export const postPost = newPost => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
     .post('/post', newPost)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: POST_POST,
         payload: res.data,
       });
       dispatch(clearErrors());
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data,
@@ -97,96 +89,96 @@ export const postPost = (newPost) => (dispatch) => {
 };
 
 // Fav a post
-export const favPost = (postId) => (dispatch) => {
+export const favPost = postId => dispatch => {
   axios
     .post(`/post/${postId}/fav`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: FAV_POST,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Unfav a post
-export const unfavPost = (postId) => (dispatch) => {
+export const unfavPost = postId => dispatch => {
   axios
     .post(`/post/${postId}/unfav`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: UNFAV_POST,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Toggle comment upvote
-export const toggleCommentUpvote = (commentId) => (dispatch) => {
+export const toggleCommentUpvote = commentId => dispatch => {
   axios
     .post(`/comment/${commentId}/toggleCommentUpvote`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: TOGGLE_COMMENT_UPVOTE,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Toggle comment downvote
-export const toggleCommentDownvote = (commentId) => (dispatch) => {
+export const toggleCommentDownvote = commentId => dispatch => {
   axios
     .post(`/comment/${commentId}/toggleCommentDownvote`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: TOGGLE_COMMENT_DOWNVOTE,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Toggle post upvote
-export const togglePostUpvote = (postId) => (dispatch) => {
+export const togglePostUpvote = postId => dispatch => {
   axios
     .post(`/post/${postId}/togglePostUpvote`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: TOGGLE_POST_UPVOTE,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Toggle post downvote
-export const togglePostDownvote = (postId) => (dispatch) => {
+export const togglePostDownvote = postId => dispatch => {
   axios
     .post(`/post/${postId}/togglePostDownvote`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: TOGGLE_POST_DOWNVOTE,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 // Submit a comment
-export const submitComment = (postId, commentData) => (dispatch) => {
+export const submitComment = (postId, commentData) => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
     .post(`/post/${postId}/comment`, commentData)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: SUBMIT_COMMENT,
         payload: res.data,
       });
       dispatch(clearErrors());
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       dispatch({
         type: SET_ERRORS,
@@ -196,10 +188,10 @@ export const submitComment = (postId, commentData) => (dispatch) => {
 };
 
 // Delete a comment
-export const deleteComment = (postId, commentId) => (dispatch) => {
+export const deleteComment = (postId, commentId) => dispatch => {
   axios
     .delete(`/post/${postId}/comment/${commentId}`)
-    .then((res) => {
+    .then(() => {
       dispatch({
         type: DELETE_COMMENT,
         payload: {
@@ -209,7 +201,7 @@ export const deleteComment = (postId, commentId) => (dispatch) => {
       });
       dispatch(clearErrors());
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       // dispatch({
       //   type: SET_ERRORS,
@@ -218,7 +210,7 @@ export const deleteComment = (postId, commentId) => (dispatch) => {
     });
 };
 
-export const deletePost = (postId) => (dispatch) => {
+export const deletePost = postId => dispatch => {
   axios
     .delete(`/post/${postId}`)
     .then(() => {
@@ -229,14 +221,14 @@ export const deletePost = (postId) => (dispatch) => {
         },
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
-export const getUserData = (userName) => (dispatch) => {
+export const getUserData = userName => dispatch => {
   dispatch({ type: LOADING_DATA });
   axios
     .get(`/user/${userName}`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: SET_POSTS,
         payload: res.data.posts,
@@ -250,99 +242,6 @@ export const getUserData = (userName) => (dispatch) => {
     });
 };
 
-export const clearErrors = () => (dispatch) => {
+export const clearErrors = () => dispatch => {
   dispatch({ type: CLEAR_ERRORS });
 };
-
-// Old functions
-// export function handleAddPost(title, body, category) {
-//   return (dispatch, getState) => {
-//     const { authedUser } = getState();
-
-//     return savePost({
-//       title,
-//       body,
-//       category,
-//       author: authedUser.id,
-//     }).then((post) => {
-//       dispatch(addPost(post));
-
-//       axios.post('http://localhost:3001/posts', post, options);
-//     });
-//   };
-// }
-
-// export function handleAddComment(comment, postId) {
-//   return (dispatch, getState) => {
-//     const { authedUser } = getState();
-
-//     return saveComment({
-//       comment,
-//       postId,
-//       author: authedUser.id,
-//     }).then((comment) => dispatch(addComment(comment)));
-//   };
-// }
-
-// export function handleToggleUpvote (id) {
-//   return (dispatch, getState) => {
-//     const { authedUser } = getState()
-
-//     dispatch(toggleUpvote(id, authedUser))
-//   }
-// }
-
-// export function handleToggleDownvote (id) {
-//   return (dispatch, getState) => {
-//     const { authedUser } = getState()
-
-//     dispatch(toggleDownvote(id, authedUser))
-//   }
-// }
-
-// export function handleToggleFav (postId) {
-//   return (dispatch, getState) => {
-//     const { authedUser } = getState()
-
-//     dispatch(toggleFav(postId, authedUser))
-//   }
-// }
-
-// function toggleFav(postId, authedUser) {
-//   return {
-//     type: TOGGLE_FAV,
-//     payload: {
-//       postId,
-//       authedUser
-//     }
-//   }
-// }
-
-// function addComment(comment) {
-//   return {
-//     type: ADD_COMMENT,
-//     payload: {
-//       comment,
-//     },
-//   };
-// }
-
-// function toggleUpvote (id, authedUser) {
-//   return {
-//     type: TOGGLE_UPVOTE,
-//     payload: {
-//       id,
-//       authedUser
-//     }
-//   }
-// }
-
-// function toggleDownvote (id, authedUser) {
-//   return {
-//     type: TOGGLE_DOWNVOTE,
-//     payload: {
-//       id,
-//       authedUser
-//     }
-//   }
-// }

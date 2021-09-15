@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/actions/user';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
-const SignoutButton = ({ authedUser, dispatch }) => {
+const SignoutButton = ({ dispatch }) => {
   const history = useHistory();
 
   return (
@@ -14,19 +14,15 @@ const SignoutButton = ({ authedUser, dispatch }) => {
       }}
     >
       <button
-        className='navbar__right-signout'
+        className="navbar__right-signout"
         onClick={() => dispatch(logoutUser(history))}
       >
-        <FaSignOutAlt className='navbar__right-signout__icon' />
+        <FaSignOutAlt className="navbar__right-signout__icon" />
       </button>
     </div>
   );
 };
 
-function mapStateToProps({ authedUser }) {
-  return {
-    authedUser,
-  };
-}
+function mapStateToProps() {}
 
 export default connect(mapStateToProps)(SignoutButton);

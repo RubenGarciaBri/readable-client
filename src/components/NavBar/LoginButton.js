@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/user';
-import { FaSignOutAlt } from 'react-icons/fa';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const LoginButton = ({ authedUser, dispatch }) => {
+const LoginButton = () => {
   const history = useHistory();
 
   return (
@@ -14,7 +11,7 @@ const LoginButton = ({ authedUser, dispatch }) => {
       }}
     >
       <button
-        className='navbar__right-login'
+        className="navbar__right-login"
         onClick={() => history.push('/login')}
       >
         Log In
@@ -23,10 +20,4 @@ const LoginButton = ({ authedUser, dispatch }) => {
   );
 };
 
-function mapStateToProps({ authedUser }) {
-  return {
-    authedUser,
-  };
-}
-
-export default connect(mapStateToProps)(LoginButton);
+export default LoginButton;

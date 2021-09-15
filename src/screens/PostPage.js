@@ -9,11 +9,11 @@ const PostPage = ({ id, postIds }) => {
     <>
       <MetaDecorator />
       <Nav />
-      <div className='postPage'>
-        <div className='postPage-container'>
+      <div className="postPage">
+        <div className="postPage-container">
           {postIds
-            .filter((postId) => postId === id)
-            .map((p) => {
+            .filter(postId => postId === id)
+            .map(p => {
               return <OpenedPost key={p} id={p} />;
             })}
         </div>

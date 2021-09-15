@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { formatDate } from '../../utils/helpers';
-import { FaCommentAlt, FaTimesCircle } from 'react-icons/fa';
+import { FaTimesCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { ImArrowUp, ImArrowDown } from 'react-icons/im';
-import NewComment from './NewComment';
-import { deleteComment } from '../../redux/actions/data'
+import { deleteComment } from '../../redux/actions/data';
 
 const Comment = ({ data, user, dispatch }) => {
-  const [showNewComment, setShowNewComment] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [showNewComment, setShowNewComment] = useState(false);
 
   const { userName, userImage, id, postId, createdAt, body } = data;
 
@@ -21,30 +19,31 @@ const Comment = ({ data, user, dispatch }) => {
     }
   }, [user]);
 
-  const handleReply = () => {
-    setShowNewComment(!showNewComment);
-  };
+  // const handleReply = () => {
+  //   setShowNewComment(!showNewComment);
+  // };
 
   const handleDelete = () => {
-    dispatch(deleteComment(postId, id))
+    dispatch(deleteComment(postId, id));
   };
 
   return (
-    <li className='comment'>
-      <div className='comment-top'>
+    <li className="comment">
+      <div className="comment-top">
         <Link to={`/profile/${userName}`}>
-          <img src={userImage} className='comment-top__img' />
+          <img src={userImage} className="comment-top__img" />
         </Link>
-        <Link to={`/profile/${userName}`} className='comment-top__author'>@{userName}
+        <Link to={`/profile/${userName}`} className="comment-top__author">
+          @{userName}
         </Link>
-        <span className='comment-top__timestamp'>{formatDate(createdAt)}</span>
+        <span className="comment-top__timestamp">{formatDate(createdAt)}</span>
       </div>
-      <div className='comment-middle'>
-        <p className='comment-middle__body'>{body}</p>
-        {showNewComment === true ? <NewComment /> : null}
+      <div className="comment-middle">
+        <p className="comment-middle__body">{body}</p>
+        {/* {showNewComment === true ? <NewComment /> : null} */}
       </div>
-      <div className='comment-bottom'>
-        <ul className='comment-bottom__list'>
+      <div className="comment-bottom">
+        <ul className="comment-bottom__list">
           {/* Upvote and downvote funcitonality disabled */}
           {/* <li className='comment-bottom__list-item'>
             <a
@@ -86,10 +85,13 @@ const Comment = ({ data, user, dispatch }) => {
             </li>
           ) : null} */}
           {isLoggedIn ? (
-            <li className='comment-bottom__list-item'>
+            <li className="comment-bottom__list-item">
               <button onClick={handleDelete}>
-                <FaTimesCircle className='comment-bottom__list-item__icon comment-bottom__list-item__icon--delete' />{' '}
-                <span className='comment-bottom__list-item__delete'> Delete</span>
+                <FaTimesCircle className="comment-bottom__list-item__icon comment-bottom__list-item__icon--delete" />{' '}
+                <span className="comment-bottom__list-item__delete">
+                  {' '}
+                  Delete
+                </span>
               </button>
             </li>
           ) : null}
@@ -100,7 +102,6 @@ const Comment = ({ data, user, dispatch }) => {
 };
 
 function mapStateToProps({ user }) {
-
   return {
     user,
   };

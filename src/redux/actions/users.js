@@ -1,16 +1,14 @@
-import {
-  SET_USERS
-} from '../types';
+import { SET_USERS } from '../types';
 import axios from 'axios';
 
-export const getUsers = () => (dispatch) => {
+export const getUsers = () => dispatch => {
   axios
     .get('/users')
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: SET_USERS,
         payload: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };

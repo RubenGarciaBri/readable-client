@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useSpring, animated } from 'react-spring';
 import {
   FaCheck,
   FaExclamationCircle,
@@ -8,7 +7,7 @@ import {
   FaInfoCircle,
 } from 'react-icons/fa';
 
-const Toast = ({ dispatch, notifications, position }) => {
+const Toast = ({ notifications, position }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ const Toast = ({ dispatch, notifications, position }) => {
     }, 3000);
   });
 
-  const generateIcon = (type) => {
+  const generateIcon = type => {
     switch (type) {
       case 'DANGER':
         return <FaExclamationCircle />;
@@ -32,7 +31,7 @@ const Toast = ({ dispatch, notifications, position }) => {
     }
   };
 
-  const generateBgColor = (type) => {
+  const generateBgColor = type => {
     switch (type) {
       case 'DANGER':
         return '#d9534f';
@@ -56,7 +55,7 @@ const Toast = ({ dispatch, notifications, position }) => {
   return (
     <div className={`notification-container ${position}`}>
       {notifications.length > 0
-        ? notifications.map((notification, i) => {
+        ? notifications.map(notification => {
             return (
               <div
                 style={{ backgroundColor: generateBgColor(notification.type) }}
@@ -67,12 +66,12 @@ const Toast = ({ dispatch, notifications, position }) => {
                     : 'notification--hidden'
                 }`}
               >
-                <div className='notification__img'>
+                <div className="notification__img">
                   {generateIcon(notification.type)}
                 </div>
                 <div>
-                  <p className='notification__title'>{notification.title}</p>
-                  <p className='notification__message'>
+                  <p className="notification__title">{notification.title}</p>
+                  <p className="notification__message">
                     {notification.message}
                   </p>
                 </div>

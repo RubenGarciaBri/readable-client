@@ -1,14 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../../utils/helpers';
-import {
-  FaComment,
-  FaCommentAlt,
-  FaRegStar,
-  FaShareAlt,
-  FaStar,
-  FaSearch
-} from 'react-icons/fa';
+import { FaCommentAlt } from 'react-icons/fa';
 import useOutsideClick from '../../utils/helpers';
 import algoliasearch from 'algoliasearch';
 import _ from 'lodash';
@@ -35,19 +28,19 @@ const SearchBar = () => {
     searchableAttributes: ['title', 'category', 'author'],
   });
 
-  const getPosts = (value) => {
+  const getPosts = value => {
     index
       .search(value)
-      .then((data) => {
+      .then(data => {
         setSearchResults(data.hits);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
 
   const throttledSearch = useCallback(
-    _.throttle((value) => {
+    _.throttle(value => {
       getPosts(value);
     }, 500),
     []
@@ -60,11 +53,7 @@ const SearchBar = () => {
   return (
     <>
       {/* Default Desktop */}
-      <form
-        ref={node}
-        action='#'
-        className='searchBar'
-      >
+      <form ref={node} action="#" className="searchBar">
         {/* Mobile Button */}
         {/* <div
         style={{
@@ -82,11 +71,11 @@ const SearchBar = () => {
 
         <input
           required={true}
-          type='text'
+          type="text"
           value={term}
-          placeholder='Search posts...'
-          className='searchBar__input'
-          onChange={(e) => setTerm(e.target.value)}
+          placeholder="Search posts..."
+          className="searchBar__input"
+          onChange={e => setTerm(e.target.value)}
         />
         <ul
           className={`searchBar__results ${
@@ -94,35 +83,35 @@ const SearchBar = () => {
           }`}
         >
           {term.length >= 2
-            ? searchResults.map((item) => {
+            ? searchResults.map(item => {
                 return (
-                  <li key={item.objectID} className='searchBar__results-item'>
+                  <li key={item.objectID} className="searchBar__results-item">
                     <Link
                       to={`/posts/${item.objectID}`}
-                      className='searchBar__results-item__link'
+                      className="searchBar__results-item__link"
                     >
-                      <div className='searchBar__results-item__link-left'>
-                        <span className='searchBar__results-item__link-left__title'>
+                      <div className="searchBar__results-item__link-left">
+                        <span className="searchBar__results-item__link-left__title">
                           {item.title}
                         </span>
-                        <div className='searchBar__results-item__link-left__sub'>
-                          <span className='searchBar__results-item__link-left__sub-category'>
+                        <div className="searchBar__results-item__link-left__sub">
+                          <span className="searchBar__results-item__link-left__sub-category">
                             /{item.category}
                           </span>
                           <span>
-                            <FaCommentAlt className='searchBar__results-item__link-left__sub-icon' />{' '}
+                            <FaCommentAlt className="searchBar__results-item__link-left__sub-icon" />{' '}
                             {item.commentCount}
                           </span>
                         </div>
                       </div>
-                      <div className='searchBar__results-item__link-right'>
+                      <div className="searchBar__results-item__link-right">
                         <span>
                           @{item.author} | {formatDate(item.createdAt)}
                         </span>
                       </div>
                     </Link>
                   </li>
-                )
+                );
               })
             : null}
         </ul>

@@ -5,7 +5,8 @@ const ErrorMessage = () => {
   return (
     <div className="error-message">
       <p>
-        You don't have permission to see this. Please log in before proceeding.
+        You don&apos;t have permission to see this. Please log in before
+        proceeding.
       </p>
       <Link to="/login">Log in</Link>
     </div>

@@ -3,16 +3,14 @@ import {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   LOADING_USER,
-  LIKE_SCREAM,
-  UNLIKE_SCREAM,
-  MARK_NOTIFICATIONS_READ
+  MARK_NOTIFICATIONS_READ,
 } from '../types';
 
 const initialState = {
   authenticated: false,
   loading: false,
   credentials: {},
-  notifications: []
+  notifications: [],
 };
 
 export default function user(state = initialState, action) {
@@ -20,7 +18,7 @@ export default function user(state = initialState, action) {
     case SET_AUTHENTICATED:
       return {
         ...state,
-        authenticated: true
+        authenticated: true,
       };
     case SET_UNAUTHENTICATED:
       return initialState;
@@ -28,19 +26,19 @@ export default function user(state = initialState, action) {
       return {
         authenticated: true,
         loading: false,
-        ...action.payload
+        ...action.payload,
       };
     case LOADING_USER:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
-    
+
     case MARK_NOTIFICATIONS_READ:
-      state.notifications.forEach((notif) => notif.read = true)
-      
+      state.notifications.forEach(notif => (notif.read = true));
+
       return {
-        ...state
+        ...state,
       };
 
     default:

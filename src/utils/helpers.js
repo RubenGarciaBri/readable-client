@@ -45,7 +45,7 @@ export function formatPost(post, author, authedUser, parentPost) {
 export function arrayIntoNestedIdObject(array) {
   let object = {};
 
-  array.forEach((item) => {
+  array.forEach(item => {
     object[item.id] = {
       ...item,
     };
@@ -88,7 +88,7 @@ export function createExcerpt(text, wordLimit) {
 }
 
 const useOutsideClick = (ref, callback) => {
-  const handleClick = (e) => {
+  const handleClick = e => {
     if (ref.current && !ref.current.contains(e.target)) {
       callback();
     }

@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/user';
-import { FaSignOutAlt } from 'react-icons/fa';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const SignupButton = ({ authedUser, dispatch }) => {
+const SignupButton = () => {
   const history = useHistory();
 
   return (
@@ -14,7 +11,7 @@ const SignupButton = ({ authedUser, dispatch }) => {
       }}
     >
       <button
-        className='navbar__right-signup'
+        className="navbar__right-signup"
         onClick={() => history.push('/signup')}
       >
         Sign Up
@@ -23,10 +20,4 @@ const SignupButton = ({ authedUser, dispatch }) => {
   );
 };
 
-function mapStateToProps({ authedUser }) {
-  return {
-    authedUser,
-  };
-}
-
-export default connect(mapStateToProps)(SignupButton);
+export default SignupButton;

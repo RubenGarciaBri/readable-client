@@ -11,7 +11,7 @@ import {
   TOGGLE_POST_UPVOTE,
   TOGGLE_POST_DOWNVOTE,
   TOGGLE_COMMENT_UPVOTE,
-  TOGGLE_COMMENT_DOWNVOTE
+  TOGGLE_COMMENT_DOWNVOTE,
 } from '../types';
 import {
   nestedIdObjectToArray,
@@ -35,7 +35,7 @@ export default function data(state = initialState, action) {
       return {
         ...state,
         users: action.payload,
-        loading: Object.keys(state.posts).length === 0 ? true : false
+        loading: Object.keys(state.posts).length === 0 ? true : false,
       };
 
     case SET_POSTS:
@@ -54,10 +54,11 @@ export default function data(state = initialState, action) {
         },
       };
 
-    case DELETE_POST:
+    case DELETE_POST: {
       const postsArray = nestedIdObjectToArray(state.posts);
+
       const filteredArray = postsArray.filter(
-        (post) => post.id !== action.payload.postId
+        post => post.id !== action.payload.postId
       );
       const newPostsObject = arrayIntoNestedIdObject(filteredArray);
 
@@ -65,6 +66,7 @@ export default function data(state = initialState, action) {
         ...state,
         posts: newPostsObject,
       };
+    }
 
     case FAV_POST:
     case UNFAV_POST:
@@ -103,7 +105,7 @@ export default function data(state = initialState, action) {
           [action.payload.postId]: {
             ...state.posts[action.payload.postId],
             comments: state.posts[action.payload.postId].comments.filter(
-              (comment) => comment.id !== action.payload.commentId
+              comment => comment.id !== action.payload.commentId
             ),
             commentCount: state.posts[action.payload.postId].commentCount - 1,
           },
@@ -138,14 +140,16 @@ export default function data(state = initialState, action) {
         },
       };
 
-      case TOGGLE_COMMENT_UPVOTE:
+    case TOGGLE_COMMENT_UPVOTE:
       return {
         ...state,
         posts: {
           ...state.posts,
           [action.payload.postId]: {
             ...state.posts[action.payload.postId],
-            comments: state.posts[action.payload.postId].comments.concat(action.payload)        
+            comments: state.posts[action.payload.postId].comments.concat(
+              action.payload
+            ),
           },
         },
       };
@@ -157,7 +161,9 @@ export default function data(state = initialState, action) {
           ...state.posts,
           [action.payload.postId]: {
             ...state.posts[action.payload.postId],
-            comments: state.posts[action.payload.postId].comments.concat(action.payload)        
+            comments: state.posts[action.payload.postId].comments.concat(
+              action.payload
+            ),
           },
         },
       };

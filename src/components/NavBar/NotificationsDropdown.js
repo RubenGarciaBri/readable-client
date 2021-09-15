@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { IoNotificationsSharp } from 'react-icons/io5';
 import { FaComment, FaHeart } from 'react-icons/fa';
@@ -12,15 +12,14 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
   const node = useRef();
 
   let unreadNotifications;
-  const unreadNotificationIds = []
+  const unreadNotificationIds = [];
 
   if (notifications && notifications.length > 0) {
-    unreadNotifications = notifications.filter((notif) => notif.read === false);
-    unreadNotifications.forEach((notif) => {
-      unreadNotificationIds.push(notif.notificationId)
-    })
+    unreadNotifications = notifications.filter(notif => notif.read === false);
+    unreadNotifications.forEach(notif => {
+      unreadNotificationIds.push(notif.notificationId);
+    });
   }
-
 
   useOutsideClick(node, () => {
     if (isOpen === true) {
@@ -29,9 +28,9 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
   });
 
   const handleOpen = () => {
-    setIsOpen(!isOpen)
-    dispatch(markNotificationsRead(unreadNotificationIds))
-  }
+    setIsOpen(!isOpen);
+    dispatch(markNotificationsRead(unreadNotificationIds));
+  };
 
   return (
     <div
@@ -39,14 +38,11 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
         position: 'relative',
       }}
     >
-      <button
-        className='navbar__right-notifications'
-        onClick={handleOpen}
-      >
-        <IoNotificationsSharp className='navbar__right-notifications__icon' />
+      <button className="navbar__right-notifications" onClick={handleOpen}>
+        <IoNotificationsSharp className="navbar__right-notifications__icon" />
         {unreadNotifications && unreadNotifications.length > 0 ? (
-          <span className='navbar__right-notifications__new'>
-            <span className='navbar__right-notifications__new-number'>
+          <span className="navbar__right-notifications__new">
+            <span className="navbar__right-notifications__new-number">
               {unreadNotifications.length}
             </span>
           </span>
@@ -55,20 +51,20 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
       {isOpen && (
         <div
           ref={node}
-          className='navbar__right-notifications__dropdown shadow-slim'
+          className="navbar__right-notifications__dropdown shadow-slim"
         >
-          <div className='navbar__right-notifications__dropdown-top'>
-            <span className='navbar__right-notifications__dropdown-top__span'>
+          <div className="navbar__right-notifications__dropdown-top">
+            <span className="navbar__right-notifications__dropdown-top__span">
               Notifications
             </span>
           </div>
-          <ul className='navbar__right-notifications__dropdown-list'>
+          <ul className="navbar__right-notifications__dropdown-list">
             {notifications && notifications.length > 0 ? (
-              notifications.map((notif) => {
+              notifications.map(notif => {
                 return (
                   <li
                     key={notif.notificationId}
-                    className='navbar__right-notifications__dropdown-list__item'
+                    className="navbar__right-notifications__dropdown-list__item"
                   >
                     <Link
                       to={`/posts/${notif.postId}`}
@@ -97,9 +93,9 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
                 );
               })
             ) : (
-              <li className='navbar__right-notifications__dropdown-list__item'>
-                <div className='navbar__right-notifications__dropdown-list__item-noNotifications'>
-                  You don't have any notifications
+              <li className="navbar__right-notifications__dropdown-list__item">
+                <div className="navbar__right-notifications__dropdown-list__item-noNotifications">
+                  You don&apos;t have any notifications
                 </div>
               </li>
             )}

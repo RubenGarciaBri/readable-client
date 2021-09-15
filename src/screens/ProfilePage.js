@@ -5,21 +5,19 @@ import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { css } from '@emotion/react';
 import { uploadProfileImage } from '../redux/actions/user';
-import Pagination from '../components/Pagination'
+import Pagination from '../components/Pagination';
 import { updateUserDetails } from '../redux/actions/user';
-import { FaPen, FaCheck, FaCalendarAlt } from 'react-icons/fa';
-import { MdLocationOn } from 'react-icons/md';
+import { FaPen, FaCheck } from 'react-icons/fa';
 import MetaDecorator from '../utils/MetaDecorator';
 
 import {
   formatDate,
   formatDateYearOnly,
   nestedIdObjectToArray,
-  arrayIntoNestedIdObject,
   createExcerpt,
 } from '../utils/helpers';
 
-const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => {
+const ProfilePage = ({ user, dispatch, isLoading, data, profileUser }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
@@ -45,14 +43,16 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
   // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (profileUser !== undefined) {
       // Set data in component state
       setBio(profileUser.bio);
       setLocation(profileUser.location);
 
       // Get profile user posts in an array
-      setUserPosts(postsArray.filter((post) => post.author === profileUser.userName))
+      setUserPosts(
+        postsArray.filter(post => post.author === profileUser.userName)
+      );
 
       // Detect if the profile user is logged in
       if (profileUser.userName === user.credentials.userName) {
@@ -63,13 +63,12 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
     }
   }, [profileUser, data, user]);
 
-  // const { email, createdAt, imageUrl, userName } = profileUser;
-  const email = profileUser !== undefined ? profileUser.email : ''
-  const createdAt = profileUser !== undefined ? profileUser.createdAt : ''
-  const imageUrl = profileUser !== undefined ? profileUser.imageUrl : ''
-  const userName = profileUser !== undefined ? profileUser.userName : ''
-  
-  const handleImageChange = (e) => {
+  // const email = profileUser !== undefined ? profileUser.email : '';
+  const createdAt = profileUser !== undefined ? profileUser.createdAt : '';
+  const imageUrl = profileUser !== undefined ? profileUser.imageUrl : '';
+  const userName = profileUser !== undefined ? profileUser.userName : '';
+
+  const handleImageChange = e => {
     const image = e.target.files[0];
     const formData = new FormData();
     formData.append('image', image, image.name);
@@ -102,128 +101,126 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
 
   const loggedInMenu = () => {
     return (
-        <div className='profileCard'>
-          <div className='profileCard-top'>
-            <div className='profileCard-top__imgWrapper'>
-              <img className='shadow-slim' src={imageUrl} />
+      <div className="profileCard">
+        <div className="profileCard-top">
+          <div className="profileCard-top__imgWrapper">
+            <img className="shadow-slim" src={imageUrl} />
+            <input
+              hidden="hidden"
+              type="file"
+              id="imageUpload"
+              onChange={handleImageChange}
+            />
+            <button className="profileCard-top__imgWrapper-btn">
+              <FaPen size={14} onClick={handleImageClick} />
+            </button>
+          </div>
+          <h4 className="profileCard-top__name">@{userName}</h4>
+          <p className="profileCard-top__since">
+            Member since {formatDateYearOnly(createdAt)}
+          </p>
+          <div>
+            {isLocationOpen ? (
               <input
-                hidden='hidden'
-                type='file'
-                id='imageUpload'
-                onChange={handleImageChange}
+                type="text"
+                value={location}
+                onChange={e => setLocation(e.target.value)}
+                className="profileCard-top__input"
               />
-              <button className='profileCard-top__imgWrapper-btn'>
-                <FaPen size={14} onClick={handleImageClick} />
-              </button>
-            </div>
-            <h4 className='profileCard-top__name'>@{userName}</h4>
-            <p className='profileCard-top__since'>
-              Member since {formatDateYearOnly(createdAt)}
-            </p>
-            <div>
+            ) : (
+              <p className="profileCard-top__location">{location}</p>
+            )}
+            <button className="profileCard-top__editBtn">
               {isLocationOpen ? (
-                <input
-                  type='text'
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className='profileCard-top__input'
-                />
+                <FaCheck size={14} onClick={handleLocationUpdate} />
               ) : (
-                <p className='profileCard-top__location'>{location}</p>
+                <FaPen
+                  size={14}
+                  onClick={() => setIsLocationOpen(!isLocationOpen)}
+                />
               )}
-              <button className='profileCard-top__editBtn'>
-                {isLocationOpen ? (
-                  <FaCheck size={14} onClick={handleLocationUpdate} />
-                ) : (
-                  <FaPen
-                    size={14}
-                    onClick={() => setIsLocationOpen(!isLocationOpen)}
-                  />
-                )}
-              </button>
-            </div>          
-            <div>
+            </button>
+          </div>
+          <div>
+            {isBioOpen ? (
+              <input
+                type="text"
+                value={bio}
+                onChange={e => setBio(e.target.value)}
+                className="profileCard-top__input"
+              />
+            ) : (
+              <p className="profileCard-top__bio">{bio}</p>
+            )}
+            <button className="profileCard-top__editBtn">
               {isBioOpen ? (
-                <input
-                  type='text'
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  className='profileCard-top__input'
-                />
+                <FaCheck size={14} onClick={handleBioUpdate} />
               ) : (
-                <p className='profileCard-top__bio'>{bio}</p>
+                <FaPen size={14} onClick={() => setIsBioOpen(!isBioOpen)} />
               )}
-              <button className='profileCard-top__editBtn'>
-                {isBioOpen ? (
-                  <FaCheck size={14} onClick={handleBioUpdate} />
-                ) : (
-                  <FaPen size={14} onClick={() => setIsBioOpen(!isBioOpen)} />
-                )}
-              </button>
-            </div>
-            {/* <button className='profileCard-top__deleteAccount'>
+            </button>
+          </div>
+          {/* <button className='profileCard-top__deleteAccount'>
               Delete Account
             </button> */}
-          </div>
         </div>
-      )
+      </div>
+    );
   };
 
   const loggedOutMenu = () => {
     return (
-      <div className='profileCard'>
-        <div className='profileCard-top'>
-          <div className='profileCard-top__imgWrapper'>
-            <img className='shadow-slim' src={imageUrl} />
+      <div className="profileCard">
+        <div className="profileCard-top">
+          <div className="profileCard-top__imgWrapper">
+            <img className="shadow-slim" src={imageUrl} />
           </div>
-          <h4 className='profileCard-top__name'>@{userName}</h4>
+          <h4 className="profileCard-top__name">@{userName}</h4>
           <div>
             {/* <MdLocationOn size={19} /> */}
-            <p className='profileCard-top__location'>{location}</p>
+            <p className="profileCard-top__location">{location}</p>
           </div>
-          <p className='profileCard-top__since'>
+          <p className="profileCard-top__since">
             Member since {formatDateYearOnly(createdAt)}
           </p>
           <div>
-            <p className='profileCard-top__bio'>{bio}</p>
+            <p className="profileCard-top__bio">{bio}</p>
           </div>
         </div>
       </div>
-      )
+    );
   };
 
-  return (
-      isLoading === true ? (
-        <BeatLoader css={spinnerStyles} loading />
-      ) 
-    : (
-      <div className='profilePage'>
+  return isLoading === true ? (
+    <BeatLoader css={spinnerStyles} loading />
+  ) : (
+    <div className="profilePage">
       <MetaDecorator />
       <Nav />
-      <div className='profilePage-banner'></div>
-      <div className='profilePage-main'>
+      <div className="profilePage-banner"></div>
+      <div className="profilePage-main">
         {isLoggedIn ? loggedInMenu() : loggedOutMenu()}
-        <div className='profileContent'>
-          <h4 className='profileContent-title'>Latest Posts</h4>
-          <ul className='profileContent-list'>
-            {currentPosts.map((post) => {
+        <div className="profileContent">
+          <h4 className="profileContent-title">Latest Posts</h4>
+          <ul className="profileContent-list">
+            {currentPosts.map(post => {
               return (
-                <li key={post.id} className='profileContent-list__item'>
+                <li key={post.id} className="profileContent-list__item">
                   <Link
                     to={`/posts/${post.id}`}
-                    className='profileContent-list__item-post'
+                    className="profileContent-list__item-post"
                   >
-                    <h5 className='profileContent-list__item-post__title'>
+                    <h5 className="profileContent-list__item-post__title">
                       {post.title}
                     </h5>
-                    <p className='profileContent-list__item-post__text'>
+                    <p className="profileContent-list__item-post__text">
                       {createExcerpt(post.body)}
                     </p>
-                    <div className='profileContent-list__item-post__bottom'>
-                      <span className='profileContent-list__item-post__bottom-category'>
+                    <div className="profileContent-list__item-post__bottom">
+                      <span className="profileContent-list__item-post__bottom-category">
                         {post.category}
                       </span>
-                      <span className='profileContent-list__item-post__bottom-date'>
+                      <span className="profileContent-list__item-post__bottom-date">
                         {formatDate(post.createdAt)}
                       </span>
                     </div>
@@ -241,19 +238,18 @@ const ProfilePage = ({ user, posts, dispatch, isLoading, data, profileUser}) => 
         </div>
       </div>
     </div>
-    )   
-  )
+  );
 };
 
-function mapStateToProps({ user, data, UI }, props) {
+function mapStateToProps({ user, data }, props) {
   const { userName } = props.match.params;
-  const profileUser = data.users[userName]
+  const profileUser = data.users[userName];
 
   return {
     user,
     isLoading: data.loading,
     data,
-    profileUser
+    profileUser,
   };
 }
 

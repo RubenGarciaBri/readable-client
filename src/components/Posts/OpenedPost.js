@@ -2,28 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { capitalizeFirstLetter, formatDate } from '../../utils/helpers';
-import { favPost, unfavPost, togglePostUpvote, togglePostDownvote } from '../../redux/actions/data';
-import { deletePost } from '../../redux/actions/data';
 import {
-  FaCommentAlt,
-  FaRegStar,
-  FaShareAlt,
-  FaStar,
-  FaTimesCircle,
-  FaTrashAlt,
-} from 'react-icons/fa';
+  favPost,
+  unfavPost,
+  togglePostUpvote,
+  togglePostDownvote,
+} from '../../redux/actions/data';
+import { deletePost } from '../../redux/actions/data';
+import { FaCommentAlt, FaRegStar, FaStar, FaTrashAlt } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import NewComment from './NewComment';
 import Comment from './Comment';
-
 
 const OpenedPost = ({ user, dispatch, post }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFaved, setIsFaved] = useState(false);
   const [hasUpvoted, setHasUpvoted] = useState(false);
-  const [hasDownvoted, setHasDownvoted] = useState(false);  
+  const [hasDownvoted, setHasDownvoted] = useState(false);
 
   const history = useHistory();
 
@@ -34,7 +31,6 @@ const OpenedPost = ({ user, dispatch, post }) => {
     category,
     author,
     createdAt,
-    favCount,
     commentCount,
     voteScore,
     userImage,
@@ -55,7 +51,7 @@ const OpenedPost = ({ user, dispatch, post }) => {
   useEffect(() => {
     // Create array containing the usernames of all the users that have faved this post
     const usersFavArray = [];
-    favs.forEach((fav) => {
+    favs.forEach(fav => {
       usersFavArray.push(fav.userName);
     });
 
@@ -68,12 +64,12 @@ const OpenedPost = ({ user, dispatch, post }) => {
 
     // Create array containing the usernames of all the users that have upvoted and downvoted this post
     const usersUpvoteArray = [];
-    upvotes.forEach((upvote) => {
+    upvotes.forEach(upvote => {
       usersUpvoteArray.push(upvote.userName);
     });
 
     const usersDownvoteArray = [];
-    downvotes.forEach((downvote) => {
+    downvotes.forEach(downvote => {
       usersDownvoteArray.push(downvote.userName);
     });
 
@@ -89,7 +85,6 @@ const OpenedPost = ({ user, dispatch, post }) => {
     } else {
       setHasDownvoted(false);
     }
-
   }, [user, post]);
 
   const handleUpvote = () => {
@@ -99,10 +94,10 @@ const OpenedPost = ({ user, dispatch, post }) => {
     } else {
       // Check if the author is logged in
       if (isLoggedIn === true) {
-        toast.error("You can't upvote your own posts")
+        toast.error("You can't upvote your own posts");
       } else {
-        dispatch(togglePostUpvote(id))
-      } 
+        dispatch(togglePostUpvote(id));
+      }
     }
   };
 
@@ -113,31 +108,31 @@ const OpenedPost = ({ user, dispatch, post }) => {
     } else {
       // Check if the author is logged in
       if (isLoggedIn === true) {
-        toast.error("You can't downvote your own posts")
+        toast.error("You can't downvote your own posts");
       } else {
-        dispatch(togglePostDownvote(id))
-      } 
+        dispatch(togglePostDownvote(id));
+      }
     }
   };
 
   const handleFav = () => {
     // Check if there's an authenticated user
-   if (user.authenticated === false) {
-     history.push('/login');
-   } else {
-     // Check if the author is logged in
-     if (isLoggedIn === true) {
-       toast.error("You can't fav your own posts")
-     } else {
-       // Check if the post has been faved and perform the correct action
-       if (isFaved === false) {
-         dispatch(favPost(id));
-       } else {
-         dispatch(unfavPost(id));
-       }
-     }
-   }
- };
+    if (user.authenticated === false) {
+      history.push('/login');
+    } else {
+      // Check if the author is logged in
+      if (isLoggedIn === true) {
+        toast.error("You can't fav your own posts");
+      } else {
+        // Check if the post has been faved and perform the correct action
+        if (isFaved === false) {
+          dispatch(favPost(id));
+        } else {
+          dispatch(unfavPost(id));
+        }
+      }
+    }
+  };
 
   const handleDelete = () => {
     dispatch(deletePost(id));
@@ -145,42 +140,50 @@ const OpenedPost = ({ user, dispatch, post }) => {
   };
 
   return (
-    <div className='postOpened shadow-slim'>
-      <div className='postOpened-left'>
-        <div className='postOpened-left__rating'>
+    <div className="postOpened shadow-slim">
+      <div className="postOpened-left">
+        <div className="postOpened-left__rating">
           <button
-            className='postOpened-left__rating-upvote'
+            className="postOpened-left__rating-upvote"
             onClick={handleUpvote}
           >
             <ImArrowUp
               style={{ color: hasUpvoted === true ? '#ff4500' : null }}
-              className='postOpened-left__rating-upvote__icon'
+              className="postOpened-left__rating-upvote__icon"
             />
           </button>
-          <span className='postOpened-left__rating-number' style={{ color: hasUpvoted === true || hasDownvoted === true ? '#ff4500' : null }}>{voteScore}</span>
+          <span
+            className="postOpened-left__rating-number"
+            style={{
+              color:
+                hasUpvoted === true || hasDownvoted === true ? '#ff4500' : null,
+            }}
+          >
+            {voteScore}
+          </span>
           <button
-            className='postOpened-left__rating-downvote'
+            className="postOpened-left__rating-downvote"
             onClick={handleDownvote}
           >
             <ImArrowDown
               style={{ color: hasDownvoted === true ? '#ff4500' : null }}
-              className='postOpened-left__rating-downvote__icon'
+              className="postOpened-left__rating-downvote__icon"
             />
           </button>
         </div>
       </div>
-      <div className='postOpened-right'>
-        <div className='postOpened-right__top'>
-          <ul className='postOpened-right__top-list'>
-            <li className='postOpened-right__top-list__item'>
+      <div className="postOpened-right">
+        <div className="postOpened-right__top">
+          <ul className="postOpened-right__top-list">
+            <li className="postOpened-right__top-list__item">
               <Link to={`/profile/${author}`}>
                 <img src={userImage} alt="User's profile image" />
               </Link>
             </li>
-            <li className='postOpened-right__top-list__item postOpened-right__top-list__item--author'>
+            <li className="postOpened-right__top-list__item postOpened-right__top-list__item--author">
               <Link to={`/profile/${author}`}>@{author}</Link>
             </li>
-            <li className='postOpened-right__top-list__item'>
+            <li className="postOpened-right__top-list__item">
               <Link to={`/${category}`}>
                 in <b>{capitalizeFirstLetter(category)}</b> at{' '}
                 {formatDate(createdAt)}
@@ -188,34 +191,37 @@ const OpenedPost = ({ user, dispatch, post }) => {
             </li>
           </ul>
         </div>
-        <div className='postOpened-right__center'>
-          <h4 className='postOpened-right__center-title'>{title}</h4>
-          <p className='postOpened-right__center-content'>{body}</p>
+        <div className="postOpened-right__center">
+          <h4 className="postOpened-right__center-title">{title}</h4>
+          <p className="postOpened-right__center-content">{body}</p>
         </div>
-        <div className='postOpened-right__bottom'>
-          <ul className='postOpened-right__bottom-list'>
-            <li className='postOpened-right__bottom-list__item'>
+        <div className="postOpened-right__bottom">
+          <ul className="postOpened-right__bottom-list">
+            <li className="postOpened-right__bottom-list__item">
               <Link to={`/posts/${id}`}>
-                <FaCommentAlt className='postOpened-right__bottom-list__item-icon' />{' '}
+                <FaCommentAlt className="postOpened-right__bottom-list__item-icon" />{' '}
                 {commentCount} comments
               </Link>
             </li>
             {!isLoggedIn ? (
-              <li className='postOpened-right__bottom-list__item'>
-                <button onClick={handleFav} className='postOpened-right__bottom-list__item-favBtn'>
+              <li className="postOpened-right__bottom-list__item">
+                <button
+                  onClick={handleFav}
+                  className="postOpened-right__bottom-list__item-favBtn"
+                >
                   {isFaved === true ? (
-                    <FaStar className='postOpened-right__bottom-list__item-favBtn__starIcon postOpened-right__bottom-list__item-favBtn__starIcon--active' />
+                    <FaStar className="postOpened-right__bottom-list__item-favBtn__starIcon postOpened-right__bottom-list__item-favBtn__starIcon--active" />
                   ) : (
-                    <FaRegStar className='postOpened-right__bottom-list__item-favBtn__starIcon' />
+                    <FaRegStar className="postOpened-right__bottom-list__item-favBtn__starIcon" />
                   )}
                   {isFaved === true ? 'Unfav' : 'Fav'}
                 </button>
               </li>
             ) : null}
             {isLoggedIn ? (
-              <li className='postOpened-right__bottom-list__item postOpened-right__bottom-list__item--delete'>
+              <li className="postOpened-right__bottom-list__item postOpened-right__bottom-list__item--delete">
                 <button onClick={handleDelete}>
-                  <FaTrashAlt className='post-right__bottom-list__item-deleteIcon' />{' '}
+                  <FaTrashAlt className="post-right__bottom-list__item-deleteIcon" />{' '}
                   Delete
                 </button>
               </li>
@@ -224,14 +230,12 @@ const OpenedPost = ({ user, dispatch, post }) => {
         </div>
         {
           // Only show New Comment component if there is an authenticated user
-          user.authenticated !== false ? (
-            <NewComment id={id} />
-          ) : null
+          user.authenticated !== false ? <NewComment id={id} /> : null
         }
-        <div className='comment-section'>
-          <ul className='comment-list'>
+        <div className="comment-section">
+          <ul className="comment-list">
             {comments.length > 0
-              ? comments.map((comment) => {
+              ? comments.map(comment => {
                   return <Comment data={comment} key={comment.id} />;
                 })
               : null}

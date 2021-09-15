@@ -2,12 +2,12 @@ import React from 'react';
 
 const FilterBar = ({ onSelectChange }) => {
   return (
-    <div className='filterBar'>
+    <div className="filterBar">
       <label>Sort by </label>
-      <select name='filters' id='filters' onChange={onSelectChange}>
-        <option value='latest'>Latest Posts</option>
-        <option value='rating'>Highest Rating</option>
-        <option value='comments'>Most Comments</option>
+      <select name="filters" id="filters" onChange={onSelectChange}>
+        <option value="latest">Latest Posts</option>
+        <option value="rating">Highest Rating</option>
+        <option value="comments">Most Comments</option>
       </select>
     </div>
   );
