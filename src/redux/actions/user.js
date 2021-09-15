@@ -37,6 +37,7 @@ export const signupUser = (newUserData, history) => dispatch => {
       dispatch(getUserData());
       dispatch({ type: CLEAR_ERRORS });
       history.push('/');
+      window.location.reload();
     })
     .catch(err => {
       dispatch({
@@ -59,11 +60,13 @@ export const getUserData = () => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const logoutUser = dispatch => {
+export const logoutUser = history => dispatch => {
   dispatch({ type: LOADING_USER });
   localStorage.removeItem('FBIdToken');
   delete axios.defaults.headers.common['Authorization'];
   dispatch({ type: SET_UNAUTHENTICATED });
+  history.push('/');
+  window.location.reload();
 };
 
 export const updateUserDetails = userDetails => dispatch => {
