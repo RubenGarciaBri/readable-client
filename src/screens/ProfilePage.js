@@ -3,7 +3,7 @@ import Nav from '../components/NavBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { css } from '@emotion/react';
+import { spinnerStyles } from '../sass/spinnerStyles';
 import { uploadProfileImage } from '../redux/actions/user';
 import Pagination from '../components/Pagination';
 import { updateUserDetails } from '../redux/actions/user';
@@ -26,12 +26,6 @@ const ProfilePage = ({ user, dispatch, isLoading, data, profileUser }) => {
   const [userPosts, setUserPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
-
-  const spinnerStyles = css`
-    display: block;
-    margin: 100px auto;
-    text-align: center;
-  `;
 
   const postsArray = nestedIdObjectToArray(data.posts);
 

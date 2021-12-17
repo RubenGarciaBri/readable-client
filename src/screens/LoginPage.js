@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { css } from '@emotion/react';
+import { spinnerStyles } from '../sass/spinnerStyles';
 import { loginUser } from '../redux/actions/user';
 import MetaDecorator from '../utils/MetaDecorator';
 
@@ -12,12 +12,6 @@ const LoginPage = ({ dispatch, UI }) => {
   const [errors, setErrors] = useState({});
 
   const history = useHistory();
-
-  const spinnerStyles = css`
-    display: block;
-    margin: 250px auto;
-    text-align: center;
-  `;
 
   useEffect(() => {
     setErrors(UI.errors);

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-import { css } from '@emotion/react';
+import { spinnerStyles } from '../sass/spinnerStyles';
 import { GoAlert } from 'react-icons/go';
 import { postPost } from '../redux/actions/data';
 import useOutsideClick from '../utils/helpers';
@@ -14,12 +14,6 @@ const CreatePost = ({ dispatch, user, UI }) => {
   const [body, setBody] = useState('');
   const [category, setCategory] = useState(null);
   const [errorMessage, setErrorMessage] = useState(false);
-
-  const spinnerStyles = css`
-    display: block;
-    margin: 50px auto;
-    text-align: center;
-  `;
 
   const node = useRef();
   const history = useHistory();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { css } from '@emotion/react';
+import { spinnerStyles } from '../../sass/spinnerStyles';
 import { submitComment } from '../../redux/actions/data';
 
 const NewComment = ({ dispatch, id, UI }) => {
@@ -13,12 +13,6 @@ const NewComment = ({ dispatch, id, UI }) => {
     dispatch(submitComment(id, commentData));
     setBody('');
   };
-
-  const spinnerStyles = css`
-    display: block;
-    margin: 50px auto;
-    text-align: center;
-  `;
 
   const commentData = {
     body,

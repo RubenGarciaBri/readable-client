@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { css } from '@emotion/react';
+import { spinnerStyles } from '../sass/spinnerStyles';
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
 import AsideMenu from '../components/AsideMenu';
@@ -13,12 +13,6 @@ import MetaDecorator from '../utils/MetaDecorator';
 
 const HomePage = ({ postsArr, loading }) => {
   const [filter, setFilter] = useState('latest');
-
-  const spinnerStyles = css`
-    display: block;
-    margin: 50px auto;
-    text-align: center;
-  `;
 
   const onSelectChange = e => {
     setFilter(e.target.value);

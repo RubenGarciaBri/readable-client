@@ -14,7 +14,7 @@ import ProfilePage from '../screens/ProfilePage';
 import { ToastContainer } from 'react-toastify';
 import { SET_AUTHENTICATED } from '../redux/types';
 import { getPosts, getUsers } from '../redux/actions/data';
-import { logoutUser, getUserData } from '../redux/actions/user';
+import { logoutUser, loginUser, getUserData } from '../redux/actions/user';
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
 
@@ -24,18 +24,30 @@ axios.defaults.baseURL =
 function App({ dispatch }) {
   const history = useHistory();
 
+  console.log(process.env.REACT_APP_MODE);
+
   // Load initial data
   useEffect(() => {
-    const token = localStorage.FBIdToken;
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      if (decodedToken.exp * 1000 < Date.now()) {
-        dispatch(logoutUser());
-        history.push('/');
-      } else {
-        dispatch({ type: SET_AUTHENTICATED });
-        axios.defaults.headers.common['Authorization'] = token;
-        dispatch(getUserData());
+    // Automatic login during development for testing
+    if (process.env.REACT_APP_MODE === 'development') {
+      dispatch(
+        loginUser({
+          email: 'ruben@gmail.com',
+          password: '123456',
+        })
+      );
+    } else {
+      const token = localStorage.FBIdToken;
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.exp * 1000 < Date.now()) {
+          dispatch(logoutUser());
+          history.push('/');
+        } else {
+          dispatch({ type: SET_AUTHENTICATED });
+          axios.defaults.headers.common['Authorization'] = token;
+          dispatch(getUserData());
+        }
       }
     }
   }, []);
@@ -57,13 +69,13 @@ function App({ dispatch }) {
         <AuthRoute path="/signup" component={SignupPage} />
         <AuthRoute path="/login" component={LoginPage} />
       </Switch>
-      <ToastContainer
+      {/* <ToastContainer
         limit={7}
         position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         pauseOnHover
-      />
+      /> */}
     </div>
   );
 }
