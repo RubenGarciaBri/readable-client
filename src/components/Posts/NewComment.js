@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../../sass/spinnerStyles';
+import { spinnerStylesDefault } from '../../sass/spinnerStyles';
 import { submitComment } from '../../redux/actions/data';
 
 const NewComment = ({ dispatch, id, UI }) => {
@@ -21,7 +21,7 @@ const NewComment = ({ dispatch, id, UI }) => {
   return (
     <div className="newComment">
       {UI.loading === true ? (
-        <BeatLoader css={spinnerStyles} loading />
+        <BeatLoader css={spinnerStylesDefault} loading />
       ) : (
         <form className="newComment__form" onSubmit={e => onFormSubmit(e)}>
           <textarea

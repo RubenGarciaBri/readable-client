@@ -3,7 +3,7 @@ import Nav from '../components/NavBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../sass/spinnerStyles';
+import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { uploadProfileImage } from '../redux/actions/user';
 import Pagination from '../components/Pagination';
 import { updateUserDetails } from '../redux/actions/user';
@@ -186,7 +186,7 @@ const ProfilePage = ({ user, dispatch, isLoading, data, profileUser }) => {
   };
 
   return isLoading === true ? (
-    <BeatLoader css={spinnerStyles} loading />
+    <BeatLoader css={spinnerStylesDefault} loading />
   ) : (
     <div className="profilePage">
       <MetaDecorator />

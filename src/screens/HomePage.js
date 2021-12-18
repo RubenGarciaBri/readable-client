@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../sass/spinnerStyles';
+import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
 import AsideMenu from '../components/AsideMenu';
@@ -30,7 +30,7 @@ const HomePage = ({ postsArr, loading }) => {
           <CreatePost />
           <FilterBar onSelectChange={onSelectChange} />
           {loading === true ? (
-            <BeatLoader css={spinnerStyles} loading />
+            <BeatLoader css={spinnerStylesDefault} loading />
           ) : (
             <ul>
               {filter === 'latest'

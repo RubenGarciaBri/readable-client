@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../sass/spinnerStyles';
+import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { signupUser } from '../redux/actions/user';
 import { connect } from 'react-redux';
 import MetaDecorator from '../utils/MetaDecorator';
@@ -36,7 +36,7 @@ const SignupPage = ({ dispatch, UI }) => {
       <MetaDecorator />
       <div className="signup-container">
         {UI.loading === true ? (
-          <BeatLoader css={spinnerStyles} loading />
+          <BeatLoader css={spinnerStylesDefault} loading />
         ) : (
           <div className="signup shadow-xs">
             <div className="signup-card session-card">

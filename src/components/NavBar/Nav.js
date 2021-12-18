@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../../sass/spinnerStyles';
+import { spinnerStylesNav } from '../../sass/spinnerStyles';
 import SearchBar from './SearchBar';
 import NotificationsDropdown from './NotificationsDropdown';
 import SignoutButton from './SignoutButton';
@@ -25,9 +25,9 @@ const Nav = ({ authenticated, loading }) => {
             <SearchBar />
           </div>
           <div className="navbar__right">
-            {loading === true ? (
-              <BeatLoader css={spinnerStyles} size={10} loading />
-            ) : authenticated === true ? (
+            {loading ? (
+              <BeatLoader css={spinnerStylesNav} size={10} loading />
+            ) : authenticated ? (
               <>
                 <ProfileLink />
                 <NotificationsDropdown />
@@ -56,7 +56,7 @@ const Nav = ({ authenticated, loading }) => {
           </div>
           <div className="navbarMobile__right">
             {loading === true ? (
-              <BeatLoader css={spinnerStyles} size={10} loading />
+              <BeatLoader css={spinnerStylesNav} size={10} loading />
             ) : authenticated === true ? (
               <>
                 <NotificationsDropdown />

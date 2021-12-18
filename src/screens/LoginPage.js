@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../sass/spinnerStyles';
+import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { loginUser } from '../redux/actions/user';
 import MetaDecorator from '../utils/MetaDecorator';
 
@@ -32,7 +32,7 @@ const LoginPage = ({ dispatch, UI }) => {
       <MetaDecorator />
       <div className="login-container main-container">
         {UI.loading === true ? (
-          <BeatLoader css={spinnerStyles} loading />
+          <BeatLoader css={spinnerStylesDefault} loading />
         ) : (
           <div className="login shadow-xs">
             <div className="login-card session-card">

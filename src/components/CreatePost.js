@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
-import { spinnerStyles } from '../sass/spinnerStyles';
+import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { GoAlert } from 'react-icons/go';
 import { postPost } from '../redux/actions/data';
 import useOutsideClick from '../utils/helpers';
@@ -81,84 +81,78 @@ const CreatePost = ({ dispatch, user, UI }) => {
   };
 
   return (
-    <>
-      {UI.loading === true ? (
-        <BeatLoader css={spinnerStyles} loading />
-      ) : (
-        <div
-          ref={node}
-          className={`createPost shadow-slim ${
-            isVisible === true ? 'cursor-auto' : 'cursor-pointer'
-          }`}
-          onClick={onInputFocus}
+    <div
+      ref={node}
+      className={`createPost shadow-slim ${
+        isVisible === true ? 'cursor-auto' : 'cursor-pointer'
+      }`}
+      onClick={onInputFocus}
+    >
+      <div className="createPost__left"></div>
+      <div className="createPost__right">
+        <form
+          action="#"
+          className="createPost__right-form"
+          onSubmit={e => onFormSubmit(e)}
         >
-          <div className="createPost__left"></div>
-          <div className="createPost__right">
-            <form
-              action="#"
-              className="createPost__right-form"
-              onSubmit={e => onFormSubmit(e)}
-            >
-              {isVisible === true ? (
-                <input
-                  required={true}
-                  type="text"
-                  value={title}
-                  placeholder="Title"
-                  className="createPost__right-form__input"
-                  onChange={e => onInputChange(e.target.value)}
-                />
-              ) : null}
-              <textarea
-                value={body}
-                required={true}
-                placeholder="Create post"
-                rows={rows}
-                className="createPost__right-form__textarea"
-                onChange={e => onTextareaChange(e.target.value)}
-              ></textarea>
+          {isVisible === true ? (
+            <input
+              required={true}
+              type="text"
+              value={title}
+              placeholder="Title"
+              className="createPost__right-form__input"
+              onChange={e => onInputChange(e.target.value)}
+            />
+          ) : null}
+          <textarea
+            value={body}
+            required={true}
+            placeholder="Create post"
+            rows={rows}
+            className="createPost__right-form__textarea"
+            onChange={e => onTextareaChange(e.target.value)}
+          ></textarea>
 
-              {isVisible === true ? (
-                <>
-                  <ul className="createPost__right-form__categories">
-                    <span className="createPost__right-form__categories-title">
-                      Category
-                    </span>
-                    {categories.map(item => {
-                      return (
-                        <li
-                          key={item}
-                          className={`createPost__right-form__categories-item ${
-                            category === item
-                              ? 'createPost__right-form__categories-item--active'
-                              : null
-                          }`}
-                        >
-                          <a
-                            href="#"
-                            onClick={e => onCategoryChange(e.target.innerText)}
-                          >
-                            {item}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  {errorMessage === true ? (
-                    <span className={'createPost__right-form__error'}>
-                      <GoAlert size={14} /> Please select a category
-                    </span>
-                  ) : null}
-                  <button type="submit" className="createPost__right-form__btn">
-                    Create Post
-                  </button>
-                </>
+          {isVisible === true ? (
+            <>
+              <ul className="createPost__right-form__categories">
+                <span className="createPost__right-form__categories-title">
+                  Category
+                </span>
+                {categories.map(item => {
+                  return (
+                    <li
+                      key={item}
+                      className={`createPost__right-form__categories-item ${
+                        category === item
+                          ? 'createPost__right-form__categories-item--active'
+                          : null
+                      }`}
+                    >
+                      <a
+                        href="#"
+                        onClick={e => onCategoryChange(e.target.innerText)}
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+              {errorMessage === true ? (
+                <span className={'createPost__right-form__error'}>
+                  <GoAlert size={14} /> Please select a category
+                </span>
               ) : null}
-            </form>
-          </div>
-        </div>
-      )}
-    </>
+              <button type="submit" className="createPost__right-form__btn">
+                Create Post
+              </button>
+            </>
+          ) : null}
+        </form>
+      </div>
+    </div>
   );
 };
 
