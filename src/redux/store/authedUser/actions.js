@@ -1,48 +1,49 @@
 import {
   SET_USER,
-  SET_ERRORS,
-  CLEAR_ERRORS,
-  LOADING_UI,
+  SET_ERROR,
+  CLEAR_ERROR,
+  SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   LOADING_USER,
-  MARK_NOTIFICATIONS_READ,
-} from '../types';
+} from './types';
 
 import axios from 'axios';
 
 export const loginUser = (userData, history) => dispatch => {
-  dispatch({ type: LOADING_UI });
+  dispatch({ type: LOADING_USER });
   axios
     .post('/login', userData)
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
-      dispatch({ type: CLEAR_ERRORS });
+      dispatch({ type: CLEAR_ERROR });
       history.push('/');
     })
     .catch(err => {
       dispatch({
-        type: SET_ERRORS,
+        // TODO: Fix later, currently an empty object because of frozen UI issue
+        type: SET_ERROR,
         payload: {},
       });
     });
 };
 
 export const signupUser = (newUserData, history) => dispatch => {
-  dispatch({ type: LOADING_UI });
+  dispatch({ type: LOADING_USER });
   axios
     .post('/signup', newUserData)
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
-      dispatch({ type: CLEAR_ERRORS });
+      dispatch({ type: CLEAR_ERROR });
       history.push('/');
       window.location.reload();
     })
     .catch(err => {
       dispatch({
-        type: SET_ERRORS,
-        payload: err.response.data,
+        // TODO: Fix later, currently an empty object because of frozen UI issue
+        type: SET_ERROR,
+        payload: {},
       });
     });
 };
@@ -93,15 +94,4 @@ const setAuthorizationHeader = token => {
   const FBIdToken = `Bearer ${token}`;
   localStorage.setItem('FBIdToken', FBIdToken);
   axios.defaults.headers.common['Authorization'] = FBIdToken;
-};
-
-export const markNotificationsRead = notificationIds => dispatch => {
-  axios
-    .post('/notifications', notificationIds)
-    .then(() => {
-      dispatch({
-        type: MARK_NOTIFICATIONS_READ,
-      });
-    })
-    .catch(err => console.log(err));
 };

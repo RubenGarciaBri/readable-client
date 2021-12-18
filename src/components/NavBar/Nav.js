@@ -42,32 +42,6 @@ const Nav = ({ authenticated, loading }) => {
           </div>
         </div>
       </nav>
-
-      {/* Navbar Mobile */}
-      <nav className="navbarMobile">
-        <div className="navbarMobile__container main-container">
-          <div className="navbarMobile__left">
-            <a className="logo" href="/">
-              Readable
-            </a>
-          </div>
-          <div className="navbarMobile__center">
-            <SearchBar />
-          </div>
-          <div className="navbarMobile__right">
-            {loading === true ? (
-              <BeatLoader css={spinnerStylesNav} size={10} loading />
-            ) : authenticated === true ? (
-              <>
-                <NotificationsDropdown />
-                <MobileMenu authenticated={true} />
-              </>
-            ) : (
-              <MobileMenu authenticated={false} />
-            )}
-          </div>
-        </div>
-      </nav>
     </>
   );
 };

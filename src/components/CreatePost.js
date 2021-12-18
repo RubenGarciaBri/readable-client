@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { GoAlert } from 'react-icons/go';
 import { postPost } from '../redux/actions/data';

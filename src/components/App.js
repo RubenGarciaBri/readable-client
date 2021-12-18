@@ -13,8 +13,13 @@ import LoginPage from '../screens/LoginPage';
 import ProfilePage from '../screens/ProfilePage';
 import { ToastContainer } from 'react-toastify';
 import { SET_AUTHENTICATED } from '../redux/types';
-import { getPosts, getUsers } from '../redux/actions/data';
-import { logoutUser, loginUser, getUserData } from '../redux/actions/user';
+import { getPosts } from '../redux/store/posts/actions';
+import { getUsers } from '../redux/store/users/actions';
+import {
+  logoutUser,
+  loginUser,
+  getUserData,
+} from '../redux/store/authedUser/actions';
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
 
@@ -69,13 +74,13 @@ function App({ dispatch }) {
         <AuthRoute path="/signup" component={SignupPage} />
         <AuthRoute path="/login" component={LoginPage} />
       </Switch>
-      {/* <ToastContainer
+      <ToastContainer
         limit={7}
         position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         pauseOnHover
-      /> */}
+      />
     </div>
   );
 }
