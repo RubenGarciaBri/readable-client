@@ -27,43 +27,43 @@ import { getAuthedUserAuthenticatedSelector } from '../redux/store/authedUser/se
 axios.defaults.baseURL =
   'https://europe-west1-readable-bf7a6.cloudfunctions.net/api';
 
-const App = ({ dispatch }) => {
+const App = () => {
   const history = useHistory();
 
-  const authenticated = useSelector(getAuthedUserAuthenticatedSelector);
+  const authenticated = useSelector(getAuthedUserAuthenticatedSelector());
 
   console.log('auth', authenticated);
 
-  // Load initial data
-  useEffect(() => {
-    // Automatic login during development for testing
-    if (process.env.REACT_APP_MODE === 'development') {
-      dispatch(
-        loginUser({
-          email: 'ruben@gmail.com',
-          password: '123456',
-        })
-      );
-    } else {
-      const token = localStorage.FBIdToken;
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        if (decodedToken.exp * 1000 < Date.now()) {
-          dispatch(logoutUser());
-          history.push('/');
-        } else {
-          dispatch({ type: SET_AUTHENTICATED });
-          axios.defaults.headers.common['Authorization'] = token;
-          dispatch(getUserData());
-        }
-      }
-    }
-  }, []);
+  // // Load initial data
+  // useEffect(() => {
+  //   // Automatic login during development for testing
+  //   if (process.env.REACT_APP_MODE === 'development') {
+  //     dispatch(
+  //       loginUser({
+  //         email: 'ruben@gmail.com',
+  //         password: '123456',
+  //       })
+  //     );
+  //   } else {
+  //     const token = localStorage.FBIdToken;
+  //     if (token) {
+  //       const decodedToken = jwtDecode(token);
+  //       if (decodedToken.exp * 1000 < Date.now()) {
+  //         dispatch(logoutUser());
+  //         history.push('/');
+  //       } else {
+  //         dispatch({ type: SET_AUTHENTICATED });
+  //         axios.defaults.headers.common['Authorization'] = token;
+  //         dispatch(getUserData());
+  //       }
+  //     }
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    dispatch(getPosts());
-    dispatch(getUsers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  //   dispatch(getUsers());
+  // }, []);
 
   return (
     <div className="App">
