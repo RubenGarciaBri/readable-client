@@ -1,5 +1,21 @@
 import initialState from './initialState';
 
+import {
+  arrayIntoNestedIdObject,
+  nestedIdObjectToArray,
+} from '../../../utils/helpers';
+
+import {
+  LOADING_DATA,
+  SET_POSTS,
+  POST_POST,
+  DELETE_POST,
+  FAV_POST,
+  UNFAV_POST,
+  TOGGLE_POST_UPVOTE,
+  TOGGLE_POST_DOWNVOTE,
+} from './types';
+
 const postsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOADING_DATA:

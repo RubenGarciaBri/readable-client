@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
-import { uploadProfileImage } from '../redux/actions/user';
 import Pagination from '../components/Pagination';
-import { updateUserDetails } from '../redux/actions/user';
+import {
+  updateUserDetails,
+  uploadProfileImage,
+} from '../redux/store/authedUser/actions';
 import { FaPen, FaCheck } from 'react-icons/fa';
 import MetaDecorator from '../utils/MetaDecorator';
 

@@ -1,3 +1,12 @@
+import initialState from './initialState';
+
+import {
+  SET_AUTHENTICATED,
+  SET_UNAUTHENTICATED,
+  SET_USER,
+  LOADING_USER,
+} from './types';
+
 const authedUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_AUTHENTICATED:

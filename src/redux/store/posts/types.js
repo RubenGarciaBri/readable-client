@@ -1,5 +1,7 @@
 export const SET_POSTS = 'SET_POSTS';
 export const SET_POST = 'SET_POST';
+export const TOGGLE_POST_DOWNVOTE = 'TOGGLE_POST_DOWNVOTE';
+export const TOGGLE_POST_UPVOTE = 'TOGGLE_POST_UPVOTE';
 export const FAV_POST = 'FAV_POST';
 export const UNFAV_POST = 'UNFAV_POST';
 export const DELETE_POST = 'DELETE_POST';
@@ -7,3 +9,4 @@ export const POST_POST = 'POST_POST';
 export const LOADING_POSTS = 'LOADING_POSTS';
 export const SET_ERROR = 'SET_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+export const LOADING_DATA = 'LOADING_DATA';

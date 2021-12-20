@@ -1,5 +1,7 @@
 import initialState from './initialState';
 
+import { MARK_NOTIFICATIONS_READ } from './types';
+
 const notificationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case MARK_NOTIFICATIONS_READ:

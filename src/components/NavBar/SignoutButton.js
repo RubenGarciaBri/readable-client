@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/user';
+import { logoutUser } from '../../redux/store/authedUser/actions';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 

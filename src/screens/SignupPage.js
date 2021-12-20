@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
-import { signupUser } from '../redux/actions/user';
+import { signupUser } from '../redux/store/authedUser/actions';
 import { connect } from 'react-redux';
 import MetaDecorator from '../utils/MetaDecorator';
 

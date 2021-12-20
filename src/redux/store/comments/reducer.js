@@ -1,5 +1,7 @@
 import initialState from './initialState';
 
+import { SUBMIT_COMMENT, DELETE_COMMENT } from './types';
+
 const commentsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SUBMIT_COMMENT:

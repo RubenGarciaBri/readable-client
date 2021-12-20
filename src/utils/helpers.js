@@ -42,6 +42,7 @@ export function formatPost(post, author, authedUser, parentPost) {
   };
 }
 
+// TODO: Shorten and improve the two helper functions below
 export function arrayIntoNestedIdObject(array) {
   let object = {};
 

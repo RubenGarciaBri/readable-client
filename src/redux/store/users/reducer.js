@@ -1,4 +1,5 @@
 import initialState from './initialState';
+import { SET_USERS } from './types';
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../../sass/spinnerStyles';
-import { submitComment } from '../../redux/actions/data';
+import { submitComment } from '../../redux/store/comments/actions';
 
 const NewComment = ({ dispatch, id, UI }) => {
   const [body, setBody] = useState('');

@@ -11,7 +11,7 @@ import {
   unfavPost,
   togglePostUpvote,
   togglePostDownvote,
-} from '../../redux/actions/data';
+} from '../../redux/store/posts/actions';
 import { FaCommentAlt, FaRegStar, FaStar } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';

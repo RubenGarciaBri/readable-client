@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
-import { loginUser } from '../redux/actions/user';
+import { loginUser } from '../redux/store/authedUser/actions';
 import MetaDecorator from '../utils/MetaDecorator';
 
 const LoginPage = ({ dispatch, UI }) => {

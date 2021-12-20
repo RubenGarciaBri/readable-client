@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/user';
+import { logoutUser } from '../../redux/store/authedUser/actions';
 import { FaSignOutAlt, FaUserPlus } from 'react-icons/fa';
 import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';

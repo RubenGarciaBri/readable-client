@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import HomePage from '../screens/HomePage';
@@ -12,7 +12,7 @@ import SignupPage from '../screens/SignupPage';
 import LoginPage from '../screens/LoginPage';
 import ProfilePage from '../screens/ProfilePage';
 import { ToastContainer } from 'react-toastify';
-import { SET_AUTHENTICATED } from '../redux/types';
+import { SET_AUTHENTICATED } from '../redux/store/authedUser/actions';
 import { getPosts } from '../redux/store/posts/actions';
 import { getUsers } from '../redux/store/users/actions';
 import {
@@ -22,14 +22,17 @@ import {
 } from '../redux/store/authedUser/actions';
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
+import { getAuthedUserAuthenticatedSelector } from '../redux/store/authedUser/selectors';
 
 axios.defaults.baseURL =
   'https://europe-west1-readable-bf7a6.cloudfunctions.net/api';
 
-function App({ dispatch }) {
+const App = ({ dispatch }) => {
   const history = useHistory();
 
-  console.log(process.env.REACT_APP_MODE);
+  const authenticated = useSelector(getAuthedUserAuthenticatedSelector);
+
+  console.log('auth', authenticated);
 
   // Load initial data
   useEffect(() => {
@@ -64,7 +67,7 @@ function App({ dispatch }) {
 
   return (
     <div className="App">
-      <Switch>
+      {/* <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/posts/:id" component={PostPage} />
         <Route path="/profile/:userName" component={ProfilePage} />
@@ -80,16 +83,9 @@ function App({ dispatch }) {
         autoClose={2000}
         hideProgressBar={true}
         pauseOnHover
-      />
+      /> */}
     </div>
   );
-}
+};
 
-function mapStateToProps({ authedUser, data }) {
-  return {
-    authedUser,
-    isLoaded: data.loading,
-  };
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

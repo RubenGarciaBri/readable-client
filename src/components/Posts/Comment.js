@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { formatDate } from '../../utils/helpers';
 import { FaTimesCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { deleteComment } from '../../redux/actions/data';
+import { deleteComment } from '../../redux/store/comments/actions';
 
 const Comment = ({ data, user, dispatch }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

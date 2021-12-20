@@ -4,7 +4,7 @@ import { IoNotificationsSharp } from 'react-icons/io5';
 import { FaComment, FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import useOutsideClick from '../../utils/helpers';
-import { markNotificationsRead } from '../../redux/actions/user';
+import { markNotificationsRead } from '../../redux/store/notifications/actions';
 
 const NotificationsDropdown = ({ notifications, dispatch }) => {
   const [isOpen, setIsOpen] = useState(false);

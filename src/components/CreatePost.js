@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { GoAlert } from 'react-icons/go';
-import { postPost } from '../redux/actions/data';
+import { postPost } from '../redux/store/posts/actions';
 import useOutsideClick from '../utils/helpers';
 
 const CreatePost = ({ dispatch, user, UI }) => {

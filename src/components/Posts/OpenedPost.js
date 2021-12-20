@@ -7,8 +7,8 @@ import {
   unfavPost,
   togglePostUpvote,
   togglePostDownvote,
-} from '../../redux/actions/data';
-import { deletePost } from '../../redux/actions/data';
+  deletePost,
+} from '../../redux/store/posts/actions.js';
 import { FaCommentAlt, FaRegStar, FaStar, FaTrashAlt } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link } from 'react-router-dom';
@@ -246,13 +246,4 @@ const OpenedPost = ({ user, dispatch, post }) => {
   );
 };
 
-function mapStateToProps({ data, user }, { id }) {
-  const post = data.posts[id];
-
-  return {
-    post,
-    user,
-  };
-}
-
-export default connect(mapStateToProps)(OpenedPost);
+export default OpenedPost;
