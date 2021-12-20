@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   capitalizeFirstLetter,
@@ -16,14 +16,25 @@ import { FaCommentAlt, FaRegStar, FaStar } from 'react-icons/fa';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
 import { Link, withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getPostByIdSelector } from '../../redux/store/posts/selectors';
+import {
+  getAuthedUserNameSelector,
+  getAuthedUserAuthenticatedSelector,
+} from '../../redux/store/authedUser/selectors';
 
-const Post = ({ dispatch, post, user }) => {
+const Post = ({ stateId }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isFaved, setIsFaved] = useState(false);
   const [hasUpvoted, setHasUpvoted] = useState(false);
   const [hasDownvoted, setHasDownvoted] = useState(false);
 
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  // Values from the Redux Store
+  const post = useSelector(getPostByIdSelector(stateId));
+  const authenticated = useSelector(getAuthedUserAuthenticatedSelector());
+  const authedUserName = useSelector(getAuthedUserNameSelector());
 
   const {
     id,
@@ -41,12 +52,12 @@ const Post = ({ dispatch, post, user }) => {
   } = post;
 
   useEffect(() => {
-    if (user.credentials.userName === author) {
+    if (authedUserName === author) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
-  }, [user]);
+  }, [authedUserName, author]);
 
   useEffect(() => {
     // Create array containing the usernames of all the users that have faved this post
@@ -56,7 +67,7 @@ const Post = ({ dispatch, post, user }) => {
     });
 
     // If any of the usernames in the array matches the authenticated user, set isFaved to true
-    if (usersFavArray.includes(user.credentials.userName)) {
+    if (usersFavArray.includes(authedUserName)) {
       setIsFaved(true);
     } else {
       setIsFaved(false);
@@ -74,61 +85,61 @@ const Post = ({ dispatch, post, user }) => {
     });
 
     // If any of the usernames in the arrays match the authenticated user, set hasUpvoted and hasDownvoted accordingly
-    if (usersUpvoteArray.includes(user.credentials.userName)) {
+    if (usersUpvoteArray.includes(authedUserName)) {
       setHasUpvoted(true);
     } else {
       setHasUpvoted(false);
     }
 
-    if (usersDownvoteArray.includes(user.credentials.userName)) {
+    if (usersDownvoteArray.includes(authedUserName)) {
       setHasDownvoted(true);
     } else {
       setHasDownvoted(false);
     }
-  }, [user, post]);
+  }, [authedUserName, post]);
 
   const handleUpvote = () => {
     // Check if there's an authenticated user
-    if (user.authenticated === false) {
+    if (!authenticated) {
       history.push('/login');
     } else {
       // Check if the author is logged in
-      if (isLoggedIn === true) {
+      if (isLoggedIn) {
         toast.error("You can't upvote your own posts");
       } else {
-        dispatch(togglePostUpvote(id));
+        dispatch(togglePostUpvote(stateId));
       }
     }
   };
 
   const handleDownvote = () => {
     // Check if there's an authenticated user
-    if (user.authenticated === false) {
+    if (!authenticated) {
       history.push('/login');
     } else {
       // Check if the author is logged in
-      if (isLoggedIn === true) {
+      if (isLoggedIn) {
         toast.error("You can't downvote your own posts");
       } else {
-        dispatch(togglePostDownvote(id));
+        dispatch(togglePostDownvote(stateId));
       }
     }
   };
 
   const handleFav = () => {
     // Check if there's an authenticated user
-    if (user.authenticated === false) {
+    if (!authenticated) {
       history.push('/login');
     } else {
       // Check if the author is logged in
-      if (isLoggedIn === true) {
+      if (isLoggedIn) {
         toast.error("You can't fav your own posts");
       } else {
         // Check if the post has been faved and perform the correct action
-        if (isFaved === false) {
-          dispatch(favPost(id));
+        if (!isFaved) {
+          dispatch(favPost(stateId));
         } else {
-          dispatch(unfavPost(id));
+          dispatch(unfavPost(stateId));
         }
       }
     }
@@ -217,13 +228,4 @@ const Post = ({ dispatch, post, user }) => {
   );
 };
 
-function mapStateToProps({ data, user }, { id }) {
-  const post = data.posts[id];
-
-  return {
-    post,
-    user,
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Post));
+export default Post;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import Nav from '../components/NavBar';
@@ -10,9 +10,18 @@ import CreatePost from '../components/CreatePost';
 import FilterBar from '../components/FilterBar';
 import { nestedIdObjectToArray } from '../utils/helpers';
 import MetaDecorator from '../utils/MetaDecorator';
+import {
+  getAllPostIdsSelector,
+  getPostLoadingSelector,
+} from '../redux/store/posts/selectors';
 
-const HomePage = ({ postsArr, loading }) => {
+const HomePage = () => {
   const [filter, setFilter] = useState('latest');
+  const dispatch = useDispatch();
+
+  // Values from the Redux Store
+  const postIdsArray = useSelector(getAllPostIdsSelector());
+  const loading = useSelector(getPostLoadingSelector());
 
   const onSelectChange = e => {
     setFilter(e.target.value);
@@ -34,33 +43,33 @@ const HomePage = ({ postsArr, loading }) => {
           ) : (
             <ul>
               {filter === 'latest'
-                ? postsArr
+                ? postIdsArray
                     .sort(
                       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                     )
-                    .map(post => {
+                    .map(postId => {
                       return (
-                        <li key={post.id}>
-                          <Post id={post.id} />
+                        <li key={postId}>
+                          <Post stateId={postId} />
                         </li>
                       );
                     })
                 : filter === 'rating'
-                ? postsArr
+                ? postIdsArray
                     .sort((a, b) => b.voteScore - a.voteScore)
-                    .map(post => {
+                    .map(postId => {
                       return (
-                        <li key={post.id}>
-                          <Post id={post.id} />
+                        <li key={postId}>
+                          <Post id={postId} />
                         </li>
                       );
                     })
-                : postsArr
+                : postIdsArray
                     .sort((a, b) => b.commentCount - a.commentCount)
-                    .map(post => {
+                    .map(postId => {
                       return (
-                        <li key={post.id}>
-                          <Post id={post.id} />
+                        <li key={postId}>
+                          <Post id={postId} />
                         </li>
                       );
                     })}
@@ -78,14 +87,4 @@ const HomePage = ({ postsArr, loading }) => {
   );
 };
 
-function mapStateToProps({ data }) {
-  // Turn nested object into array and sort by available options
-  const postsArr = nestedIdObjectToArray(data.posts);
-
-  return {
-    postsArr,
-    loading: data.loading,
-  };
-}
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

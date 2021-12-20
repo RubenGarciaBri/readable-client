@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
 import { spinnerStylesNav } from '../../sass/spinnerStyles';
 import SearchBar from './SearchBar';
@@ -9,8 +9,16 @@ import MobileMenu from './MobileMenu';
 import ProfileLink from './ProfileLink';
 import LoginButton from './LoginButton';
 import SignupButton from './SignupButton';
+import {
+  getAuthedUserAuthenticatedSelector,
+  getAuthedUserLoadingSelector,
+} from '../../redux/store/authedUser/selectors';
 
-const Nav = ({ authenticated, loading }) => {
+const Nav = () => {
+  // Values from the Redux Store
+  const authenticated = useSelector(getAuthedUserAuthenticatedSelector());
+  const loading = useSelector(getAuthedUserLoadingSelector());
+
   return (
     <>
       {/* Default Navbar Desktop */}
@@ -46,11 +54,4 @@ const Nav = ({ authenticated, loading }) => {
   );
 };
 
-function mapStateToProps({ user }) {
-  return {
-    authenticated: user.authenticated,
-    loading: user.loading,
-  };
-}
-
-export default connect(mapStateToProps)(Nav);
+export default Nav;

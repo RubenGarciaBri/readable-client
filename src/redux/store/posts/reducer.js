@@ -6,7 +6,7 @@ import {
 } from '../../../utils/helpers';
 
 import {
-  LOADING_DATA,
+  LOADING_POSTS,
   SET_POSTS,
   POST_POST,
   DELETE_POST,
@@ -18,7 +18,7 @@ import {
 
 const postsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_DATA:
+    case LOADING_POSTS:
       return {
         ...state,
         loading: true,
@@ -27,7 +27,9 @@ const postsReducer = (state = initialState, action) => {
     case SET_POSTS:
       return {
         ...state,
-        posts: action.payload,
+        byId: action.payload,
+        // TODO: Make more readable later
+        allIds: nestedIdObjectToArray(action.payload).map(post => post.id),
         loading: false,
       };
 

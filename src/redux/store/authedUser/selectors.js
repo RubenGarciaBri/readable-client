@@ -4,6 +4,10 @@ const getAuthedUserAuthenticated = state => {
   return state.authedUser.authenticated;
 };
 
+const getAuthedUserName = state => {
+  return state.authedUser.credentials.userName;
+};
+
 const getAuthedUserLoading = state => {
   return state.authedUser.loading;
 };
@@ -20,6 +24,12 @@ export const getAuthedUserAuthenticatedSelector = () =>
   createSelector(
     state => getAuthedUserAuthenticated(state),
     authenticated => authenticated
+  );
+
+export const getAuthedUserNameSelector = () =>
+  createSelector(
+    state => getAuthedUserName(state),
+    userName => userName
   );
 
 export const getAuthedUserLoadingSelector = () =>

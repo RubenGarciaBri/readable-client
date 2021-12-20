@@ -9,4 +9,3 @@ export const POST_POST = 'POST_POST';
 export const LOADING_POSTS = 'LOADING_POSTS';
 export const SET_ERROR = 'SET_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
-export const LOADING_DATA = 'LOADING_DATA';

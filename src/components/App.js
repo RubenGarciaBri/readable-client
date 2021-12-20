@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import HomePage from '../screens/HomePage';
@@ -29,12 +29,12 @@ axios.defaults.baseURL =
 
 const App = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
+  // Values from the Redux Store
   const authenticated = useSelector(getAuthedUserAuthenticatedSelector());
 
-  console.log('auth', authenticated);
-
-  // // Load initial data
+  // Load initial data
   // useEffect(() => {
   //   // Automatic login during development for testing
   //   if (process.env.REACT_APP_MODE === 'development') {
@@ -60,14 +60,14 @@ const App = () => {
   //   }
   // }, []);
 
-  // useEffect(() => {
-  //   dispatch(getPosts());
-  //   dispatch(getUsers());
-  // }, []);
+  useEffect(() => {
+    dispatch(getPosts());
+    // dispatch(getUsers());
+  }, []);
 
   return (
     <div className="App">
-      {/* <Switch>
+      <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/posts/:id" component={PostPage} />
         <Route path="/profile/:userName" component={ProfilePage} />
@@ -83,7 +83,7 @@ const App = () => {
         autoClose={2000}
         hideProgressBar={true}
         pauseOnHover
-      /> */}
+      />
     </div>
   );
 };
