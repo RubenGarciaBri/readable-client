@@ -1,4 +1,4 @@
-import { SET_USERS } from './types';
+import { LOADING_USERS, SET_USERS } from './types';
 import axios from 'axios';
 
 export const getUsers = () => dispatch => {
@@ -8,6 +8,7 @@ export const getUsers = () => dispatch => {
       dispatch({
         type: SET_USERS,
         payload: res.data,
+        loading: false,
       });
     })
     .catch(err => console.log(err));

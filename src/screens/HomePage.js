@@ -8,7 +8,6 @@ import AsideMenu from '../components/AsideMenu';
 import AsideCategories from '../components/AsideCategories';
 import CreatePost from '../components/CreatePost';
 import FilterBar from '../components/FilterBar';
-import { nestedIdObjectToArray } from '../utils/helpers';
 import MetaDecorator from '../utils/MetaDecorator';
 import {
   getAllPostIdsSelector,

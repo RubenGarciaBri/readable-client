@@ -15,7 +15,6 @@ import {
 import axios from 'axios';
 
 export const getPosts = () => dispatch => {
-  dispatch({ type: LOADING_POSTS });
   axios
     .get('/posts')
     .then(res => {
@@ -34,7 +33,6 @@ export const getPosts = () => dispatch => {
 };
 
 export const getPost = postId => dispatch => {
-  dispatch({ type: LOADING_POSTS });
   axios
     .get(`/post/${postId}`)
     .then(res => {
@@ -47,7 +45,6 @@ export const getPost = postId => dispatch => {
 };
 
 export const postPost = newPost => dispatch => {
-  dispatch({ type: LOADING_POSTS });
   axios
     .post('/post', newPost)
     .then(res => {

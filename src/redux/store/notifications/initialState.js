@@ -1,7 +1,7 @@
 const initialState = {
   byId: {},
   allIds: [],
-  loading: false,
+  loading: true,
   error: null,
 };
 
