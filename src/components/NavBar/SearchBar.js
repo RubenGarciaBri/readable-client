@@ -34,9 +34,7 @@ const SearchBar = () => {
       .then(data => {
         setSearchResults(data.hits);
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => console.log(err));
   };
 
   const throttledSearch = useCallback(

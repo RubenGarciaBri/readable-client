@@ -1,15 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IoNotificationsSharp } from 'react-icons/io5';
 import { FaComment, FaHeart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import useOutsideClick from '../../utils/helpers';
 import { markNotificationsRead } from '../../redux/store/notifications/actions';
+import { getAllNotificationsSelector } from '../../redux/store/notifications/selectors';
+import { nestedIdObjectToArray } from '../../utils/helpers';
 
-const NotificationsDropdown = ({ notifications, dispatch }) => {
+const NotificationsDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const node = useRef();
+  const dispatch = useDispatch();
+
+  const notificationsObj = useSelector(getAllNotificationsSelector());
+
+  const notifications = nestedIdObjectToArray(notificationsObj);
 
   let unreadNotifications;
   const unreadNotificationIds = [];
@@ -106,10 +112,4 @@ const NotificationsDropdown = ({ notifications, dispatch }) => {
   );
 };
 
-function mapStateToProps({ user }) {
-  return {
-    notifications: user.notifications,
-  };
-}
-
-export default connect(mapStateToProps)(NotificationsDropdown);
+export default NotificationsDropdown;

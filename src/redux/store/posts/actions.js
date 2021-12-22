@@ -23,13 +23,7 @@ export const getPosts = () => dispatch => {
         payload: res.data,
       });
     })
-    .catch(err => {
-      console.log(err);
-      dispatch({
-        type: SET_POSTS,
-        payload: [],
-      });
-    });
+    .catch(err => console.log(err));
 };
 
 export const getPost = postId => dispatch => {
@@ -45,22 +39,21 @@ export const getPost = postId => dispatch => {
 };
 
 export const postPost = newPost => dispatch => {
-  axios
-    .post('/post', newPost)
-    .then(res => {
-      dispatch({
-        type: POST_POST,
-        payload: res.data,
-      });
-      dispatch({ type: CLEAR_ERROR });
-    })
-    .catch(err => {
-      // TODO: Fix later, currently an empty object because of frozen UI issue
-      dispatch({
-        type: SET_ERROR,
-        payload: {},
-      });
+  axios.post('/post', newPost).then(res => {
+    dispatch({
+      type: POST_POST,
+      payload: res.data,
     });
+    dispatch({ type: CLEAR_ERROR });
+  });
+
+  err => {
+    // TODO: Fix later, currently an empty object because of frozen UI issue
+    dispatch({
+      type: SET_ERROR,
+      payload: {},
+    });
+  };
 };
 
 export const favPost = postId => dispatch => {

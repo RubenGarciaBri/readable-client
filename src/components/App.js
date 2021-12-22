@@ -39,10 +39,13 @@ const App = () => {
     // Automatic login during development for testing
     if (process.env.REACT_APP_MODE === 'development') {
       dispatch(
-        loginUser({
-          email: 'ruben@gmail.com',
-          password: '123456',
-        })
+        loginUser(
+          {
+            email: 'ruben@gmail.com',
+            password: '123456',
+          },
+          history
+        )
       );
     } else {
       const token = localStorage.FBIdToken;

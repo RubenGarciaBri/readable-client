@@ -3,6 +3,9 @@ import { createSelector } from 'reselect';
 const getAllNotificationIds = state => {
   return state.notifications.allIds;
 };
+const getAllNotifications = state => {
+  return state.notifications.byId;
+};
 
 const getNotificationById = (state, stateId) => {
   return state.notifications.byId[stateId];
@@ -20,6 +23,12 @@ export const getAllNotificationIdsSelector = () =>
   createSelector(
     state => getAllNotificationIds(state),
     allIds => allIds
+  );
+
+export const getAllNotificationsSelector = () =>
+  createSelector(
+    state => getAllNotifications(state),
+    byId => byId
   );
 
 export const getNotificationByIdSelector = stateId =>

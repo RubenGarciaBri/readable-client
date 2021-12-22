@@ -23,6 +23,8 @@ const SignoutButton = ({ dispatch }) => {
   );
 };
 
-function mapStateToProps() {}
+function mapStateToProps() {
+  return {};
+}
 
 export default connect(mapStateToProps)(SignoutButton);

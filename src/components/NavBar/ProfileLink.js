@@ -1,13 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import {
+  getAuthedUserAuthenticatedSelector,
+  getAuthedUserCredentialsSelector,
+  getAuthedUserNameSelector,
+} from '../../redux/store/authedUser/selectors';
 
-const ProfileLink = ({ authenticated, imageUrl, userName }) => {
+const ProfileLink = () => {
+  const authenticated = useSelector(getAuthedUserAuthenticatedSelector());
+  const userName = useSelector(getAuthedUserNameSelector());
+  const credentials = useSelector(getAuthedUserCredentialsSelector());
+
   return (
     <Link to={`/profile/${userName}`} className="navbar__right-profile">
       <img
         className="navbar__right-profile__userImg shadow-slim"
-        src={authenticated && imageUrl}
+        src={authenticated && credentials.imageUrl}
         alt=""
       />
       <span className="navbar__right-profile__userName">
@@ -17,12 +26,4 @@ const ProfileLink = ({ authenticated, imageUrl, userName }) => {
   );
 };
 
-function mapStateToProps({ user }) {
-  return {
-    authenticated: user.authenticated,
-    imageUrl: user.credentials.imageUrl,
-    userName: user.credentials.userName,
-  };
-}
-
-export default connect(mapStateToProps)(ProfileLink);
+export default ProfileLink;

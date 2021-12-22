@@ -19,13 +19,7 @@ export const loginUser = (userData, history) => dispatch => {
       dispatch({ type: CLEAR_ERROR });
       history.push('/');
     })
-    .catch(err => {
-      dispatch({
-        // TODO: Fix later, currently an empty object because of frozen UI issue
-        type: SET_ERROR,
-        payload: {},
-      });
-    });
+    .catch(err => console.log(err));
 };
 
 export const signupUser = (newUserData, history) => dispatch => {
@@ -39,13 +33,7 @@ export const signupUser = (newUserData, history) => dispatch => {
       history.push('/');
       window.location.reload();
     })
-    .catch(err => {
-      dispatch({
-        // TODO: Fix later, currently an empty object because of frozen UI issue
-        type: SET_ERROR,
-        payload: {},
-      });
-    });
+    .catch(err => console.log(err));
 };
 
 export const getUserData = () => dispatch => {

@@ -45,14 +45,7 @@ export const submitComment = (postId, commentData) => dispatch => {
       });
       dispatch({ type: CLEAR_ERROR });
     })
-    .catch(err => {
-      console.log(err);
-      // TODO: Fix later, currently an empty object because of frozen UI issue
-      dispatch({
-        type: SET_ERROR,
-        payload: {},
-      });
-    });
+    .catch(err => console.log(err));
 };
 
 export const deleteComment = (postId, commentId) => dispatch => {
@@ -68,12 +61,5 @@ export const deleteComment = (postId, commentId) => dispatch => {
       });
       dispatch({ type: CLEAR_ERROR });
     })
-    .catch(err => {
-      console.log(err);
-      // TODO: Fix later, currently an empty object because of frozen UI issue
-      dispatch({
-        type: SET_ERROR,
-        payload: {},
-      });
-    });
+    .catch(err => console.log(err));
 };
