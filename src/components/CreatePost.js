@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import { GoAlert } from 'react-icons/go';
 import { postPost } from '../redux/store/posts/actions';
 import useOutsideClick from '../utils/helpers';
+import { getAuthedUserAuthenticatedSelector } from '../redux/store/authedUser/selectors';
 
-const CreatePost = ({ dispatch, user, UI }) => {
+const CreatePost = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [rows, setRows] = useState(1);
   const [title, setTitle] = useState('');
@@ -16,6 +17,10 @@ const CreatePost = ({ dispatch, user, UI }) => {
 
   const node = useRef();
   const history = useHistory();
+
+  const authenticated = useSelector(getAuthedUserAuthenticatedSelector());
+
+  const dispatch = useDispatch();
 
   useOutsideClick(node, () => {
     onInputBlur();
@@ -39,7 +44,7 @@ const CreatePost = ({ dispatch, user, UI }) => {
 
   const onInputFocus = () => {
     // Check if there is no authenticated user to prevent post to be created
-    if (user.authenticated === false) {
+    if (!authenticated) {
       history.push('/login');
     } else {
       setIsVisible(true);
@@ -155,11 +160,4 @@ const CreatePost = ({ dispatch, user, UI }) => {
   );
 };
 
-function mapStateToProps({ user, UI }) {
-  return {
-    user,
-    UI,
-  };
-}
-
-export default connect(mapStateToProps)(CreatePost);
+export default CreatePost;

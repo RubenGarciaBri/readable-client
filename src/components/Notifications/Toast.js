@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   FaCheck,
   FaExclamationCircle,
   FaExclamationTriangle,
   FaInfoCircle,
 } from 'react-icons/fa';
+import { nestedIdObjectToArray } from '../../utils/helpers';
+import { getAllNotificationsSelector } from '../../redux/store/notifications/selectors';
 
-const Toast = ({ notifications, position }) => {
+const Toast = ({ position }) => {
   const [isVisible, setIsVisible] = useState(true);
+
+  const notificationsObj = useSelector(getAllNotificationsSelector());
+  const notifications = nestedIdObjectToArray(notificationsObj);
 
   useEffect(() => {
     setTimeout(() => {
@@ -46,47 +51,32 @@ const Toast = ({ notifications, position }) => {
     }
   };
 
-  // const props = useSpring({
-  //   from: {opacity: 0},
-  //   to: {opacity: 1},
-  //   config: { duration: 2000 }
-  //   })
-
   return (
     <div className={`notification-container ${position}`}>
-      {notifications.length > 0
-        ? notifications.map(notification => {
-            return (
-              <div
-                style={{ backgroundColor: generateBgColor(notification.type) }}
-                key={notification.id}
-                className={`notification toast ${
-                  isVisible === true
-                    ? 'notification-visible'
-                    : 'notification--hidden'
-                }`}
-              >
-                <div className="notification__img">
-                  {generateIcon(notification.type)}
-                </div>
-                <div>
-                  <p className="notification__title">{notification.title}</p>
-                  <p className="notification__message">
-                    {notification.message}
-                  </p>
-                </div>
+      {notifications.length > 0 &&
+        notifications.map(notification => {
+          return (
+            <div
+              style={{ backgroundColor: generateBgColor(notification.type) }}
+              key={notification.id}
+              className={`notification toast ${
+                isVisible === true
+                  ? 'notification-visible'
+                  : 'notification--hidden'
+              }`}
+            >
+              <div className="notification__img">
+                {generateIcon(notification.type)}
               </div>
-            );
-          })
-        : null}
+              <div>
+                <p className="notification__title">{notification.title}</p>
+                <p className="notification__message">{notification.message}</p>
+              </div>
+            </div>
+          );
+        })}
     </div>
   );
 };
 
-function mapStateToProps({ notifications }) {
-  return {
-    notifications,
-  };
-}
-
-export default connect(mapStateToProps)(Toast);
+export default Toast;

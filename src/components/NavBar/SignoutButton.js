@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { logoutUser } from '../../redux/store/authedUser/actions';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -23,8 +22,4 @@ const SignoutButton = ({ dispatch }) => {
   );
 };
 
-function mapStateToProps() {
-  return {};
-}
-
-export default connect(mapStateToProps)(SignoutButton);
+export default SignoutButton;

@@ -23,6 +23,10 @@ import {
 import AuthRoute from '../utils/AuthRoute';
 import axios from 'axios';
 import { getAuthedUserAuthenticatedSelector } from '../redux/store/authedUser/selectors';
+import {
+  getFilteredPostIdsSelector,
+  getAllPostIdsSelector,
+} from '../redux/store/posts/selectors';
 
 axios.defaults.baseURL =
   'https://europe-west1-readable-bf7a6.cloudfunctions.net/api';

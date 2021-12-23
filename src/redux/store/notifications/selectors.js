@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 const getAllNotificationIds = state => {
   return state.notifications.allIds;
 };
+
 const getAllNotifications = state => {
   return state.notifications.byId;
 };
