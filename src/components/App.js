@@ -3,11 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import HomePage from '../screens/HomePage';
+import Page from '../screens/Page';
 import PostPage from '../screens/PostPage';
-import SportsPage from '../screens/SportsPage';
-import MusicPage from '../screens/MusicPage';
-import BusinessPage from '../screens/BusinessPage';
 import SignupPage from '../screens/SignupPage';
 import LoginPage from '../screens/LoginPage';
 import ProfilePage from '../screens/ProfilePage';
@@ -75,14 +72,14 @@ const App = () => {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/posts/:id" component={PostPage} />
-        <Route path="/profile/:userName" component={ProfilePage} />
-        <Route path="/sports" component={SportsPage} />
-        <Route path="/music" component={MusicPage} />
-        <Route path="/business" component={BusinessPage} />
-        <AuthRoute path="/signup" component={SignupPage} />
-        <AuthRoute path="/login" component={LoginPage} />
+        <Route exact path="/" render={() => <Page />} />
+        <Route path="/sports" render={() => <Page category="sports" />} />
+        <Route path="/music" render={() => <Page category="music" />} />
+        <Route path="/business" render={() => <Page category="business" />} />
+        <Route path="/posts/:id" render={() => <PostPage />} />
+        <Route path="/profile/:userName" render={() => <ProfilePage />} />
+        <AuthRoute path="/signup" render={() => <SignupPage />} />
+        <AuthRoute path="/login" render={() => <LoginPage />} />
       </Switch>
       <ToastContainer
         limit={7}

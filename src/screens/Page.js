@@ -10,17 +10,22 @@ import CreatePost from '../components/CreatePost';
 import FilterBar from '../components/FilterBar';
 import MetaDecorator from '../utils/MetaDecorator';
 import {
-  getAllPostIdsSelector,
+  getAllPostsSelector,
   getPostLoadingSelector,
+  getFilteredPostsSelector,
 } from '../redux/store/posts/selectors';
 
-const HomePage = () => {
+const Page = ({ category }) => {
   const [filter, setFilter] = useState('latest');
   const dispatch = useDispatch();
 
   // Values from the Redux Store
-  const postIdsArray = useSelector(getAllPostIdsSelector());
+  const postsArray = category
+    ? useSelector(getFilteredPostsSelector(category))
+    : useSelector(getAllPostsSelector());
   const loading = useSelector(getPostLoadingSelector());
+
+  console.log(postsArray);
 
   const onSelectChange = e => {
     setFilter(e.target.value);
@@ -42,33 +47,33 @@ const HomePage = () => {
           ) : (
             <ul>
               {filter === 'latest'
-                ? postIdsArray
+                ? postsArray
                     .sort(
                       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                     )
-                    .map(postId => {
+                    .map(post => {
                       return (
-                        <li key={postId}>
-                          <Post stateId={postId} />
+                        <li key={post.id}>
+                          <Post stateId={post.id} />
                         </li>
                       );
                     })
                 : filter === 'rating'
-                ? postIdsArray
+                ? postsArray
                     .sort((a, b) => b.voteScore - a.voteScore)
-                    .map(postId => {
+                    .map(post => {
                       return (
-                        <li key={postId}>
-                          <Post id={postId} />
+                        <li key={post.id}>
+                          <Post id={post.id} />
                         </li>
                       );
                     })
-                : postIdsArray
+                : postsArray
                     .sort((a, b) => b.commentCount - a.commentCount)
-                    .map(postId => {
+                    .map(post => {
                       return (
-                        <li key={postId}>
-                          <Post id={postId} />
+                        <li key={post.id}>
+                          <Post id={post.id} />
                         </li>
                       );
                     })}
@@ -86,4 +91,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Page;
