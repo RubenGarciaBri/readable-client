@@ -4,7 +4,6 @@ import { BeatLoader } from 'react-spinners';
 import { spinnerStylesDefault } from '../sass/spinnerStyles';
 import Nav from '../components/NavBar';
 import Post from '../components/Posts';
-import AsideMenu from '../components/AsideMenu';
 import AsideCategories from '../components/AsideCategories';
 import CreatePost from '../components/CreatePost';
 import FilterBar from '../components/FilterBar';
