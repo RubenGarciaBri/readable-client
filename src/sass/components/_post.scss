@@ -19,7 +19,7 @@
     justify-content: center;
     align-items: flex-start;
     padding-top: 2rem;
-    flex-basis: 9%;
+    width: 6rem;
     background: #eee;
 
     &__rating {
@@ -54,7 +54,7 @@
   }
 
   &-right {
-    flex-basis: 91%;
+    flex-grow: 1;
     padding: 1rem 1.5rem 1.5rem 1.5rem;
 
     &__top {

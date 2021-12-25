@@ -25,8 +25,6 @@ const Page = ({ category }) => {
     : useSelector(getAllPostsSelector());
   const loading = useSelector(getPostLoadingSelector());
 
-  console.log(postsArray);
-
   const onSelectChange = e => {
     setFilter(e.target.value);
   };
@@ -80,12 +78,6 @@ const Page = ({ category }) => {
             </ul>
           )}
         </main>
-        <aside className="categoryPage-right">
-          <AsideMenu
-            category="Home"
-            description="This is the front page of Readable. Here you can find all the latest posts and updates from the community."
-          />
-        </aside>
       </div>
     </div>
   );

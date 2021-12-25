@@ -28,7 +28,7 @@
 }
 
 .categoryPage-main {
-  flex-basis: 50%;
+  flex-basis: 75%;
   order: 2;
 
   @include respond(tab-port) {
@@ -46,4 +46,3 @@
     order: 2;
   }
 }
-
